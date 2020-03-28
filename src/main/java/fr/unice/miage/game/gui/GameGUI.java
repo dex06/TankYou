@@ -1,7 +1,5 @@
 package fr.unice.miage.game.gui;
 
-import java.util.Iterator;
-
 import fr.unice.miage.game.GameBoard;
 import fr.unice.miage.sprite.RectangleSprite;
 import fr.unice.miage.sprite.RoundSprite;
@@ -14,6 +12,8 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+
+import java.util.Iterator;
 
 public class GameGUI extends Application {
 	private long lastUpdateNanoTime;

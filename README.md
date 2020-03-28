@@ -83,3 +83,4 @@ Une fois l'architecture pour plugins mise en place, il devrait être très facil
  un suivi régulier (au moins bi-hebdomadaire) du travail. Le suivi des taches devra être effectué avec le Kanban intégré à GitHub.
  La note des membres du groupe pourra être différente suivant le travail accompli par chacun. C'est pour ça que le suivi régulier des taches est très important.
  En cas de problèmes dans le groupe. Il faut essayer de le traiter en interne. Par exemple assigner les taches en fonction de la disponibilité et les compétences techniques. Si le problème persiste, me contacter pour que j'intervienne.  
+"# projet-tp1-charlet-samson-panzera" 
