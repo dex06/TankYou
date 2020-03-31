@@ -93,7 +93,9 @@ public class GameMenu extends Application {
                         "Option 2",
                         "Option 3"
                 );
-        guiVBox.getChildren().addAll(guiLabel, new ComboBox(options));
+        ComboBox guiCB = new ComboBox(options);
+        guiCB.setValue("Option 1");
+        guiVBox.getChildren().addAll(guiLabel, guiCB);
         guiVBox.setAlignment(Pos.CENTER_LEFT);
         return guiVBox;
         //guiConfigList.add(guiVBox);
@@ -108,7 +110,9 @@ public class GameMenu extends Application {
                         "Option 2",
                         "Option 3"
                 );
-        playerVBox.getChildren().addAll(playerLabel, new ComboBox(options));
+        ComboBox playerCB = new ComboBox(options);
+        playerCB.setValue("Option 1");
+        playerVBox.getChildren().addAll(playerLabel, playerCB);
         return playerVBox;
         //guiConfigList.add(playerVBox);
        /* comboBox.getItems().addAll(
