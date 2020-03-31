@@ -1,6 +1,7 @@
 package fr.unice.miage.game.gui;
 
 import fr.unice.miage.game.GameBoard;
+import fr.unice.miage.game.GameMenu;
 import fr.unice.miage.sprite.RectangleSprite;
 import fr.unice.miage.sprite.RoundSprite;
 import fr.unice.miage.sprite.Sprite;
@@ -18,10 +19,18 @@ import java.util.Iterator;
 public class GameGUI extends Application {
 	private long lastUpdateNanoTime;
 	private GameBoard board;
+	private GameMenu menu;
 
 	@Override
 	public void start(Stage stage) {
-		initGame(stage);
+		initMenu(stage);
+		//initGame(stage);
+	}
+
+	private void initMenu(Stage stage){
+		menu = new GameMenu();
+		//menu.start();
+		Stage menuStage = menu.getStage();
 	}
 
 	private void initGame(Stage stage) {
