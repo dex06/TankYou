@@ -3,6 +3,7 @@ package fr.unice.miage.game;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -61,6 +62,8 @@ public class GameMenu extends Application {
         });
 
         mainVBox.getChildren().addAll(this.guis, this.players, addPlayerBtn);
+        mainVBox.setSpacing(10);
+        mainVBox.setPadding(new Insets(25));
 
         Group root = new Group();
         Scene scene = new Scene(mainVBox, 512, 512);
@@ -76,10 +79,15 @@ public class GameMenu extends Application {
         HBox playerHBox = new HBox();
         Label playerLabel = new Label("Joueur " + this.nbPlayers);
         VBox playerMovementVBox = this.createPlayerVBox("Mouvements");
+        playerMovementVBox.setAlignment(Pos.CENTER);
         VBox playerWeaponVBox = this.createPlayerVBox("Armes");
+        playerWeaponVBox.setAlignment(Pos.CENTER);
         VBox playerGraphicVBox = this.createPlayerVBox("Graphiques");
+        playerGraphicVBox.setAlignment(Pos.CENTER);
         playerHBox.getChildren().addAll(playerLabel, playerMovementVBox, playerWeaponVBox, playerGraphicVBox);
+        playerHBox.setSpacing(10);
         playerHBox.setAlignment(Pos.CENTER_LEFT);
+
         players.getChildren().add(playerHBox);
 
     }
@@ -96,7 +104,8 @@ public class GameMenu extends Application {
         ComboBox guiCB = new ComboBox(options);
         guiCB.setValue("Option 1");
         guiVBox.getChildren().addAll(guiLabel, guiCB);
-        guiVBox.setAlignment(Pos.CENTER_LEFT);
+        guiVBox.setSpacing(10);
+        guiVBox.setAlignment(Pos.CENTER);
         return guiVBox;
         //guiConfigList.add(guiVBox);
     }
