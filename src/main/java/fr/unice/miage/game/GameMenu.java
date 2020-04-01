@@ -5,13 +5,11 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
@@ -22,7 +20,7 @@ public class GameMenu extends Application {
     private int width;
     private int height;
     private int nbGUI = 0;
-    private int nbPlayers = 0;
+    private int nbPlayers = 1;
     private VBox guis = new VBox();
     private VBox players = new VBox();
 
@@ -65,6 +63,8 @@ public class GameMenu extends Application {
             this.nbPlayers++;
             this.addPlayerConfig();
         });
+        //Ajouter un joueur de base
+        this.addPlayerConfig();
 
         Button startGameBtn = new Button("Commencer la partie");
         startGameBtn.setOnAction(e -> {
@@ -74,23 +74,25 @@ public class GameMenu extends Application {
         btnHB.getChildren().addAll(addPlayerBtn, startGameBtn);
         btnHB.setSpacing(30);
         btnHB.setAlignment(Pos.BOTTOM_CENTER);
+        BorderPane bottom = new BorderPane();
+        bottom.setCenter(btnHB);
 
         VBox mainVBox = new VBox();
         mainVBox.getChildren().addAll(this.guis, this.players);
         mainVBox.setSpacing(10);
         mainVBox.setPadding(new Insets(25));
 
-        VBox globalVBox = new VBox();
-        globalVBox.getChildren().addAll(mainVBox,btnHB);
+        BorderPane root= new BorderPane();
+        root.setPadding(new Insets(25));
+        root.setCenter(mainVBox);
+        root.setBottom(bottom);
 
-        Group root = new Group();
-        Scene scene = new Scene(globalVBox, 512, 512);
+        Scene scene = new Scene(root);
         this.stage.setTitle("Menu");
         this.stage.setScene(scene);
-        Canvas canvas = new Canvas(512, 512);
-        root.getChildren().add(canvas);
-        GraphicsContext gc = canvas.getGraphicsContext2D();
-        this.stage.sizeToScene();
+        this.stage.setWidth(512);
+        this.stage.setHeight(512);
+        //this.stage.sizeToScene();
         this.stage.show();
     }
     private void addPlayerConfig(){
