@@ -5,6 +5,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
@@ -15,6 +16,9 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
+import java.util.ArrayList;
+import java.util.Set;
+
 public class GameMenu extends Application {
     private Stage stage;
     private int width;
@@ -23,6 +27,8 @@ public class GameMenu extends Application {
     private int nbPlayers = 1;
     private VBox guis = new VBox();
     private VBox players = new VBox();
+    private ArrayList<String> listOfGUIOptions = new ArrayList<>();
+    private ArrayList<String> listOfPlayersOptions = new ArrayList<>();
 
     /*public GameMenu() {
         super();
@@ -42,7 +48,6 @@ public class GameMenu extends Application {
 
     private void init(Stage stage){
         this.stage = stage;
-
 
         Label guiLabel = new Label("GUI");
         guiLabel.setFont(new Font("Arial", 18));
@@ -68,7 +73,9 @@ public class GameMenu extends Application {
 
         Button startGameBtn = new Button("Commencer la partie");
         startGameBtn.setOnAction(e -> {
-            //startGame()
+            this.listOfGUIOptions = this.getOptions("guis");
+            this.listOfPlayersOptions = this.getOptions("players");
+            //this.startGame();
                 });
         HBox btnHB = new HBox();
         btnHB.getChildren().addAll(addPlayerBtn, startGameBtn);
@@ -107,7 +114,6 @@ public class GameMenu extends Application {
         playerHBox.getChildren().addAll(playerLabel, playerMovementVBox, playerWeaponVBox, playerGraphicVBox);
         playerHBox.setSpacing(10);
         playerHBox.setAlignment(Pos.CENTER_LEFT);
-
         players.getChildren().add(playerHBox);
 
     }
@@ -127,7 +133,6 @@ public class GameMenu extends Application {
         guiVBox.setSpacing(10);
         guiVBox.setAlignment(Pos.CENTER);
         return guiVBox;
-        //guiConfigList.add(guiVBox);
     }
 
     private VBox createPlayerVBox(String type){
@@ -143,12 +148,23 @@ public class GameMenu extends Application {
         playerCB.setValue("Option 1");
         playerVBox.getChildren().addAll(playerLabel, playerCB);
         return playerVBox;
-        //guiConfigList.add(playerVBox);
        /* comboBox.getItems().addAll(
                 "Option 4",
                 "Option 5",
                 "Option 6"
         );*/
+    }
+
+    private void startGame(){}
+
+    private ArrayList<String> getOptions(String type){
+        ArrayList<String> optionsList = new ArrayList<>();
+        Set<Node> CBSet =  type == "guis" ? this.guis.lookupAll("ComboBox") : this.players.lookupAll("ComboBox");
+        for(Node cb : CBSet){
+            ComboBox new_cb = (ComboBox) cb;
+            optionsList.add((String)new_cb.getValue());
+        }
+        return optionsList;
     }
 
     public static void main(String[] args) {
