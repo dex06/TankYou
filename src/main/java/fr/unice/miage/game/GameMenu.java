@@ -44,7 +44,7 @@ public class GameMenu extends Application {
 
     private void init(Stage stage){
         this.stage = stage;
-        VBox mainVBox = new VBox();
+
 
         Label guiLabel = new Label("GUI");
         guiLabel.setFont(new Font("Arial", 18));
@@ -52,6 +52,7 @@ public class GameMenu extends Application {
         VBox gui1 = this.createGUIVBox();
         VBox gui2 = this.createGUIVBox();
         guiHBox.getChildren().addAll(gui1, gui2);
+        guiHBox.setSpacing(15);
         guiHBox.setAlignment(Pos.CENTER);
         this.guis.getChildren().addAll(guiLabel,guiHBox);
 
@@ -60,20 +61,30 @@ public class GameMenu extends Application {
         this.players.getChildren().add(playersLabel);
 
         Button addPlayerBtn = new Button("Ajouter un joueur");
-        HBox btnHB = new HBox();
-        btnHB.getChildren().add(addPlayerBtn);
-        btnHB.setAlignment(Pos.BOTTOM_CENTER);
         addPlayerBtn.setOnAction(e -> {
             this.nbPlayers++;
             this.addPlayerConfig();
         });
 
-        mainVBox.getChildren().addAll(this.guis, this.players, btnHB);
+        Button startGameBtn = new Button("Commencer la partie");
+        startGameBtn.setOnAction(e -> {
+            //startGame()
+                });
+        HBox btnHB = new HBox();
+        btnHB.getChildren().addAll(addPlayerBtn, startGameBtn);
+        btnHB.setSpacing(30);
+        btnHB.setAlignment(Pos.BOTTOM_CENTER);
+
+        VBox mainVBox = new VBox();
+        mainVBox.getChildren().addAll(this.guis, this.players);
         mainVBox.setSpacing(10);
         mainVBox.setPadding(new Insets(25));
 
+        VBox globalVBox = new VBox();
+        globalVBox.getChildren().addAll(mainVBox,btnHB);
+
         Group root = new Group();
-        Scene scene = new Scene(mainVBox, 512, 512);
+        Scene scene = new Scene(globalVBox, 512, 512);
         this.stage.setTitle("Menu");
         this.stage.setScene(scene);
         Canvas canvas = new Canvas(512, 512);

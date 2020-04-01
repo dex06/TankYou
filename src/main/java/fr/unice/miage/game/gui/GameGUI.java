@@ -29,8 +29,8 @@ public class GameGUI extends Application {
 
 	private void initMenu(Stage stage){
 		menu = new GameMenu();
-		//menu.start();
-		Stage menuStage = menu.getStage();
+		menu.start(stage);
+		//Stage menuStage = menu.getStage();
 	}
 
 	private void initGame(Stage stage) {
