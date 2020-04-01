@@ -14,6 +14,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 public class GameMenu extends Application {
@@ -46,22 +47,28 @@ public class GameMenu extends Application {
         VBox mainVBox = new VBox();
 
         Label guiLabel = new Label("GUI");
+        guiLabel.setFont(new Font("Arial", 18));
         HBox guiHBox = new HBox();
         VBox gui1 = this.createGUIVBox();
         VBox gui2 = this.createGUIVBox();
         guiHBox.getChildren().addAll(gui1, gui2);
+        guiHBox.setAlignment(Pos.CENTER);
         this.guis.getChildren().addAll(guiLabel,guiHBox);
 
         Label playersLabel = new Label("Joueurs");
+        playersLabel.setFont(new Font("Arial", 18));
         this.players.getChildren().add(playersLabel);
 
         Button addPlayerBtn = new Button("Ajouter un joueur");
+        HBox btnHB = new HBox();
+        btnHB.getChildren().add(addPlayerBtn);
+        btnHB.setAlignment(Pos.BOTTOM_CENTER);
         addPlayerBtn.setOnAction(e -> {
             this.nbPlayers++;
             this.addPlayerConfig();
         });
 
-        mainVBox.getChildren().addAll(this.guis, this.players, addPlayerBtn);
+        mainVBox.getChildren().addAll(this.guis, this.players, btnHB);
         mainVBox.setSpacing(10);
         mainVBox.setPadding(new Insets(25));
 
