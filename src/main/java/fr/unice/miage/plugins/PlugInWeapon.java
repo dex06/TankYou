@@ -1,4 +1,4 @@
 package fr.unice.miage.plugins;
 
-public class PlugInWeapon {
+public interface PlugInWeapon {
 }

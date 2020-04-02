@@ -6,7 +6,7 @@ import java.net.URL;
 import java.net.URLClassLoader;
 
 public class Repository {
-    ClassLoader loader = new URLClassLoader(new URL[]{new File("fr/unice/miage/game/classes").toURL()});
+    ClassLoader loader = new URLClassLoader(new URL[]{new File("fr/unice/miage/classes").toURL()});
 
     public Repository() throws MalformedURLException {}
     public Repository(File base) throws MalformedURLException {

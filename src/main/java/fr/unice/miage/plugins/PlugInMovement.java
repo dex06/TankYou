@@ -1,4 +1,5 @@
 package fr.unice.miage.plugins;
 
-public class PlugInMovement {
+public interface PlugInMovement {
+    public void move();
 }

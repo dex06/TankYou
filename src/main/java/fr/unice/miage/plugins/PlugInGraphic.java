@@ -1,4 +1,5 @@
 package fr.unice.miage.plugins;
 
-public class PlugInGraphic {
+public interface PlugInGraphic {
+    public void draw();
 }
