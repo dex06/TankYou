@@ -17,6 +17,7 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 public class GameMenu extends Application {
@@ -27,8 +28,8 @@ public class GameMenu extends Application {
     private int nbPlayers = 1;
     private VBox guis = new VBox();
     private VBox players = new VBox();
-    private ArrayList<String> listOfGUIOptions = new ArrayList<>();
-    private ArrayList<String> listOfPlayersOptions = new ArrayList<>();
+    private ArrayList<Object> listOfGUIOptions = new ArrayList<>();
+    private ArrayList<Object> listOfPlayersOptions = new ArrayList<>();
 
     /*public GameMenu() {
         super();
@@ -75,7 +76,7 @@ public class GameMenu extends Application {
         startGameBtn.setOnAction(e -> {
             this.listOfGUIOptions = this.getOptions("guis");
             this.listOfPlayersOptions = this.getOptions("players");
-            //this.startGame();
+            this.startGame();
                 });
         HBox btnHB = new HBox();
         btnHB.getChildren().addAll(addPlayerBtn, startGameBtn);
@@ -155,14 +156,25 @@ public class GameMenu extends Application {
         );*/
     }
 
-    private void startGame(){}
+    private void startGame(){
+        //this.listOfPlayersOptions;
+    }
 
-    private ArrayList<String> getOptions(String type){
-        ArrayList<String> optionsList = new ArrayList<>();
+    private ArrayList<Object> getOptions(String type){
+        ArrayList<Object> optionsList = new ArrayList<>();
         Set<Node> CBSet =  type == "guis" ? this.guis.lookupAll("ComboBox") : this.players.lookupAll("ComboBox");
         for(Node cb : CBSet){
             ComboBox new_cb = (ComboBox) cb;
             optionsList.add((String)new_cb.getValue());
+        }
+        if(type == "players"){
+            int nbPluginByPlayer = optionsList.size() / this.nbPlayers;
+            ArrayList<Object> listOfOptionsByPlayer = new ArrayList<>();
+            for(int i = 0; i < optionsList.size() - 1; i += nbPluginByPlayer){
+                    List<Object> subL = optionsList.subList(i, i + nbPluginByPlayer);
+                    listOfOptionsByPlayer.add(subL);
+            }
+            optionsList = listOfOptionsByPlayer;
         }
         return optionsList;
     }
