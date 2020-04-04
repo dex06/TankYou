@@ -10,9 +10,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
@@ -31,7 +30,7 @@ public class GameMenu extends Application {
     private ArrayList<Object> listOfGUIOptions = new ArrayList<>();
     private ArrayList<Object> listOfPlayersOptions = new ArrayList<>();
 
-    /*public GameMenu() {
+    /*public GameMenu(int width, int height, Stage stage) {
         super();
         //this.stage = stage;
         //this.width = width;
@@ -94,12 +93,14 @@ public class GameMenu extends Application {
         root.setPadding(new Insets(25));
         root.setCenter(mainVBox);
         root.setBottom(bottom);
+        root.setBackground(new Background(new BackgroundFill(Color.web("#e0e4ec"), null, null)));
 
         Scene scene = new Scene(root);
         this.stage.setTitle("Menu");
         this.stage.setScene(scene);
         this.stage.setWidth(512);
         this.stage.setHeight(512);
+        this.stage.centerOnScreen();
         //this.stage.sizeToScene();
         this.stage.show();
     }
