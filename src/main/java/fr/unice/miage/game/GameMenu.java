@@ -27,8 +27,8 @@ public class GameMenu extends Application {
     private int nbPlayers = 1;
     private VBox guis = new VBox();
     private VBox players = new VBox();
-    private ArrayList<Object> listOfGUIOptions = new ArrayList<>();
-    private ArrayList<Object> listOfPlayersOptions = new ArrayList<>();
+    private List<Object> listOfGUIOptions = new ArrayList<>();
+    private List<Object> listOfPlayersOptions = new ArrayList<>();
 
     /*public GameMenu(int width, int height, Stage stage) {
         super();
@@ -158,6 +158,7 @@ public class GameMenu extends Application {
     }
 
     private void startGame(){
+        //this.gameEngine.loadingPlayers(this.listOfPlayersOptions);
         //this.listOfPlayersOptions;
     }
 

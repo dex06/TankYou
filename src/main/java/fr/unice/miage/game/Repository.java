@@ -12,15 +12,22 @@ public class Repository {
     public Repository(File base) throws MalformedURLException {
         this.loader = new URLClassLoader(new URL[] {base.toURL()});
     }
-   /* public List<Class<?>> loadMovement(String path){
+    public Class loadMovement(String opt){
+        String str = "something" ;
+        Class stringClass = str.getClass();
+        return stringClass;
 
-    } */
+    }
 
-   /* public List<Class<?>> loadWeapon(String path){
+   public Class loadWeapon(String path){
+       String str = "something" ;
+       Class stringClass = str.getClass();
+       return stringClass;
+    }
 
-    } */
-
-   /* public List<Class<?>> loadGraphic(String path){
-
-    } */
+   public Class loadGraphic(String path){
+       String str = "something" ;
+       Class stringClass = str.getClass();
+       return stringClass;
+    }
 }

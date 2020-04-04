@@ -1,6 +1,38 @@
 package fr.unice.miage.game;
 
+import fr.unice.miage.game_objects.Player;
+
+import java.io.File;
+import java.net.MalformedURLException;
+import java.util.List;
+
 public class GameEngine {
+    GameMenu gameMenu;
+    GameBoard gameBoard;
+    Repository repository;
+
+    int nbPlayers;
+    List<Player> players;
+
+    public GameEngine(File path) throws MalformedURLException {
+        this.repository = new Repository(path);
+    }
+    public void init(){
+        this.gameMenu = new GameMenu();
+
+
+    }
+
+    public void loadingPlayers(List<List<Object>> playersOptions) {
+        this.nbPlayers = playersOptions.size();
+        for(List<Object> playerOpts : playersOptions) {
+            try {
+                this.players.add(new Player(playerOpts, this.repository));
+            } catch (Exception e) {
+                System.err.println(e);
+            }
+        }
+    }
 
     public void loop(){
 
