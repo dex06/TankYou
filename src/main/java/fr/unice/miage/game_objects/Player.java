@@ -26,8 +26,8 @@ public class Player {
     }
 
     private void loadPlugins(List<Object> plugins)  {
-        Class moveClass = this.repository.loadMovement((String) plugins.get(0));
         try {
+            Class moveClass = this.repository.loadMovement((String) plugins.get(0));
             this.pluginMovement = (PlugInMovement) moveClass.getDeclaredConstructor().newInstance();
             Class weaponClass = this.repository.loadWeapon((String) plugins.get(1));
             this.pluginWeapon = (PlugInWeapon) weaponClass.getDeclaredConstructor().newInstance();
@@ -36,6 +36,16 @@ public class Player {
         } catch (Exception e){
             System.err.println(e);
         }
+    }
+
+    public PlugInMovement getPluginMovement(){
+        return this.pluginMovement;
+    }
+    public PlugInWeapon getPluginWeapon(){
+        return this.pluginWeapon;
+    }
+    public PlugInGraphic getPluginGraphic(){
+        return this.pluginGraphic;
     }
 
 
