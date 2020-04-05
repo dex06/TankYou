@@ -34,7 +34,7 @@ public class Player {
             Class graphicClass = this.repository.loadGraphic(plugins.get(2));
             this.pluginGraphic = (PlugInGraphic) graphicClass.getDeclaredConstructor().newInstance();
         } catch (Exception e){
-            System.err.println(e);
+            System.err.println("loadPlugins error :" + e);
         }
     }
 

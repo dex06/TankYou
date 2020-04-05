@@ -42,7 +42,7 @@ public class GameGUI{
 		GraphicsContext gc = canvas.getGraphicsContext();
 		stage.sizeToScene();
 
-		board = new GameBoard(512, 512, canvas);
+		//board = new GameBoard(512, 512, canvas);
 
 		RectangleSprite r = new RectangleSprite(50, 10, 0, 100);
 		board.addSprite(r);

@@ -15,7 +15,9 @@ import java.net.URLClassLoader;
 public class Repository {
     ClassLoader loader = new URLClassLoader(new URL[]{new File("fr/unice/miage/classes").toURL()});
 
-    public Repository() throws MalformedURLException {}
+    public Repository() throws MalformedURLException {
+        System.out.println("in repository");
+    }
     public Repository(File base) throws MalformedURLException {
         this.loader = new URLClassLoader(new URL[] {base.toURL()});
     }
@@ -26,13 +28,13 @@ public class Repository {
 
     }
 
-   public Class loadWeapon(String path){
+   public Class loadWeapon(String opt){
        PlugInWeapon pluginWeapon = new WeaponOne() ;
        Class weaponClass = pluginWeapon.getClass();
        return weaponClass;
     }
 
-   public Class loadGraphic(String path){
+   public Class loadGraphic(String opt){
        PlugInGraphic pluginGraphic = new GraphicOne();
        Class graphicClass = pluginGraphic.getClass();
        return graphicClass;

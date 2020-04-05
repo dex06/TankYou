@@ -27,6 +27,10 @@ public class CanvasGUI {
         return this.gc;
     }
 
+    public Canvas getCanvas(){
+        return this.canvas;
+    }
+
     public RectangleSprite createRectangleSprite(int x, int y, int speedX, int speedY){
         return new RectangleSprite(x, y, speedX, speedY);
     }

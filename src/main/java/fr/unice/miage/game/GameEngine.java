@@ -6,6 +6,7 @@ import javafx.animation.AnimationTimer;
 import javafx.stage.Stage;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 public class GameEngine  {
@@ -16,7 +17,7 @@ public class GameEngine  {
     private Repository repository;
     private CanvasGUI canvas;
     private int nbPlayers;
-    private List<Player> players;
+    private List<Player> players = new ArrayList<>();
 
     private Stage stage;
     private int stageWidth;
@@ -52,13 +53,15 @@ public class GameEngine  {
             try {
                 this.players.add(new Player(playerOpts, this.repository));
             } catch (Exception e) {
-                System.err.println(e);
+                System.err.println("adding new players error " + e);
             }
         }
     }
 
     public void createGameBoard(){
-        this.gameBoard = new GameBoard(600,600, this.canvas);
+        this.gameBoard = new GameBoard(this.stage, 600,600, this.canvas);
+        this.gameBoard.init();
+        this.gameBoard.start();
     }
 
     public void loop(){
@@ -81,7 +84,8 @@ public class GameEngine  {
                 lastUpdateNanoTime = currentNanoTime;
             }
 
-        };
+        }.start();
+        this.stage.show();
     }
 
     public static void main(String[] args) {

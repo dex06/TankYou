@@ -155,8 +155,9 @@ public class GameMenu  {
     }
 
     private void startGame(){
-        this.gameEngine.loadingPlayers(this.listOfPlayersOptions);
         this.stop();
+        this.gameEngine.loadingPlayers(this.listOfPlayersOptions);
+        this.gameEngine.createGameBoard();
     }
 
     private List<String> getGUIOptions(){
