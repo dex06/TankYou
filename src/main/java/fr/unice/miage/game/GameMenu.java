@@ -97,7 +97,7 @@ public class GameMenu  {
         this.stage.setHeight(512);
         this.stage.centerOnScreen();
         //this.stage.sizeToScene();
-        this.stage.show();
+        //this.stage.show();
     }
     private void addPlayerConfig(){
         HBox playerHBox = new HBox();

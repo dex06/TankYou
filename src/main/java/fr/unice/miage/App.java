@@ -16,6 +16,7 @@ public class App extends Application
     public void start(Stage stage) {
         GameEngine gameEngine = new GameEngine(stage, 600,600, new File(""));
         gameEngine.init();
+        gameEngine.start();
     }
     public static void main( String[] args )
     {

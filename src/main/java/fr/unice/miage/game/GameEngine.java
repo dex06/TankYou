@@ -36,10 +36,13 @@ public class GameEngine  {
         }
     }
 
-
     public void init(){
         this.gameMenu = new GameMenu(this.stage);
         this.gameMenu.init();
+
+    }
+
+    public void start(){
         this.gameMenu.start();
     }
 
