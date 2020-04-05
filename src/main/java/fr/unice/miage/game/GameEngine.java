@@ -1,6 +1,8 @@
 package fr.unice.miage.game;
 
 import fr.unice.miage.game.gui.CanvasGUI;
+import fr.unice.miage.game.gui.GameBoard;
+import fr.unice.miage.game.gui.GameMenu;
 import fr.unice.miage.game_objects.Player;
 import javafx.animation.AnimationTimer;
 import javafx.stage.Stage;

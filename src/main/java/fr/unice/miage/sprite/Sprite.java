@@ -1,7 +1,7 @@
 package fr.unice.miage.sprite;
 
 
-import fr.unice.miage.game.GameBoard;
+import fr.unice.miage.game.gui.GameBoard;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.shape.Shape;
 

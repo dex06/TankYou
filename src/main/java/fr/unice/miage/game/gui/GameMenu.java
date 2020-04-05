@@ -1,5 +1,6 @@
-package fr.unice.miage.game;
+package fr.unice.miage.game.gui;
 
+import fr.unice.miage.game.GameEngine;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;

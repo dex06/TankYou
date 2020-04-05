@@ -2,7 +2,7 @@ package fr.unice.miage.sprite;
 
 import java.util.Random;
 
-import fr.unice.miage.game.GameBoard;
+import fr.unice.miage.game.gui.GameBoard;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;

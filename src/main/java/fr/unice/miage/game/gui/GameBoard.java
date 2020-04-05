@@ -1,6 +1,5 @@
-package fr.unice.miage.game;
+package fr.unice.miage.game.gui;
 
-import fr.unice.miage.game.gui.CanvasGUI;
 import fr.unice.miage.sprite.Sprite;
 import javafx.scene.Group;
 import javafx.scene.Scene;
@@ -31,12 +30,16 @@ public class GameBoard {
 		Scene theScene = new Scene(root);
 		this.stage.setScene(theScene);
 		root.getChildren().add(this.canvas.getCanvas());
+		this.stage.sizeToScene();
 	}
 	public void start(){
 		this.stage.show();
 	}
 
-	
+	public void stop(){
+		this.stage.close();
+	}
+
 	public void addSprite(Sprite p) {
 		this.list.add(p);
 	}

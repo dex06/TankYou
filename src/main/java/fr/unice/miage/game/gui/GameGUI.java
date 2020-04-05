@@ -1,7 +1,5 @@
 package fr.unice.miage.game.gui;
 
-import fr.unice.miage.game.GameBoard;
-import fr.unice.miage.game.GameMenu;
 import fr.unice.miage.sprite.RectangleSprite;
 import fr.unice.miage.sprite.RoundSprite;
 import fr.unice.miage.sprite.Sprite;
