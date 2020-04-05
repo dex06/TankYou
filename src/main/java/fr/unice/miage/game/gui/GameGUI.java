@@ -26,7 +26,7 @@ public class GameGUI{
 	}
 
 	private void initMenu(Stage stage){
-		menu = new GameMenu(stage);
+		//menu = new GameMenu(stage);
 		menu.start();
 		//Stage menuStage = menu.getStage();
 	}

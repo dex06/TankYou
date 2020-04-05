@@ -1,5 +1,12 @@
 package fr.unice.miage.game;
 
+import fr.unice.miage.classes.GraphicOne;
+import fr.unice.miage.classes.MoveOne;
+import fr.unice.miage.classes.WeaponOne;
+import fr.unice.miage.plugins.PlugInGraphic;
+import fr.unice.miage.plugins.PlugInMovement;
+import fr.unice.miage.plugins.PlugInWeapon;
+
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -13,21 +20,21 @@ public class Repository {
         this.loader = new URLClassLoader(new URL[] {base.toURL()});
     }
     public Class loadMovement(String opt){
-        String str = "something" ;
-        Class stringClass = str.getClass();
-        return stringClass;
+        PlugInMovement pluginMovement = new MoveOne();
+        Class moveClass = pluginMovement.getClass();
+        return moveClass;
 
     }
 
    public Class loadWeapon(String path){
-       String str = "something" ;
-       Class stringClass = str.getClass();
-       return stringClass;
+       PlugInWeapon pluginWeapon = new WeaponOne() ;
+       Class weaponClass = pluginWeapon.getClass();
+       return weaponClass;
     }
 
    public Class loadGraphic(String path){
-       String str = "something" ;
-       Class stringClass = str.getClass();
-       return stringClass;
+       PlugInGraphic pluginGraphic = new GraphicOne();
+       Class graphicClass = pluginGraphic.getClass();
+       return graphicClass;
     }
 }

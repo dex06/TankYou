@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.Set;
 
 public class GameMenu  {
+    private GameEngine gameEngine;
     private Stage stage;
     private double width;
     private double height;
@@ -26,11 +27,12 @@ public class GameMenu  {
     private int nbPlayers = 1;
     private VBox guis = new VBox();
     private VBox players = new VBox();
-    private List<Object> listOfGUIOptions = new ArrayList<>();
-    private List<Object> listOfPlayersOptions = new ArrayList<>();
+    private List<String> listOfGUIOptions = new ArrayList<>();
+    private List<List<String>> listOfPlayersOptions = new ArrayList<>();
 
-    public GameMenu(Stage stage) {
+    public GameMenu(GameEngine gameEngine, Stage stage) {
         super();
+        this.gameEngine = gameEngine;
         this.stage = stage;
         this.width = stage.getWidth();
         this.height = stage.getHeight();
@@ -40,7 +42,7 @@ public class GameMenu  {
     }
 
     public void stop(){
-
+        this.stage.close();
     }
 
     public void init(){
@@ -68,8 +70,8 @@ public class GameMenu  {
 
         Button startGameBtn = new Button("Commencer la partie");
         startGameBtn.setOnAction(e -> {
-            this.listOfGUIOptions = this.getOptions("guis");
-            this.listOfPlayersOptions = this.getOptions("players");
+            this.listOfGUIOptions = this.getGUIOptions();
+            this.listOfPlayersOptions = this.getPlayersOptions();
             this.startGame();
                 });
         HBox btnHB = new HBox();
@@ -153,27 +155,35 @@ public class GameMenu  {
     }
 
     private void startGame(){
-        //this.gameEngine.loadingPlayers(this.listOfPlayersOptions);
-        //this.listOfPlayersOptions;
+        this.gameEngine.loadingPlayers(this.listOfPlayersOptions);
+        this.stop();
     }
 
-    private ArrayList<Object> getOptions(String type){
-        ArrayList<Object> optionsList = new ArrayList<>();
-        Set<Node> CBSet =  type == "guis" ? this.guis.lookupAll("ComboBox") : this.players.lookupAll("ComboBox");
+    private List<String> getGUIOptions(){
+        List<String> optionsList = new ArrayList<>();
+        Set<Node> CBSet =   this.guis.lookupAll("ComboBox");
         for(Node cb : CBSet){
             ComboBox new_cb = (ComboBox) cb;
             optionsList.add((String)new_cb.getValue());
         }
-        if(type == "players"){
-            int nbPluginByPlayer = optionsList.size() / this.nbPlayers;
-            ArrayList<Object> listOfOptionsByPlayer = new ArrayList<>();
-            for(int i = 0; i < optionsList.size() - 1; i += nbPluginByPlayer){
-                    List<Object> subL = optionsList.subList(i, i + nbPluginByPlayer);
-                    listOfOptionsByPlayer.add(subL);
-            }
-            optionsList = listOfOptionsByPlayer;
-        }
         return optionsList;
+    }
+
+    private List<List<String>> getPlayersOptions(){
+        List<String> optionsList = new ArrayList<>();
+        Set<Node> CBSet = this.players.lookupAll("ComboBox");
+        for(Node cb : CBSet){
+            ComboBox new_cb = (ComboBox) cb;
+            optionsList.add((String)new_cb.getValue());
+        }
+
+        int nbPluginByPlayer = optionsList.size() / this.nbPlayers;
+        List<List<String>> listOfOptionsByPlayer = new ArrayList<>();
+        for(int i = 0; i < optionsList.size() - 1; i += nbPluginByPlayer){
+            List<String> subL = optionsList.subList(i, i + nbPluginByPlayer);
+            listOfOptionsByPlayer.add(subL);
+        }
+         return listOfOptionsByPlayer;
     }
 
     public static void main(String[] args) {

@@ -37,7 +37,7 @@ public class GameEngine  {
     }
 
     public void init(){
-        this.gameMenu = new GameMenu(this.stage);
+        this.gameMenu = new GameMenu(this, this.stage);
         this.gameMenu.init();
 
     }
@@ -46,9 +46,9 @@ public class GameEngine  {
         this.gameMenu.start();
     }
 
-    public void loadingPlayers(List<List<Object>> playersOptions) {
+    public void loadingPlayers(List<List<String>> playersOptions) {
         this.nbPlayers = playersOptions.size();
-        for(List<Object> playerOpts : playersOptions) {
+        for(List<String> playerOpts : playersOptions) {
             try {
                 this.players.add(new Player(playerOpts, this.repository));
             } catch (Exception e) {

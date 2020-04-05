@@ -17,7 +17,7 @@ public class Player {
     PlugInWeapon pluginWeapon;
     PlugInGraphic pluginGraphic;
 
-    public Player(List<Object> plugins, Repository repository) {
+    public Player(List<String> plugins, Repository repository) {
         this.position = new Vector2();
         this.velocity = new Vector2();
         this.acceleration = new Vector2();
@@ -25,13 +25,13 @@ public class Player {
         this.loadPlugins(plugins);
     }
 
-    private void loadPlugins(List<Object> plugins)  {
+    private void loadPlugins(List<String> plugins)  {
         try {
-            Class moveClass = this.repository.loadMovement((String) plugins.get(0));
+            Class moveClass = this.repository.loadMovement(plugins.get(0));
             this.pluginMovement = (PlugInMovement) moveClass.getDeclaredConstructor().newInstance();
-            Class weaponClass = this.repository.loadWeapon((String) plugins.get(1));
+            Class weaponClass = this.repository.loadWeapon(plugins.get(1));
             this.pluginWeapon = (PlugInWeapon) weaponClass.getDeclaredConstructor().newInstance();
-            Class graphicClass = this.repository.loadGraphic((String) plugins.get(2));
+            Class graphicClass = this.repository.loadGraphic(plugins.get(2));
             this.pluginGraphic = (PlugInGraphic) graphicClass.getDeclaredConstructor().newInstance();
         } catch (Exception e){
             System.err.println(e);
