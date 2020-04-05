@@ -1,21 +1,24 @@
 package fr.unice.miage.game;
 
+import fr.unice.miage.game.gui.CanvasGUI;
+import fr.unice.miage.sprite.Sprite;
+
 import java.util.ArrayList;
 import java.util.Iterator;
-
-import fr.unice.miage.sprite.Sprite;
 
 public class GameBoard {
 
 	private int width;
 	private int height;
+	private CanvasGUI canvas;
 
 	private ArrayList<Sprite> list = new ArrayList<>();
 	
-	public GameBoard(int width, int height) {
+	public GameBoard(int width, int height, CanvasGUI canvas) {
 		super();
 		this.width = width;
 		this.height = height;
+		this.canvas = canvas;
 	}
 
 	
@@ -41,6 +44,18 @@ public class GameBoard {
 
 	public void setHeight(int height) {
 		this.height = height;
+	}
+
+	private void checkForCollision(Sprite s, Iterator<Sprite> it) {
+		while (it.hasNext()) {
+			Sprite d = it.next();
+			if (d != s) {
+				if (s.getBoundingShape().getBoundsInParent().intersects(d.getBoundingShape().getBoundsInParent())) {
+					System.out.println(" it's a crash !!!");
+					s.handleCollision(this, d);
+				}
+			}
+		}
 	}
 
 }

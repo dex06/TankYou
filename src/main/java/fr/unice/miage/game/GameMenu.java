@@ -1,6 +1,5 @@
 package fr.unice.miage.game;
 
-import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -19,10 +18,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
-public class GameMenu extends Application {
+public class GameMenu  {
     private Stage stage;
-    private int width;
-    private int height;
+    private double width;
+    private double height;
     private int nbGUI = 0;
     private int nbPlayers = 1;
     private VBox guis = new VBox();
@@ -30,25 +29,21 @@ public class GameMenu extends Application {
     private List<Object> listOfGUIOptions = new ArrayList<>();
     private List<Object> listOfPlayersOptions = new ArrayList<>();
 
-    /*public GameMenu(int width, int height, Stage stage) {
+    public GameMenu(Stage stage) {
         super();
-        //this.stage = stage;
-        //this.width = width;
-        //this.height = height;
-    }*/
-
-    public Stage getStage() {
-        return this.stage;
-    }
-
-    @Override
-    public void start(Stage stage){
-        init(stage);
-    }
-
-    private void init(Stage stage){
         this.stage = stage;
+        this.width = stage.getWidth();
+        this.height = stage.getHeight();
+    }
+    public void start(){
+        this.stage.show();
+    }
 
+    public void stop(){
+
+    }
+
+    public void init(){
         Label guiLabel = new Label("GUI");
         guiLabel.setFont(new Font("Arial", 18));
         HBox guiHBox = new HBox();
@@ -182,7 +177,7 @@ public class GameMenu extends Application {
     }
 
     public static void main(String[] args) {
-       launch(args);
+
 
 
     }

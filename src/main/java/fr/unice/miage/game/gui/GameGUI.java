@@ -6,30 +6,28 @@ import fr.unice.miage.sprite.RectangleSprite;
 import fr.unice.miage.sprite.RoundSprite;
 import fr.unice.miage.sprite.Sprite;
 import javafx.animation.AnimationTimer;
-import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 import java.util.Iterator;
 
-public class GameGUI extends Application {
+public class GameGUI{
 	private long lastUpdateNanoTime;
 	private GameBoard board;
 	private GameMenu menu;
 
-	@Override
+
 	public void start(Stage stage) {
 		initMenu(stage);
 		//initGame(stage);
 	}
 
 	private void initMenu(Stage stage){
-		menu = new GameMenu();
-		menu.start(stage);
+		menu = new GameMenu(stage);
+		menu.start();
 		//Stage menuStage = menu.getStage();
 	}
 
@@ -39,12 +37,12 @@ public class GameGUI extends Application {
 		Group root = new Group();
 		Scene theScene = new Scene(root);
 		stage.setScene(theScene);
-		Canvas canvas = new Canvas(512, 512);
-		root.getChildren().add(canvas);
-		GraphicsContext gc = canvas.getGraphicsContext2D();
+		CanvasGUI canvas = new CanvasGUI(512, 512);
+		//root.getChildren().add(canvas);
+		GraphicsContext gc = canvas.getGraphicsContext();
 		stage.sizeToScene();
 
-		board = new GameBoard(512, 512);
+		board = new GameBoard(512, 512, canvas);
 
 		RectangleSprite r = new RectangleSprite(50, 10, 0, 100);
 		board.addSprite(r);
@@ -85,13 +83,12 @@ public class GameGUI extends Application {
 				}
 			}
 		}
-
 	}
 
 
 
 
 	public static void main(String[] args) {
-		launch(args);
+
 	}
 }

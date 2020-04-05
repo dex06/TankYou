@@ -1,26 +1,46 @@
 package fr.unice.miage.game;
 
+import fr.unice.miage.game.gui.CanvasGUI;
 import fr.unice.miage.game_objects.Player;
 import javafx.animation.AnimationTimer;
+import javafx.stage.Stage;
 
 import java.io.File;
-import java.net.MalformedURLException;
 import java.util.List;
 
-public class GameEngine {
-    GameMenu gameMenu;
-    GameBoard gameBoard;
-    Repository repository;
+public class GameEngine  {
 
-    int nbPlayers;
-    List<Player> players;
+    private long lastUpdateNanoTime;
+    private GameMenu gameMenu;
+    private GameBoard gameBoard;
+    private Repository repository;
+    private CanvasGUI canvas;
+    private int nbPlayers;
+    private List<Player> players;
 
-    public GameEngine(File path) throws MalformedURLException {
-        this.repository = new Repository(path);
+    private Stage stage;
+    private int stageWidth;
+    private int stageHeight;
+    private File path;
+
+    public GameEngine(Stage stage, int width, int height, File path) {
+        this.stage = stage;
+        this.stageWidth = width;
+        this.stageHeight = height;
+        this.path = path;
+        try {
+            this.repository = new Repository(path);
+            this.canvas = new CanvasGUI(width, height);
+        } catch(Exception e){
+            System.err.println(e);
+        }
     }
+
+
     public void init(){
-        this.gameMenu = new GameMenu();
-        //this.gameMenu.start(Stage stage);
+        this.gameMenu = new GameMenu(this.stage);
+        this.gameMenu.init();
+        this.gameMenu.start();
     }
 
     public void loadingPlayers(List<List<Object>> playersOptions) {
@@ -35,7 +55,7 @@ public class GameEngine {
     }
 
     public void createGameBoard(){
-        this.gameBoard = new GameBoard(600,600);
+        this.gameBoard = new GameBoard(600,600, this.canvas);
     }
 
     public void loop(){
@@ -46,14 +66,22 @@ public class GameEngine {
         Constructor<PlugInMovement> constructor = c1.getConstructor(String.class);
         PlugInMovement movePlugIn = constructor.newInstance("myString"); */
 
+        lastUpdateNanoTime = System.nanoTime();
         new AnimationTimer(){
             //List<Player> players = this.players;
-            @Override
-            public void handle(long l) {
+
+            public void handle(long currentNanoTime) {
+                double t = (currentNanoTime - lastUpdateNanoTime) / 1000000000.0;
                 for(Player player : players){
                     //player.getPluginMovement().move();
                 }
+                lastUpdateNanoTime = currentNanoTime;
             }
+
         };
+    }
+
+    public static void main(String[] args) {
+
     }
 }
