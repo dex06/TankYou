@@ -4,6 +4,7 @@ import fr.unice.miage.sprite.RectangleSprite;
 import fr.unice.miage.sprite.RoundSprite;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
 
 public class CanvasGUI {
    private Canvas canvas;
@@ -29,6 +30,12 @@ public class CanvasGUI {
 
     public Canvas getCanvas(){
         return this.canvas;
+    }
+
+    public void clean(){
+        gc.setFill(Color.AZURE);
+        gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
+        gc.setFill(Color.BLACK);
     }
 
     public RectangleSprite createRectangleSprite(int x, int y, int speedX, int speedY){

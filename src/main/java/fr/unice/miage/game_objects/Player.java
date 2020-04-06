@@ -5,17 +5,19 @@ import fr.unice.miage.geom.Vector2;
 import fr.unice.miage.plugins.PlugInGraphic;
 import fr.unice.miage.plugins.PlugInMovement;
 import fr.unice.miage.plugins.PlugInWeapon;
+import fr.unice.miage.sprite.Sprite;
 
 import java.util.List;
 
 public class Player {
-    Vector2 position;
-    Vector2 velocity;
-    Vector2 acceleration;
-    Repository repository;
-    PlugInMovement pluginMovement;
-    PlugInWeapon pluginWeapon;
-    PlugInGraphic pluginGraphic;
+    private Vector2 position;
+    private Vector2 velocity;
+    private Vector2 acceleration;
+    private Repository repository;
+    private PlugInMovement pluginMovement;
+    private PlugInWeapon pluginWeapon;
+    private PlugInGraphic pluginGraphic;
+    private Sprite playerSprite;
 
     public Player(List<String> plugins, Repository repository) {
         this.position = new Vector2();
@@ -23,6 +25,7 @@ public class Player {
         this.acceleration = new Vector2();
         this.repository = repository;
         this.loadPlugins(plugins);
+        this.setSprite();
     }
 
     private void loadPlugins(List<String> plugins)  {
@@ -46,6 +49,10 @@ public class Player {
     }
     public PlugInGraphic getPluginGraphic(){
         return this.pluginGraphic;
+    }
+
+    public void setSprite(){
+        this.playerSprite = this.pluginGraphic.getPlayerSprite();
     }
 
 

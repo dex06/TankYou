@@ -1,13 +1,13 @@
 package fr.unice.miage.sprite;
 
-import java.util.Random;
-
 import fr.unice.miage.game.gui.GameBoard;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
+
+import java.util.Random;
 
 public class RectangleSprite extends Sprite {
 	private int w =20;
@@ -37,10 +37,9 @@ public class RectangleSprite extends Sprite {
 	@Override
 	public void render(GraphicsContext gc) {
 		Paint save = gc.getFill();
-		System.out.println(" colors " + colors[currentColor] );
+		//System.out.println(" colors " + colors[currentColor] );
 		gc.setFill(colors[currentColor]);
 		gc.fillRect(x, y, w, h);
-		
 		gc.setFill(save);
 	}
 

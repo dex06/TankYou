@@ -4,6 +4,7 @@ import fr.unice.miage.game.gui.CanvasGUI;
 import fr.unice.miage.game.gui.GameBoard;
 import fr.unice.miage.game.gui.GameMenu;
 import fr.unice.miage.game_objects.Player;
+import fr.unice.miage.sprite.Sprite;
 import javafx.animation.AnimationTimer;
 import javafx.stage.Stage;
 
@@ -64,6 +65,7 @@ public class GameEngine  {
         this.gameBoard = new GameBoard(this.stage, 600,600, this.canvas);
         this.gameBoard.init();
         this.gameBoard.start();
+        this.loop();
     }
 
     public void loop(){
@@ -81,13 +83,13 @@ public class GameEngine  {
             public void handle(long currentNanoTime) {
                 double t = (currentNanoTime - lastUpdateNanoTime) / 1000000000.0;
                 for(Player player : players){
-                    //player.getPluginMovement().move();
+                    Sprite playerSprite = player.getPluginGraphic().getPlayerSprite();
+                    player.getPluginMovement().move(playerSprite, t, gameBoard);
+                    player.getPluginGraphic().draw(canvas);
                 }
                 lastUpdateNanoTime = currentNanoTime;
             }
-
         }.start();
-        this.stage.show();
     }
 
     public static void main(String[] args) {
