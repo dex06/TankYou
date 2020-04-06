@@ -54,4 +54,12 @@ public class RectangleSprite extends Sprite {
 		
 	}
 
+	public Color[] getColors(){
+		return this.colors;
+	}
+
+	public void setColor(int num){
+		this.currentColor = num;
+	}
+
 }

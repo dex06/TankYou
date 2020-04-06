@@ -75,7 +75,9 @@ public class GameEngine  {
         Class<moveClass> c1 = (Class<moveClass>)loader.loadClass("chemin");
         Constructor<PlugInMovement> constructor = c1.getConstructor(String.class);
         PlugInMovement movePlugIn = constructor.newInstance("myString"); */
-
+        for(Player player : players){
+            player.getPluginGraphic().init();
+        }
         lastUpdateNanoTime = System.nanoTime();
         new AnimationTimer(){
             //List<Player> players = this.players;
