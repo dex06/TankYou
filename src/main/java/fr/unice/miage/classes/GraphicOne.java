@@ -4,6 +4,7 @@ import fr.unice.miage.game.gui.CanvasGUI;
 import fr.unice.miage.plugins.PlugInGraphic;
 import fr.unice.miage.sprite.RectangleSprite;
 import fr.unice.miage.sprite.Sprite;
+import fr.unice.miage.utils.Randomizer;
 import javafx.scene.paint.Color;
 
 public class GraphicOne implements PlugInGraphic {
@@ -14,23 +15,26 @@ public class GraphicOne implements PlugInGraphic {
     private double randSpeedX;
     private double randSpeedY;
 
+    {
+        this.init();
+    }
     public GraphicOne(){
 
     }
 
     public void init(){
-        this.randX = this.getRandX();
-        this.randY = this.getRandY();
-        this.randSpeedX = this.getRandSpeedX();
-        this.randSpeedY = this.getRandSpeedY();
+        this.randX = Randomizer.getRandomDoubleInRange(0,100);
+        this.randY = Randomizer.getRandomDoubleInRange(0,100);
+        this.randSpeedX = Randomizer.getRandomDoubleInRange(0,5);
+        this.randSpeedY = Randomizer.getRandomDoubleInRange(0,5);
         this.playerSprite = new RectangleSprite(randX, randY,  randSpeedX, randSpeedY);
-        this.playerSprite.setColor(2);
+        this.playerSprite.setColor((int) Randomizer.getRandomDoubleInRange(0,3));
     }
     @Override
     public void draw(CanvasGUI canvas) {
         //this.playerSprite.update(t, board);
         //checkForCollision(s, board.spriteIterator());
-        canvas.clean();
+        //canvas.clean()
         this.playerSprite.render(canvas.getGraphicsContext());
     }
 

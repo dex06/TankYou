@@ -18,6 +18,7 @@ public class Player {
     private PlugInWeapon pluginWeapon;
     private PlugInGraphic pluginGraphic;
     private Sprite playerSprite;
+    private int life;
 
     public Player(List<String> plugins, Repository repository) {
         this.position = new Vector2();

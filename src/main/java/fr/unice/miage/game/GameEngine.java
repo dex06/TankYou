@@ -5,6 +5,7 @@ import fr.unice.miage.game.gui.GameBoard;
 import fr.unice.miage.game.gui.GameMenu;
 import fr.unice.miage.game_objects.Player;
 import fr.unice.miage.sprite.Sprite;
+import fr.unice.miage.utils.Randomizer;
 import javafx.animation.AnimationTimer;
 import javafx.stage.Stage;
 
@@ -76,7 +77,8 @@ public class GameEngine  {
         Constructor<PlugInMovement> constructor = c1.getConstructor(String.class);
         PlugInMovement movePlugIn = constructor.newInstance("myString"); */
         for(Player player : players){
-            player.getPluginGraphic().init();
+            Sprite playerSprite = player.getPluginGraphic().getPlayerSprite();
+            player.getPluginMovement().move(playerSprite, Randomizer.getRandomDoubleInRange(0,100),gameBoard);
         }
         lastUpdateNanoTime = System.nanoTime();
         new AnimationTimer(){
@@ -84,6 +86,7 @@ public class GameEngine  {
 
             public void handle(long currentNanoTime) {
                 double t = (currentNanoTime - lastUpdateNanoTime) / 1000000000.0;
+                canvas.clean();
                 for(Player player : players){
                     Sprite playerSprite = player.getPluginGraphic().getPlayerSprite();
                     player.getPluginMovement().move(playerSprite, t, gameBoard);
