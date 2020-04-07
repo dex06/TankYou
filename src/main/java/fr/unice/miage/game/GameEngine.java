@@ -9,7 +9,6 @@ import fr.unice.miage.utils.Randomizer;
 import javafx.animation.AnimationTimer;
 import javafx.stage.Stage;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,9 +25,9 @@ public class GameEngine  {
     private Stage stage;
     private int stageWidth;
     private int stageHeight;
-    private File path;
+    private String path;
 
-    public GameEngine(Stage stage, int width, int height, File path) {
+    public GameEngine(Stage stage, int width, int height, String path) {
         this.stage = stage;
         this.stageWidth = width;
         this.stageHeight = height;

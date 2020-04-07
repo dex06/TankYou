@@ -9,6 +9,7 @@ import javafx.scene.paint.Color;
 
 public class GraphicOne implements PlugInGraphic {
     //private CanvasGUI canvas;
+    private String name = "rectangle";
     private RectangleSprite playerSprite;
     private double randX;
     private double randY;
@@ -36,6 +37,10 @@ public class GraphicOne implements PlugInGraphic {
         //checkForCollision(s, board.spriteIterator());
         //canvas.clean()
         this.playerSprite.render(canvas.getGraphicsContext());
+    }
+
+    public String getName(){
+        return this.name;
     }
 
     public double getRandX(){
