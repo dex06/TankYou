@@ -1,6 +1,7 @@
 package fr.unice.miage.game.gui;
 
 import fr.unice.miage.game.GameEngine;
+import fr.unice.miage.game.Repository;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
@@ -22,6 +23,7 @@ import java.util.Set;
 public class GameMenu  {
     private GameEngine gameEngine;
     private Stage stage;
+    private Repository repository;
     private double width;
     private double height;
     private int nbGUI = 0;
@@ -31,10 +33,11 @@ public class GameMenu  {
     private List<String> listOfGUIOptions = new ArrayList<>();
     private List<List<String>> listOfPlayersOptions = new ArrayList<>();
 
-    public GameMenu(GameEngine gameEngine, Stage stage) {
+    public GameMenu(GameEngine gameEngine, Stage stage, Repository repository) {
         super();
         this.gameEngine = gameEngine;
         this.stage = stage;
+        this.repository = repository;
         this.width = stage.getWidth();
         this.height = stage.getHeight();
     }

@@ -11,6 +11,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.util.ArrayList;
@@ -22,10 +23,18 @@ import java.util.jar.JarFile;
 public class Repository {
     private ClassLoader loader;
     private List<File> jarFiles = new ArrayList<>();
+    private List<String> movePluginsNames= new ArrayList<>();
+    private List<String> weaponPluginsNames = new ArrayList<>();
+    private List<String> graphicPluginsNames = new ArrayList<>();
+    private List<PlugInMovement> movePlugins = new ArrayList<>();
+    private List<PlugInWeapon> weaponPlugins = new ArrayList<>();
+    private List<PlugInGraphic> graphicPlugins = new ArrayList<>();
 
+    private String packageName = "fr.unice.miage";
+    private String appFolderName = "classes";
     private String destinationDir = "src/main/java/fr/unice/miage/classes";
     //ClassLoader loader = new URLClassLoader(new URL[]{new File("target/classes/fr/unice/miage/classes").toURL()});
-    //URL[] urls = this.loader.loadClass()
+
     public Repository() throws Exception {
         this.loadLibraries("plugins");
 
@@ -33,6 +42,25 @@ public class Repository {
     public Repository(String base) throws Exception {
         //this.loader = new URLClassLoader(new URL[] {base.toURL()});
         this.loadLibraries(base);
+    }
+
+    public List<String> getMovePluginsNames(){
+        return this.movePluginsNames;
+    }
+    public List<String> getWeaponPluginsNames(){
+        return this.weaponPluginsNames;
+    }
+    public List<String> getGraphicPluginsNames(){
+        return  this.graphicPluginsNames;
+    }
+    public List<PlugInMovement> getMovePlugins(){
+        return this.movePlugins;
+    }
+    public List<PlugInWeapon> getWeaponPlugins(){
+        return this.weaponPlugins;
+    }
+    public List<PlugInGraphic> getGraphicPlugins(){
+        return this.graphicPlugins;
     }
 
     public Class<?> load(String opt) throws ClassNotFoundException {
@@ -43,51 +71,72 @@ public class Repository {
         if(!libDir.exists() || !libDir.isDirectory()){
             throw new RuntimeException("Invalid library directory");
         }
-        List<URL> listURLs = new ArrayList<>();
         for(File file : libDir.listFiles()){
             if(!this.isJarFile(file)){
                 continue;
             }
             System.out.println("Found library format : " + file.getName());
             this.unzipJarFile(file);
-            //listURLs.add(new URL("jar:file:" + file.getCanonicalPath() + "!/"));
             this.addURLToClassPath(new URL("jar:file:" + file.getCanonicalPath() + "!/"));
 
         }
-        //URL[] urls = (URL[]) listURLs.toArray();
-        //this.loader = new URLClassLoader(urls);
+        this.getPluginsNames();
      }
 
-     public void unzipJarFile(File file) throws IOException {
-         JarFile jar = new JarFile(file);
-         for (Enumeration<JarEntry> enums = jar.entries(); enums.hasMoreElements();) {
-             JarEntry entry = (JarEntry) enums.nextElement();
-             System.out.println(entry.getName());
-             String fileName = this.destinationDir + File.separator + entry.getName();
-             File f = new File(fileName);
+     private void getPluginsNames() throws IOException, ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
+         for (File file : this.jarFiles) {
+             if (file.isDirectory()) {
+                 File classFile = new File(file, file.getCanonicalPath());
+                 if (classFile.exists()) {
+                     Class loadedClass = this.loadClass(file);
+                 }
+             } else {
+                 Class loadedClass = this.loadClass(file);
+                 Object instance = loadedClass.getDeclaredConstructor().newInstance();
+                 String interfaceName = instance.getClass().getInterfaces()[0].getSimpleName();
 
-             if (fileName.endsWith("/")) {
-                 f.mkdirs();
+                 switch (interfaceName){
+                     case "PlugInMovement":
+                         this.movePluginsNames.add(instance.getClass().getSimpleName());
+                         this.movePlugins.add((PlugInMovement) instance);
+                         break;
+                     case "PlugInWeapon":
+                         this.weaponPluginsNames.add(instance.getClass().getSimpleName());
+                         this.weaponPlugins.add((PlugInWeapon) instance);
+                         break;
+                     case "PlugInGraphic":
+                         this.graphicPluginsNames.add(instance.getClass().getSimpleName());
+                         this.graphicPlugins.add((PlugInGraphic) instance);
+                         break;
+                 }
              }
          }
+     }
 
-         for (Enumeration<JarEntry> enums = jar.entries(); enums.hasMoreElements();) {
+     private void unzipJarFile(File file) throws IOException, ClassNotFoundException {
+         JarFile jar = new JarFile(file);
+
+         for (Enumeration<JarEntry> enums = jar.entries(); enums.hasMoreElements(); ) {
              JarEntry entry = enums.nextElement();
+             String fileName;
+             File f;
+             if (entry.getName().endsWith(".class")) {
+                 fileName = destinationDir + File.separator + entry.getName();
+                 f = new File(fileName);
 
-             String fileName = destinationDir + File.separator + entry.getName();
-             File f = new File(fileName);
-             this.jarFiles.add(f);
+                 this.jarFiles.add(f);
 
-             if (!fileName.endsWith("/")) {
-                 InputStream is = jar.getInputStream(entry);
-                 FileOutputStream fos = new FileOutputStream(f);
+                 if (!fileName.endsWith("/")) {
+                     InputStream is = jar.getInputStream(entry);
+                     FileOutputStream fos = new FileOutputStream(f);
 
-                 // write contents of 'is' to 'fos'
-                 while (is.available() > 0) {
-                     fos.write(is.read());
+                     // write contents of 'is' to 'fos'
+                     while (is.available() > 0) {
+                         fos.write(is.read());
+                     }
+                     fos.close();
+                     is.close();
                  }
-                 fos.close();
-                 is.close();
              }
          }
      }
@@ -97,15 +146,19 @@ public class Repository {
         return this.loader;
      }
 
-     public void addURLToClassPath(URL url){
+     private void addURLToClassPath(URL url){
          this.loader = new URLClassLoader(new URL[]{url}, Thread.currentThread().getContextClassLoader());
          Thread.currentThread().setContextClassLoader(this.loader);
      }
 
-     public boolean isJarFile(File file) {
+     private boolean isJarFile(File file) {
         return file.getName().endsWith(".jar");
      }
-
+    private Class loadClass(File file) throws ClassNotFoundException {
+        String pack = this.packageName + "." + this.appFolderName + "." + file.getName().replace(".class", "");
+        Class classFile = Class.forName(pack, true, Thread.currentThread().getContextClassLoader());
+        return classFile;
+    }
 
     public Class loadMovement(String opt) throws ClassNotFoundException {
         PlugInMovement pluginMovement = new MoveOne();

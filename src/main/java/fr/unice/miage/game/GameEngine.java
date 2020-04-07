@@ -41,7 +41,7 @@ public class GameEngine  {
     }
 
     public void init(){
-        this.gameMenu = new GameMenu(this, this.stage);
+        this.gameMenu = new GameMenu(this, this.stage, this.repository);
         this.gameMenu.init();
 
     }
