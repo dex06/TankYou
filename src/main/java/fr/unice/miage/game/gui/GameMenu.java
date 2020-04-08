@@ -141,21 +141,22 @@ public class GameMenu  {
     private VBox createPlayerVBox(String type){
         VBox playerVBox = new VBox();
         Label playerLabel = new Label(type);
-        ObservableList<String> options =
-                FXCollections.observableArrayList(
-                        "Option 1",
-                        "Option 2",
-                        "Option 3"
-                );
-        ComboBox playerCB = new ComboBox(options);
-        playerCB.setValue("Option 1");
+        ObservableList<String> opts = FXCollections.observableArrayList();;
+        switch(type){
+            case "Mouvements":
+                opts = this.repository.getMovePluginsNames();
+                break;
+            case "Armes":
+                opts = this.repository.getWeaponPluginsNames();
+                break;
+            case "Graphiques":
+                opts = this.repository.getGraphicPluginsNames();
+                break;
+        }
+        ComboBox playerCB = new ComboBox(opts);
+        if(opts.size() > 0) playerCB.setValue(opts.get(0));
         playerVBox.getChildren().addAll(playerLabel, playerCB);
         return playerVBox;
-       /* comboBox.getItems().addAll(
-                "Option 4",
-                "Option 5",
-                "Option 6"
-        );*/
     }
 
     private void startGame(){

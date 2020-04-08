@@ -1,11 +1,10 @@
 package fr.unice.miage.game;
 
-import fr.unice.miage.classes.GraphicOne;
-import fr.unice.miage.classes.MoveOne;
-import fr.unice.miage.classes.WeaponOne;
 import fr.unice.miage.plugins.PlugInGraphic;
 import fr.unice.miage.plugins.PlugInMovement;
 import fr.unice.miage.plugins.PlugInWeapon;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -23,12 +22,12 @@ import java.util.jar.JarFile;
 public class Repository {
     private ClassLoader loader;
     private List<File> jarFiles = new ArrayList<>();
-    private List<String> movePluginsNames= new ArrayList<>();
-    private List<String> weaponPluginsNames = new ArrayList<>();
-    private List<String> graphicPluginsNames = new ArrayList<>();
-    private List<PlugInMovement> movePlugins = new ArrayList<>();
-    private List<PlugInWeapon> weaponPlugins = new ArrayList<>();
-    private List<PlugInGraphic> graphicPlugins = new ArrayList<>();
+    private ObservableList<String> movePluginsNames= FXCollections.observableArrayList();
+    private ObservableList<String> weaponPluginsNames = FXCollections.observableArrayList();
+    private ObservableList<String> graphicPluginsNames = FXCollections.observableArrayList();
+    private List<Class> movePlugins = new ArrayList<>();
+    private List<Class> weaponPlugins = new ArrayList<>();
+    private List<Class> graphicPlugins = new ArrayList<>();
 
     private String packageName = "fr.unice.miage";
     private String appFolderName = "classes";
@@ -44,22 +43,22 @@ public class Repository {
         this.loadLibraries(base);
     }
 
-    public List<String> getMovePluginsNames(){
+    public ObservableList<String> getMovePluginsNames(){
         return this.movePluginsNames;
     }
-    public List<String> getWeaponPluginsNames(){
+    public ObservableList<String> getWeaponPluginsNames(){
         return this.weaponPluginsNames;
     }
-    public List<String> getGraphicPluginsNames(){
+    public ObservableList<String> getGraphicPluginsNames(){
         return  this.graphicPluginsNames;
     }
-    public List<PlugInMovement> getMovePlugins(){
+    public List<Class> getMovePlugins(){
         return this.movePlugins;
     }
-    public List<PlugInWeapon> getWeaponPlugins(){
+    public List<Class> getWeaponPlugins(){
         return this.weaponPlugins;
     }
-    public List<PlugInGraphic> getGraphicPlugins(){
+    public List<Class> getGraphicPlugins(){
         return this.graphicPlugins;
     }
 
@@ -98,15 +97,15 @@ public class Repository {
                  switch (interfaceName){
                      case "PlugInMovement":
                          this.movePluginsNames.add(instance.getClass().getSimpleName());
-                         this.movePlugins.add((PlugInMovement) instance);
+                         this.movePlugins.add(loadedClass);
                          break;
                      case "PlugInWeapon":
                          this.weaponPluginsNames.add(instance.getClass().getSimpleName());
-                         this.weaponPlugins.add((PlugInWeapon) instance);
+                         this.weaponPlugins.add(loadedClass);
                          break;
                      case "PlugInGraphic":
                          this.graphicPluginsNames.add(instance.getClass().getSimpleName());
-                         this.graphicPlugins.add((PlugInGraphic) instance);
+                         this.graphicPlugins.add(loadedClass);
                          break;
                  }
              }
@@ -160,26 +159,16 @@ public class Repository {
         return classFile;
     }
 
-    public Class loadMovement(String opt) throws ClassNotFoundException {
-        PlugInMovement pluginMovement = new MoveOne();
-        Class moveClass = pluginMovement.getClass();
-        //return this.loader.loadClass(opt);
-        return moveClass;
-
+    public PlugInMovement loadMovement(String opt) throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
+        return (PlugInMovement) this.movePlugins.get(this.movePluginsNames.indexOf(opt)).getDeclaredConstructor().newInstance();
     }
 
-   public Class loadWeapon(String opt){
-       PlugInWeapon pluginWeapon = new WeaponOne() ;
-       Class weaponClass = pluginWeapon.getClass();
-       //return this.loader.loadClass(opt);
-       return weaponClass;
+   public PlugInWeapon loadWeapon(String opt) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
+       return (PlugInWeapon) this.weaponPlugins.get(this.weaponPluginsNames.indexOf(opt)).getDeclaredConstructor().newInstance();
     }
 
-   public Class loadGraphic(String opt){
-       PlugInGraphic pluginGraphic = new GraphicOne();
-       Class graphicClass = pluginGraphic.getClass();
-       //return this.loader.loadClass(opt);
-       return graphicClass;
+   public PlugInGraphic loadGraphic(String opt) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
+       return (PlugInGraphic) this.graphicPlugins.get(this.graphicPluginsNames.indexOf(opt)).getDeclaredConstructor().newInstance();
     }
 
     public static void main(String[] args) throws Exception {
