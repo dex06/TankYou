@@ -3,6 +3,7 @@ package fr.unice.miage.game.gui;
 import fr.unice.miage.sprite.Sprite;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.layout.FlowPane;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
@@ -11,6 +12,8 @@ import java.util.Iterator;
 public class GameBoard {
 
 	private Stage stage;
+	private Scene theScene;
+	private Group root;
 	private int width;
 	private int height;
 	private CanvasGUI canvas;
@@ -26,8 +29,8 @@ public class GameBoard {
 	}
 	public void init(){
 		this.stage.setTitle("Demo de jeu");
-		Group root = new Group();
-		Scene theScene = new Scene(root);
+		this.root = new Group();
+		this.theScene = new Scene(root);
 		this.stage.setScene(theScene);
 		root.getChildren().add(this.canvas.getCanvas());
 		this.stage.sizeToScene();
@@ -43,7 +46,12 @@ public class GameBoard {
 	public void addSprite(Sprite p) {
 		this.list.add(p);
 	}
-	
+
+	public void addHealthBar(FlowPane healthBar){
+		this.root.getChildren().remove(healthBar);
+		this.root.getChildren().add(healthBar);
+	}
+
 	public Iterator<Sprite> spriteIterator() {
 		return list.iterator();
 	}

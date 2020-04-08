@@ -13,6 +13,13 @@ public class Vector2 {
         this.y = y;
     }
 
+    public double getX(){
+        return this.x;
+    }
+    public double getY(){
+        return this.y;
+    }
+
     public Vector2 copy() {
         return new Vector2(this.x, this.y);
     }

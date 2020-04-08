@@ -3,10 +3,11 @@ package fr.unice.miage.game;
 import fr.unice.miage.game.gui.CanvasGUI;
 import fr.unice.miage.game.gui.GameBoard;
 import fr.unice.miage.game.gui.GameMenu;
+import fr.unice.miage.game.gui.HealthBar;
 import fr.unice.miage.game_objects.Player;
 import fr.unice.miage.sprite.Sprite;
-import fr.unice.miage.utils.Randomizer;
 import javafx.animation.AnimationTimer;
+import javafx.scene.layout.FlowPane;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
@@ -75,10 +76,6 @@ public class GameEngine  {
         Class<moveClass> c1 = (Class<moveClass>)loader.loadClass("chemin");
         Constructor<PlugInMovement> constructor = c1.getConstructor(String.class);
         PlugInMovement movePlugIn = constructor.newInstance("myString"); */
-        for(Player player : players){
-            Sprite playerSprite = player.getPluginGraphic().getPlayerSprite();
-            player.getPluginMovement().move(playerSprite, Randomizer.getRandomDoubleInRange(0,100),gameBoard);
-        }
         lastUpdateNanoTime = System.nanoTime();
         new AnimationTimer(){
             //List<Player> players = this.players;
@@ -88,7 +85,9 @@ public class GameEngine  {
                 canvas.clean();
                 for(Player player : players){
                     Sprite playerSprite = player.getPluginGraphic().getPlayerSprite();
-                    player.getPluginMovement().move(playerSprite, t, gameBoard);
+                    HealthBar playerHealthBar = player.getPlayerHealthBar();
+                    FlowPane healthBarPanel = playerHealthBar.getHealthBarPanel();
+                    player.getPluginMovement().move(playerSprite, healthBarPanel, t, gameBoard);
                     player.getPluginGraphic().draw(canvas);
                 }
                 lastUpdateNanoTime = currentNanoTime;
