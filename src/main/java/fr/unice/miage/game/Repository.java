@@ -93,6 +93,7 @@ public class Repository {
                  Class loadedClass = this.loadClass(file);
                  Object instance = loadedClass.getDeclaredConstructor().newInstance();
                  String interfaceName = instance.getClass().getInterfaces()[0].getSimpleName();
+                 System.out.println(loadedClass);
 
                  switch (interfaceName){
                      case "PlugInMovement":
