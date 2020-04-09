@@ -21,7 +21,6 @@ import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
 public class Repository {
-    private ClassLoader loader;
     private List<File> jarFiles = new ArrayList<>();
     private ObservableList<String> movePluginsNames = FXCollections.observableArrayList();
     private ObservableList<String> weaponPluginsNames = FXCollections.observableArrayList();
@@ -33,15 +32,12 @@ public class Repository {
     private String packageName = "fr.unice.miage";
     private String appFolderName = "classes";
     private String destinationDir = "src/main/java/fr/unice/miage/classes";
-    //ClassLoader loader = new URLClassLoader(new URL[]{new File("target/classes/fr/unice/miage/classes").toURL()});
 
     public Repository() throws Exception {
         this.loadLibraries("plugins");
-
     }
 
     public Repository(String base) throws Exception {
-        //this.loader = new URLClassLoader(new URL[] {base.toURL()});
         this.loadLibraries(base);
     }
 
@@ -83,6 +79,7 @@ public class Repository {
             this.loadClassesFromJar(file);
         }
     }
+
 
     public void loadClassesFromJar(File pathToJar) throws IOException, ClassNotFoundException, NotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
         JarFile jarFile = new JarFile(pathToJar);
@@ -146,8 +143,6 @@ public class Repository {
             }
         }
     }
-
-
 
     public PlugInMovement loadMovement(String opt) throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
         return (PlugInMovement) this.movePlugins.get(this.movePluginsNames.indexOf(opt)).getDeclaredConstructor().newInstance();
