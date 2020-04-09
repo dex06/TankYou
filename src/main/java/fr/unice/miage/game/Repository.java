@@ -5,6 +5,7 @@ import fr.unice.miage.plugins.PlugInMovement;
 import fr.unice.miage.plugins.PlugInWeapon;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javassist.NotFoundException;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -22,7 +23,7 @@ import java.util.jar.JarFile;
 public class Repository {
     private ClassLoader loader;
     private List<File> jarFiles = new ArrayList<>();
-    private ObservableList<String> movePluginsNames= FXCollections.observableArrayList();
+    private ObservableList<String> movePluginsNames = FXCollections.observableArrayList();
     private ObservableList<String> weaponPluginsNames = FXCollections.observableArrayList();
     private ObservableList<String> graphicPluginsNames = FXCollections.observableArrayList();
     private List<Class> movePlugins = new ArrayList<>();
@@ -38,144 +39,126 @@ public class Repository {
         this.loadLibraries("plugins");
 
     }
+
     public Repository(String base) throws Exception {
         //this.loader = new URLClassLoader(new URL[] {base.toURL()});
         this.loadLibraries(base);
     }
 
-    public ObservableList<String> getMovePluginsNames(){
+    public ObservableList<String> getMovePluginsNames() {
         return this.movePluginsNames;
     }
-    public ObservableList<String> getWeaponPluginsNames(){
+
+    public ObservableList<String> getWeaponPluginsNames() {
         return this.weaponPluginsNames;
     }
-    public ObservableList<String> getGraphicPluginsNames(){
-        return  this.graphicPluginsNames;
+
+    public ObservableList<String> getGraphicPluginsNames() {
+        return this.graphicPluginsNames;
     }
-    public List<Class> getMovePlugins(){
+
+    public List<Class> getMovePlugins() {
         return this.movePlugins;
     }
-    public List<Class> getWeaponPlugins(){
+
+    public List<Class> getWeaponPlugins() {
         return this.weaponPlugins;
     }
-    public List<Class> getGraphicPlugins(){
+
+    public List<Class> getGraphicPlugins() {
         return this.graphicPlugins;
     }
 
-    public Class<?> load(String opt) throws ClassNotFoundException {
-        return this.loader.loadClass(opt);
-    }
-     public void loadLibraries(String path) throws Exception {
+    public void loadLibraries(String path) throws Exception {
         File libDir = new File(path);
-        if(!libDir.exists() || !libDir.isDirectory()){
+        if (!libDir.exists() || !libDir.isDirectory()) {
             throw new RuntimeException("Invalid library directory");
         }
-        for(File file : libDir.listFiles()){
-            if(!this.isJarFile(file)){
+        for (File file : libDir.listFiles()) {
+            if (!this.isJarFile(file)) {
                 continue;
             }
             System.out.println("Found library format : " + file.getName());
             this.unzipJarFile(file);
-            this.addURLToClassPath(new URL("jar:file:" + file.getCanonicalPath() + "!/"));
-
+            this.loadClassesFromJar(file);
         }
-        this.getPluginsNames();
-     }
-
-     private void getPluginsNames() throws IOException, ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
-         for (File file : this.jarFiles) {
-             if (file.isDirectory()) {
-                 File classFile = new File(file, file.getCanonicalPath());
-                 if (classFile.exists()) {
-                     Class loadedClass = this.loadClass(file);
-                 }
-             } else {
-                 Class loadedClass = this.loadClass(file);
-                 Object instance = loadedClass.getDeclaredConstructor().newInstance();
-                 String interfaceName = instance.getClass().getInterfaces()[0].getSimpleName();
-
-                 switch (interfaceName){
-                     case "PlugInMovement":
-                         this.movePluginsNames.add(instance.getClass().getSimpleName());
-                         this.movePlugins.add(loadedClass);
-                         break;
-                     case "PlugInWeapon":
-                         this.weaponPluginsNames.add(instance.getClass().getSimpleName());
-                         this.weaponPlugins.add(loadedClass);
-                         break;
-                     case "PlugInGraphic":
-                         this.graphicPluginsNames.add(instance.getClass().getSimpleName());
-                         this.graphicPlugins.add(loadedClass);
-                         break;
-                 }
-             }
-         }
-     }
-
-     private void unzipJarFile(File file) throws IOException, ClassNotFoundException {
-         JarFile jar = new JarFile(file);
-
-         for (Enumeration<JarEntry> enums = jar.entries(); enums.hasMoreElements(); ) {
-             JarEntry entry = enums.nextElement();
-             String fileName;
-             File f;
-             if (entry.getName().endsWith(".class")) {
-                 fileName = destinationDir + File.separator + entry.getName();
-                 f = new File(fileName);
-
-                 this.jarFiles.add(f);
-
-                 if (!fileName.endsWith("/")) {
-                     InputStream is = jar.getInputStream(entry);
-                     FileOutputStream fos = new FileOutputStream(f);
-
-                     // write contents of 'is' to 'fos'
-                     while (is.available() > 0) {
-                         fos.write(is.read());
-                     }
-                     fos.close();
-                     is.close();
-                 }
-             }
-         }
-     }
-
-
-     public ClassLoader getClassLoader(){
-        return this.loader;
-     }
-
-     private void addURLToClassPath(URL url){
-         this.loader = new URLClassLoader(new URL[]{url}, Thread.currentThread().getContextClassLoader());
-         Thread.currentThread().setContextClassLoader(this.loader);
-     }
-
-     private boolean isJarFile(File file) {
-        return file.getName().endsWith(".jar");
-     }
-    private Class loadClass(File file) throws ClassNotFoundException {
-        String pack = this.packageName + "." + this.appFolderName + "." + file.getName().replace(".class", "");
-        Class classFile = Class.forName(pack, true, Thread.currentThread().getContextClassLoader());
-        return classFile;
     }
+
+    public void loadClassesFromJar(File pathToJar) throws IOException, ClassNotFoundException, NotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
+        JarFile jarFile = new JarFile(pathToJar);
+        Enumeration<JarEntry> e = jarFile.entries();
+
+        URL[] urls = {new URL("jar:file:" + pathToJar + "!/")};
+        URLClassLoader cl = URLClassLoader.newInstance(urls);
+
+        while (e.hasMoreElements()) {
+            JarEntry je = e.nextElement();
+            if (je.isDirectory() || !je.getName().endsWith(".class")) {
+                continue;
+            }
+            System.out.println("loading jar classe : " + je.getName());
+            String pack = this.packageName + "." + this.appFolderName + "." + je.getName().replace(".class", "");
+            Class loadedClass = cl.loadClass(pack);
+            Object instance = loadedClass.getDeclaredConstructor().newInstance();
+            String interfaceName = instance.getClass().getInterfaces()[0].getSimpleName();
+
+            switch (interfaceName) {
+                case "PlugInMovement":
+                    this.movePluginsNames.add(instance.getClass().getSimpleName());
+                    this.movePlugins.add(loadedClass);
+                    break;
+                case "PlugInWeapon":
+                    this.weaponPluginsNames.add(instance.getClass().getSimpleName());
+                    this.weaponPlugins.add(loadedClass);
+                    break;
+                case "PlugInGraphic":
+                    this.graphicPluginsNames.add(instance.getClass().getSimpleName());
+                    this.graphicPlugins.add(loadedClass);
+                    break;
+            }
+        }
+    }
+
+    private boolean isJarFile(File file) {
+        return file.getName().endsWith(".jar");
+    }
+
+    private void unzipJarFile(File file) throws IOException, ClassNotFoundException {
+        JarFile jar = new JarFile(file);
+        for (Enumeration<JarEntry> enums = jar.entries(); enums.hasMoreElements(); ) {
+            JarEntry entry = enums.nextElement();
+            String fileName;
+            File f;
+            if (entry.getName().endsWith(".class")) {
+                fileName = destinationDir + File.separator + entry.getName();
+                f = new File(fileName);
+                //Adding to list of jar files
+                this.jarFiles.add(f);
+                if (!fileName.endsWith("/")) {
+                    InputStream is = jar.getInputStream(entry);
+                    FileOutputStream fos = new FileOutputStream(f);
+                    while (is.available() > 0) {
+                        fos.write(is.read());
+                    }
+                    fos.close();
+                    is.close();
+                }
+            }
+        }
+    }
+
+
 
     public PlugInMovement loadMovement(String opt) throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
         return (PlugInMovement) this.movePlugins.get(this.movePluginsNames.indexOf(opt)).getDeclaredConstructor().newInstance();
     }
 
-   public PlugInWeapon loadWeapon(String opt) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
-       return (PlugInWeapon) this.weaponPlugins.get(this.weaponPluginsNames.indexOf(opt)).getDeclaredConstructor().newInstance();
+    public PlugInWeapon loadWeapon(String opt) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
+        return (PlugInWeapon) this.weaponPlugins.get(this.weaponPluginsNames.indexOf(opt)).getDeclaredConstructor().newInstance();
     }
 
-   public PlugInGraphic loadGraphic(String opt) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
-       return (PlugInGraphic) this.graphicPlugins.get(this.graphicPluginsNames.indexOf(opt)).getDeclaredConstructor().newInstance();
-    }
-
-    public static void main(String[] args) throws Exception {
-        Repository repo = new Repository();
-        repo.loadLibraries("plugins");
-
-        //System.out.println(repo.getClassLoader().loadClass("MoveOne.class").getName());
-
+    public PlugInGraphic loadGraphic(String opt) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
+        return (PlugInGraphic) this.graphicPlugins.get(this.graphicPluginsNames.indexOf(opt)).getDeclaredConstructor().newInstance();
     }
 }
+

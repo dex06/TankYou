@@ -1,13 +1,13 @@
 package fr.unice.miage.game_objects;
 
 import fr.unice.miage.game.Repository;
+import fr.unice.miage.game.gui.HealthBar;
 import fr.unice.miage.geom.Vector2;
 import fr.unice.miage.plugins.PlugInGraphic;
 import fr.unice.miage.plugins.PlugInMovement;
 import fr.unice.miage.plugins.PlugInWeapon;
-import fr.unice.miage.game.gui.HealthBar;
 import fr.unice.miage.sprite.Sprite;
-import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.value.ObservableValue;
 
 import java.lang.reflect.InvocationTargetException;
@@ -17,12 +17,13 @@ public class Player {
     private Vector2 position;
     private Vector2 velocity;
     private Vector2 acceleration;
+    private double rotation;
     private Repository repository;
     private PlugInMovement pluginMovement;
     private PlugInWeapon pluginWeapon;
     private PlugInGraphic pluginGraphic;
     private Sprite playerSprite;
-    private ObservableValue<Integer> health = new SimpleIntegerProperty(99).asObject();
+    private ObservableValue<Double> health = new SimpleDoubleProperty(0.5).asObject();
     private HealthBar healthBar;
     private boolean isAlive;
 
@@ -30,9 +31,11 @@ public class Player {
         this.position = new Vector2();
         this.velocity = new Vector2();
         this.acceleration = new Vector2();
+        this.rotation = 0;
         this.repository = repository;
         this.healthBar = new HealthBar();
-        this.healthBar.bindProgressProperty(this.health);
+        this.health.addListener((observableValue, aDouble, t1) -> healthBar.bindProgressProperty(health));
+        //this.healthBar.bindProgressProperty(this.health);
         this.isAlive = true;
         this.loadPlugins(plugins);
         this.setSprite();
@@ -47,6 +50,14 @@ public class Player {
 
     public HealthBar getPlayerHealthBar(){
         return this.healthBar;
+    }
+
+    public double getHealth(){
+        return this.health.getValue();
+    }
+
+    public void setHealth(double value){
+        this.health = new SimpleDoubleProperty(value).asObject();
     }
 
     public PlugInMovement getPluginMovement(){
