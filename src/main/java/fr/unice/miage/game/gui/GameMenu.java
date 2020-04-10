@@ -29,12 +29,14 @@ public class GameMenu  {
     private double height;
     private int nbGUI = 0;
     private int nbPlayers = 1;
+    private int maxPlayers = 8;
     private VBox guis = new VBox();
     private VBox configs = new VBox();
     private VBox players = new VBox();
     private Font labelFont = new Font("Arial", 18);
     private List<String> listOfGUIOptions = new ArrayList<>();
     private List<List<String>> listOfPlayersOptions = new ArrayList<>();
+
 
     public GameMenu(GameEngine gameEngine, Stage stage, Repository repository) {
         super();
@@ -78,8 +80,11 @@ public class GameMenu  {
 
         Button addPlayerBtn = new Button("Ajouter un joueur");
         addPlayerBtn.setOnAction(e -> {
-            this.nbPlayers++;
-            this.addPlayerConfig();
+            if(this.nbPlayers < this.maxPlayers) {
+                this.nbPlayers++;
+                this.addPlayerConfig();
+                if(this.nbPlayers >= this.maxPlayers) addPlayerBtn.setDisable(true);
+            }
         });
         //Ajouter un joueur de base
         this.addPlayerConfig();
