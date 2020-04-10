@@ -30,7 +30,7 @@ public class Repository {
     private List<Class> graphicPlugins = new ArrayList<>();
 
     private String packageName = "fr.unice.miage";
-    private String appFolderName = "classes";
+    private String appFolderName = "uncompiled";
     private String destinationDir = "src/main/java/fr/unice/miage/classes";
 
     public Repository() throws Exception {
@@ -93,7 +93,7 @@ public class Repository {
             if (je.isDirectory() || !je.getName().endsWith(".class")) {
                 continue;
             }
-            System.out.println("loading jar classe : " + je.getName());
+            System.out.println("Loading jar class : " + je.getName());
             String pack = this.packageName + "." + this.appFolderName + "." + je.getName().replace(".class", "");
             Class loadedClass = cl.loadClass(pack);
             Object instance = loadedClass.getDeclaredConstructor().newInstance();
