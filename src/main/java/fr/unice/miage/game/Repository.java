@@ -25,9 +25,11 @@ public class Repository {
     private ObservableList<String> movePluginsNames = FXCollections.observableArrayList();
     private ObservableList<String> weaponPluginsNames = FXCollections.observableArrayList();
     private ObservableList<String> graphicPluginsNames = FXCollections.observableArrayList();
+    private ObservableList<String> collisionPluginsNames = FXCollections.observableArrayList();
     private List<Class> movePlugins = new ArrayList<>();
     private List<Class> weaponPlugins = new ArrayList<>();
     private List<Class> graphicPlugins = new ArrayList<>();
+    private List<Class> collisionPlugins = new ArrayList<>();
 
     private String packageName = "fr.unice.miage";
     private String appFolderName = "uncompiled";
@@ -52,6 +54,8 @@ public class Repository {
     public ObservableList<String> getGraphicPluginsNames() {
         return this.graphicPluginsNames;
     }
+
+    public ObservableList<String> getCollisionPluginsNames(){ return this.graphicPluginsNames; }
 
     public List<Class> getMovePlugins() {
         return this.movePlugins;
@@ -111,6 +115,10 @@ public class Repository {
                 case "PlugInGraphic":
                     this.graphicPluginsNames.add(instance.getClass().getSimpleName());
                     this.graphicPlugins.add(loadedClass);
+                    break;
+                case "PlugInCollision":
+                    this.collisionPluginsNames.add(instance.getClass().getSimpleName());
+                    this.collisionPlugins.add(loadedClass);
                     break;
             }
         }

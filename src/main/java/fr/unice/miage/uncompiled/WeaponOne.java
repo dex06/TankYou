@@ -11,6 +11,7 @@ public class WeaponOne implements PlugInWeapon {
 
     public WeaponOne(){}
 
+
     public List<Projectile> getWeaponProjectiles() {
         return this.weaponProjectiles;
     }

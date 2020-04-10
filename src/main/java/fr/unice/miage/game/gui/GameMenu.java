@@ -16,6 +16,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -76,8 +77,20 @@ public class GameMenu  {
         startGameBtn.setOnAction(e -> {
             this.listOfGUIOptions = this.getGUIOptions();
             this.listOfPlayersOptions = this.getPlayersOptions();
-            this.startGame();
-                });
+            try {
+                this.startGame();
+            } catch (ClassNotFoundException ex) {
+                ex.printStackTrace();
+            } catch (NoSuchMethodException ex) {
+                ex.printStackTrace();
+            } catch (InstantiationException ex) {
+                ex.printStackTrace();
+            } catch (IllegalAccessException ex) {
+                ex.printStackTrace();
+            } catch (InvocationTargetException ex) {
+                ex.printStackTrace();
+            }
+        });
         HBox btnHB = new HBox();
         btnHB.getChildren().addAll(addPlayerBtn, startGameBtn);
         btnHB.setSpacing(30);
@@ -159,7 +172,7 @@ public class GameMenu  {
         return playerVBox;
     }
 
-    private void startGame(){
+    private void startGame() throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
         this.stop();
         this.gameEngine.loadingPlayers(this.listOfPlayersOptions);
         this.gameEngine.createGameBoard();

@@ -10,6 +10,7 @@ import javafx.animation.AnimationTimer;
 import javafx.scene.layout.FlowPane;
 import javafx.stage.Stage;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -51,14 +52,10 @@ public class GameEngine  {
         this.gameMenu.start();
     }
 
-    public void loadingPlayers(List<List<String>> playersOptions) {
+    public void loadingPlayers(List<List<String>> playersOptions) throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
         this.nbPlayers = playersOptions.size();
         for(List<String> playerOpts : playersOptions) {
-            try {
-                this.players.add(new Player(playerOpts, this.repository));
-            } catch (Exception e) {
-                System.err.println("adding new players error " + e);
-            }
+            this.players.add(new Player(playerOpts, this.repository));
         }
     }
 

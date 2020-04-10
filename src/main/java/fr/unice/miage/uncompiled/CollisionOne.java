@@ -10,11 +10,7 @@ import java.util.Iterator;
 import java.util.List;
 
 public class CollisionOne implements PlugInCollision {
-    private Player player;
 
-    public CollisionOne(Player player){
-        this.player = player;
-    }
     public void checkAllCollisions(List<Player> players){
         for(int i = 0; i < players.size()-2; i++){
             for(int j = i+1; j < players.size()-1; j++){
