@@ -21,9 +21,9 @@ public class CollisionOne implements PlugInCollision {
 
     private void checkPlayersCollision(Player player1, Player player2){
         this.checkPlayerToPlayerCollision(player1, player2);
-        this.checkPlayerToWeaponCollision(player1, player2);
-        this.checkPlayerToWeaponCollision(player2, player1);
-        this.checkWeaponToWeaponCollision(player1, player2);
+        //this.checkPlayerToWeaponCollision(player1, player2);
+        //this.checkPlayerToWeaponCollision(player2, player1);
+        //this.checkWeaponToWeaponCollision(player1, player2);
     }
 
 

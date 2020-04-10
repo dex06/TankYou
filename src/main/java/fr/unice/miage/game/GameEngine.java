@@ -6,6 +6,7 @@ import fr.unice.miage.game.gui.GameMenu;
 import fr.unice.miage.game.gui.HealthBar;
 import fr.unice.miage.game_objects.Player;
 import fr.unice.miage.sprite.Sprite;
+import fr.unice.miage.uncompiled.CollisionOne;
 import javafx.animation.AnimationTimer;
 import javafx.scene.layout.FlowPane;
 import javafx.stage.Stage;
@@ -21,6 +22,7 @@ public class GameEngine  {
     private GameBoard gameBoard;
     private Repository repository;
     private CanvasGUI canvas;
+    private CollisionOne collision;
     private int nbPlayers;
     private List<Player> players = new ArrayList<>();
 
@@ -37,6 +39,7 @@ public class GameEngine  {
         try {
             this.repository = new Repository(path);
             this.canvas = new CanvasGUI(width, height);
+            this.collision = new CollisionOne();
         } catch(Exception e){
             System.err.println(e);
         }
@@ -83,6 +86,7 @@ public class GameEngine  {
                     player.getPluginMovement().move(playerSprite, healthBarPanel, t, gameBoard);
                     player.getPluginGraphic().draw(canvas);
                 }
+                collision.checkAllCollisions(players);
                 lastUpdateNanoTime = currentNanoTime;
             }
         }.start();
