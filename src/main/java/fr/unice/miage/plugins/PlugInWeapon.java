@@ -7,4 +7,6 @@ import java.util.List;
 public interface PlugInWeapon {
 
     public List<Projectile> getWeaponProjectiles();
+
+
 }

@@ -42,7 +42,7 @@ public class Player {
         this.isAlive = true;
         this.loadPlugins(plugins);
         this.setPlayerSprite();
-        //this.setPlayerWeapons();
+        this.setPlayerWeapons();
     }
 
     private void loadPlugins(List<String> plugins) throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
@@ -70,9 +70,7 @@ public class Player {
         this.health = new SimpleDoubleProperty(value).asObject();
     }
 
-    public void setPlayerWeapons(){
-        this.weapons.add(this.pluginWeapon);
-    }
+    public void setPlayerWeapons(){ }
 
     public List<PlugInWeapon> getPlayerWeapons(){ return this.weapons; }
 
