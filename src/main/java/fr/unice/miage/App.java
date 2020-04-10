@@ -13,8 +13,8 @@ public class App extends Application
     @Override
     public void start(Stage stage) {
         GameEngine gameEngine = new GameEngine(stage, 600,600, "plugins");
-        gameEngine.init();
-        gameEngine.start();
+        gameEngine.initMenu();
+        gameEngine.startMenu();
     }
     public static void main( String[] args )
     {

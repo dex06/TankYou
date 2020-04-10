@@ -36,6 +36,7 @@ public class GameMenu  {
     private Font labelFont = new Font("Arial", 18);
     private List<String> listOfGUIOptions = new ArrayList<>();
     private List<List<String>> listOfPlayersOptions = new ArrayList<>();
+    private List<String> listOfConfigOptions = new ArrayList<>();
 
 
     public GameMenu(GameEngine gameEngine, Stage stage, Repository repository) {
@@ -93,6 +94,7 @@ public class GameMenu  {
         startGameBtn.setOnAction(e -> {
             this.listOfGUIOptions = this.getGUIOptions();
             this.listOfPlayersOptions = this.getPlayersOptions();
+            this.listOfConfigOptions = this.getConfigOptions();
             try {
                 this.startGame();
             } catch (ClassNotFoundException ex) {
@@ -202,10 +204,19 @@ public class GameMenu  {
         return playerVBox;
     }
 
-    private void startGame() throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
+    private void startGame() throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
         this.stop();
-        this.gameEngine.loadingPlayers(this.listOfPlayersOptions);
-        this.gameEngine.createGameBoard();
+        this.gameEngine.startGame(listOfGUIOptions, listOfConfigOptions, listOfPlayersOptions);
+    }
+
+    private List<String> getConfigOptions(){
+        List<String> optionsList = new ArrayList<>();
+        Set<Node> collSet = this.configs.lookupAll("ComboBox");
+        for(Node cb : collSet){
+            ComboBox new_cb = (ComboBox) cb;
+            optionsList.add((String)new_cb.getValue());
+        }
+        return optionsList;
     }
 
     private List<String> getGUIOptions(){

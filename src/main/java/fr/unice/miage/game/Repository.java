@@ -1,11 +1,15 @@
 package fr.unice.miage.game;
 
+import fr.unice.miage.plugins.PlugInCollision;
 import fr.unice.miage.plugins.PlugInGraphic;
 import fr.unice.miage.plugins.PlugInMovement;
 import fr.unice.miage.plugins.PlugInWeapon;
+import fr.unice.miage.uncompiled.CollisionOne;
+import fr.unice.miage.uncompiled.GraphicOne;
+import fr.unice.miage.uncompiled.MoveOne;
+import fr.unice.miage.uncompiled.WeaponOne;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -21,6 +25,7 @@ import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
 
 public class Repository {
+
     private List<File> jarFiles = new ArrayList<>();
     private ObservableList<String> movePluginsNames = FXCollections.observableArrayList();
     private ObservableList<String> weaponPluginsNames = FXCollections.observableArrayList();
@@ -34,6 +39,8 @@ public class Repository {
     private String packageName = "fr.unice.miage";
     private String appFolderName = "uncompiled";
     private String destinationDir = "src/main/java/fr/unice/miage/classes";
+
+    private boolean testing = true;
 
     public Repository() throws Exception {
         this.loadLibraries("plugins");
@@ -153,15 +160,23 @@ public class Repository {
     }
 
     public PlugInMovement loadMovement(String opt) throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
+        if(this.testing){ return new MoveOne(); }
         return (PlugInMovement) this.movePlugins.get(this.movePluginsNames.indexOf(opt)).getDeclaredConstructor().newInstance();
     }
 
     public PlugInWeapon loadWeapon(String opt) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
+        if(this.testing){ return new WeaponOne(); }
         return (PlugInWeapon) this.weaponPlugins.get(this.weaponPluginsNames.indexOf(opt)).getDeclaredConstructor().newInstance();
     }
 
     public PlugInGraphic loadGraphic(String opt) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
+        if(this.testing){ return new GraphicOne(); }
         return (PlugInGraphic) this.graphicPlugins.get(this.graphicPluginsNames.indexOf(opt)).getDeclaredConstructor().newInstance();
+    }
+
+    public PlugInCollision loadCollision(String opt) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
+        if(this.testing){ return new CollisionOne(); }
+        return (PlugInCollision) this.collisionPlugins.get(this.graphicPluginsNames.indexOf(opt)).getDeclaredConstructor().newInstance();
     }
 }
 
