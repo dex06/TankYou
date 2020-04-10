@@ -30,7 +30,9 @@ public class GameMenu  {
     private int nbGUI = 0;
     private int nbPlayers = 1;
     private VBox guis = new VBox();
+    private VBox configs = new VBox();
     private VBox players = new VBox();
+    private Font labelFont = new Font("Arial", 18);
     private List<String> listOfGUIOptions = new ArrayList<>();
     private List<List<String>> listOfPlayersOptions = new ArrayList<>();
 
@@ -52,7 +54,7 @@ public class GameMenu  {
 
     public void init(){
         Label guiLabel = new Label("GUI");
-        guiLabel.setFont(new Font("Arial", 18));
+        guiLabel.setFont(this.labelFont);
         HBox guiHBox = new HBox();
         VBox gui1 = this.createGUIVBox();
         VBox gui2 = this.createGUIVBox();
@@ -61,8 +63,17 @@ public class GameMenu  {
         guiHBox.setAlignment(Pos.CENTER);
         this.guis.getChildren().addAll(guiLabel,guiHBox);
 
+        Label configLabel = new Label("Configs");
+        configLabel.setFont(this.labelFont);
+        HBox configHBox = new HBox();
+        VBox collVBox = this.createCollisionVbox();
+        collVBox.setAlignment(Pos.CENTER);
+        configHBox.getChildren().add(collVBox);
+        configHBox.setAlignment(Pos.CENTER);
+        this.configs.getChildren().addAll(configLabel,configHBox);
+
         Label playersLabel = new Label("Joueurs");
-        playersLabel.setFont(new Font("Arial", 18));
+        playersLabel.setFont(this.labelFont);
         this.players.getChildren().add(playersLabel);
 
         Button addPlayerBtn = new Button("Ajouter un joueur");
@@ -99,7 +110,7 @@ public class GameMenu  {
         bottom.setCenter(btnHB);
 
         VBox mainVBox = new VBox();
-        mainVBox.getChildren().addAll(this.guis, this.players);
+        mainVBox.getChildren().addAll(this.guis, this.configs, this.players);
         mainVBox.setSpacing(10);
         mainVBox.setPadding(new Insets(25));
 
@@ -118,6 +129,9 @@ public class GameMenu  {
         //this.stage.sizeToScene();
         //this.stage.show();
     }
+
+
+
     private void addPlayerConfig(){
         HBox playerHBox = new HBox();
         Label playerLabel = new Label("Joueur " + this.nbPlayers);
@@ -132,6 +146,17 @@ public class GameMenu  {
         playerHBox.setAlignment(Pos.CENTER_LEFT);
         players.getChildren().add(playerHBox);
 
+    }
+
+    private VBox createCollisionVbox() {
+        VBox collVBox = new VBox();
+        Label collLabel = new Label("Collision");
+        ObservableList<String> opts = FXCollections.observableArrayList();
+        opts = this.repository.getCollisionPluginsNames();
+        ComboBox collCB = new ComboBox(opts);
+        if(opts.size() > 0) collCB.setValue(opts.get(0));
+        collVBox.getChildren().addAll(collLabel, collCB);
+        return collVBox;
     }
 
     private VBox createGUIVBox(){

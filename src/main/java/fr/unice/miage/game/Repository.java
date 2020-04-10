@@ -55,7 +55,7 @@ public class Repository {
         return this.graphicPluginsNames;
     }
 
-    public ObservableList<String> getCollisionPluginsNames(){ return this.graphicPluginsNames; }
+    public ObservableList<String> getCollisionPluginsNames(){ return this.collisionPluginsNames; }
 
     public List<Class> getMovePlugins() {
         return this.movePlugins;
