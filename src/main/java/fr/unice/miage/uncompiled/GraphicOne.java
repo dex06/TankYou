@@ -1,4 +1,4 @@
-package fr.unice.miage.classes;
+package fr.unice.miage.uncompiled;
 
 import fr.unice.miage.game.gui.CanvasGUI;
 import fr.unice.miage.plugins.PlugInGraphic;

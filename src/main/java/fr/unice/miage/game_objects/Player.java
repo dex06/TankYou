@@ -14,6 +14,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 public class Player {
+
+    private String playerName = "Player";
     private Vector2 position;
     private Vector2 velocity;
     private Vector2 acceleration;
@@ -25,6 +27,7 @@ public class Player {
     private Sprite playerSprite;
     private ObservableValue<Double> health = new SimpleDoubleProperty(0.5).asObject();
     private HealthBar healthBar;
+    private List<PlugInWeapon> weapons;
     private boolean isAlive;
 
     public Player(List<String> plugins, Repository repository) throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
@@ -38,7 +41,8 @@ public class Player {
         //this.healthBar.bindProgressProperty(this.health);
         this.isAlive = true;
         this.loadPlugins(plugins);
-        this.setSprite();
+        this.setPlayerSprite();
+        this.setPlayerWeapons();
     }
 
     private void loadPlugins(List<String> plugins) throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
@@ -46,7 +50,13 @@ public class Player {
             this.pluginWeapon = this.repository.loadWeapon(plugins.get(1));
             this.pluginGraphic= this.repository.loadGraphic(plugins.get(2));
     }
+    public String getName(){ return this.playerName;}
 
+    public void setPlayerSprite(){
+        this.playerSprite = this.pluginGraphic.getPlayerSprite();
+    }
+
+    public Sprite getPlayerSprite(){ return this.playerSprite; };
 
     public HealthBar getPlayerHealthBar(){
         return this.healthBar;
@@ -60,6 +70,11 @@ public class Player {
         this.health = new SimpleDoubleProperty(value).asObject();
     }
 
+    public void setPlayerWeapons(){
+        this.weapons.add(this.pluginWeapon);
+    }
+    public List<PlugInWeapon> getPlayerWeapons(){ return this.weapons; }
+
     public PlugInMovement getPluginMovement(){
         return this.pluginMovement;
     }
@@ -70,9 +85,11 @@ public class Player {
         return this.pluginGraphic;
     }
 
-    public void setSprite(){
-        this.playerSprite = this.pluginGraphic.getPlayerSprite();
-    }
+    public void getHitByProjectile(Projectile projectile){}
+
+    public void getHitByPlayer(Player player){}
+
+
 
 
 }
