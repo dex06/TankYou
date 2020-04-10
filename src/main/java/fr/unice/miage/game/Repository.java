@@ -5,7 +5,7 @@ import fr.unice.miage.plugins.PlugInMovement;
 import fr.unice.miage.plugins.PlugInWeapon;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javassist.NotFoundException;
+
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -85,7 +85,7 @@ public class Repository {
     }
 
 
-    public void loadClassesFromJar(File pathToJar) throws IOException, ClassNotFoundException, NotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
+    public void loadClassesFromJar(File pathToJar) throws IOException, ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
         JarFile jarFile = new JarFile(pathToJar);
         Enumeration<JarEntry> e = jarFile.entries();
 
