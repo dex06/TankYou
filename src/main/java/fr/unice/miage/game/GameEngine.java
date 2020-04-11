@@ -99,7 +99,6 @@ public class GameEngine  {
                     player.setHealth(player.getHealth()-0.01);
 
                 }
-                //if(players.size() > 1)
                 collision.checkAllCollisions(players);
                 lastUpdateNanoTime = currentNanoTime;
             }
