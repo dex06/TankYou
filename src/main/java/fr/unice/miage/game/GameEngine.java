@@ -64,8 +64,10 @@ public class GameEngine  {
 
     public void loadingPlayers(List<List<String>> playersOptions) throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
         this.nbPlayers = playersOptions.size();
+        int playerID = 0;
         for(List<String> playerOpts : playersOptions) {
-            this.players.add(new Player(playerOpts, this.repository, this.canvas));
+            playerID++;
+            this.players.add(new Player(playerOpts, this.repository, this.canvas, playerID));
         }
     }
 

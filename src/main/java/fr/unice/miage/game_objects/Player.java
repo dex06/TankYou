@@ -13,6 +13,7 @@ import java.util.List;
 public class Player {
 
     private String playerName = "Player";
+    private int playerID;
     private Vector2 position;
     private Vector2 velocity;
     private Vector2 acceleration;
@@ -26,13 +27,15 @@ public class Player {
     private List<PlugInWeapon> weapons;
     private boolean isAlive;
 
-    public Player(List<String> plugins, Repository repository, CanvasGUI canvas) throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
+    public Player(List<String> plugins, Repository repository, CanvasGUI canvas, int playerID) throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
         this.position = new Vector2(100,100);
         this.velocity = new Vector2(0.1,0.1);
         this.acceleration = new Vector2();
         this.rotation = 0;
         this.repository = repository;
         this.canvas = canvas;
+        this.playerID = playerID;
+        this.playerName = "Player" + playerID;
         this.isAlive = true;
         this.loadPlugins(plugins);
         this.setPlayerWeapons();
