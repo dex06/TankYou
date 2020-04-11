@@ -20,6 +20,7 @@ public class MoveOne implements PlugInMovement {
     public void playerMove(Player player){
         randomMove(player);
         seekMove(player);
+        fleeMove(player);
     }
 
     public void randomMove(Player player){
@@ -34,6 +35,15 @@ public class MoveOne implements PlugInMovement {
         Vector2 targetPosition = Finder.findClosestPlayer(player).getPosition();
         Vector2 desired_velocity = targetPosition.sub2(player.getPosition()).norm2().mult2(maxVelocity);
         Vector2 steering = desired_velocity.sub2(player.getVelocity());
+        steering = steering.limit2(maxForce).mult2(1/mass);
+        Vector2 velocity = player.getVelocity().add2(steering).limit2(maxSpeed);
+        player.setPosition(player.getPosition().add2(velocity));
+    }
+
+    public void fleeMove(Player player){
+        Vector2 targetPosition = Finder.findClosestPlayer(player).getPosition();
+        Vector2 desired_velocity = targetPosition.sub2(player.getPosition()).norm2().mult2(maxVelocity);
+        Vector2 steering = desired_velocity.sub2(player.getVelocity()).reverse2();
         steering = steering.limit2(maxForce).mult2(1/mass);
         Vector2 velocity = player.getVelocity().add2(steering).limit2(maxSpeed);
         player.setPosition(player.getPosition().add2(velocity));

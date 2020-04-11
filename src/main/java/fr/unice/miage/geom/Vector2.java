@@ -49,6 +49,10 @@ public class Vector2 {
         return new Vector2(this.x / this.length(), this.y / this.length());
     }
 
+    public Vector2 reverse2(){
+        return new Vector2(-this.x, -this.y);
+    }
+
     public void add(Vector2 v) {
         this.x += v.x;
         this.y += v.y;
