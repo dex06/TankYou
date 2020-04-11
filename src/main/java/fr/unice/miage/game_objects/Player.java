@@ -42,6 +42,7 @@ public class Player {
     }
 
     public String getName(){ return playerName; }
+    public int getPlayerID() { return playerID; }
 
     // Methods for health
     public double getHealth(){ return health; }
@@ -90,4 +91,5 @@ public class Player {
         pluginGraphic= repository.loadGraphic(plugins.get(2));
         pluginGraphic.init(this);
     }
+
 }

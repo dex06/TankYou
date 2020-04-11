@@ -3,13 +3,16 @@ package fr.unice.miage.sprite;
 import fr.unice.miage.game.gui.CanvasGUI;
 import fr.unice.miage.game_objects.Player;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
+import javafx.scene.text.Font;
 
 public class RectangleSprite extends Sprite {
 
 	private Player player;
+	private String playerID;
 	private double width;
 	private double height;
 	private Paint color;
@@ -21,6 +24,7 @@ public class RectangleSprite extends Sprite {
 		this.width = width;
 		this.height = height;
 		this.color = color;
+		this.playerID = String.valueOf(player.getPlayerID());
 	}
 	public void draw(CanvasGUI canvas){
 		double x = player.getPosition().getX();
@@ -28,6 +32,10 @@ public class RectangleSprite extends Sprite {
 		GraphicsContext gc = canvas.getGraphicsContext();
 		gc.setFill(color);
 		gc.fillRect(x, y, width, height);
+		gc.setFill(Color.BLACK);
+		gc.setFont(Font.font("Arial", 18));
+		gc.fillText(playerID, x+width/4, y+height/1.2);
+
 	}
 
 	@Override
