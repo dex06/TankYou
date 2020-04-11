@@ -40,7 +40,7 @@ public class Repository {
     private String appFolderName = "uncompiled";
     private String destinationDir = "src/main/java/fr/unice/miage/classes";
 
-    private boolean testing = false;
+    private boolean testing = Config.getTesting();
 
     public Repository() throws Exception {
         this.loadLibraries("plugins");
