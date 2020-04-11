@@ -40,7 +40,7 @@ public class Repository {
     private String appFolderName = "uncompiled";
     private String destinationDir = "src/main/java/fr/unice/miage/classes";
 
-    private boolean testing = true;
+    private boolean testing = false;
 
     public Repository() throws Exception {
         this.loadLibraries("plugins");
@@ -176,7 +176,7 @@ public class Repository {
 
     public PlugInCollision loadCollision(String opt) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
         if(this.testing){ return new CollisionOne(); }
-        return (PlugInCollision) this.collisionPlugins.get(this.graphicPluginsNames.indexOf(opt)).getDeclaredConstructor().newInstance();
+        return (PlugInCollision) this.collisionPlugins.get(this.collisionPluginsNames.indexOf(opt)).getDeclaredConstructor().newInstance();
     }
 }
 

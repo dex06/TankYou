@@ -158,8 +158,7 @@ public class GameMenu  {
     private VBox createCollisionVbox() {
         VBox collVBox = new VBox();
         Label collLabel = new Label("Collision");
-        ObservableList<String> opts = FXCollections.observableArrayList();
-        opts = this.repository.getCollisionPluginsNames();
+        ObservableList<String> opts = this.repository.getCollisionPluginsNames();
         ComboBox collCB = new ComboBox(opts);
         if(opts.size() > 0) collCB.setValue(opts.get(0));
         collVBox.getChildren().addAll(collLabel, collCB);
