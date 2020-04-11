@@ -5,6 +5,7 @@ import fr.unice.miage.game.gui.GameBoard;
 import fr.unice.miage.game.gui.GameMenu;
 import fr.unice.miage.game_objects.Player;
 import fr.unice.miage.plugins.PlugInCollision;
+import fr.unice.miage.utils.Finder;
 import fr.unice.miage.utils.Randomizer;
 import javafx.animation.AnimationTimer;
 import javafx.stage.Stage;
@@ -45,7 +46,6 @@ public class GameEngine  {
     public void initMenu(){
         this.gameMenu = new GameMenu(this, this.stage, this.repository);
         this.gameMenu.init();
-
     }
 
     public void startMenu(){
@@ -69,17 +69,18 @@ public class GameEngine  {
             playerID++;
             this.players.add(new Player(playerOpts, this.repository, this.canvas, playerID));
         }
+        Finder.setPlayers(players);
     }
 
     public void createGameBoard(){
         this.gameBoard = new GameBoard(this.stage, 600,600, this.canvas);
         this.gameBoard.init();
         this.gameBoard.start();
-        this.giveRandomPositionsAndVelocityToPlayers();
+        this.giveRandomPositionAndVelocityToPlayers();
         this.loop();
     }
 
-    public void giveRandomPositionsAndVelocityToPlayers(){
+    public void giveRandomPositionAndVelocityToPlayers(){
         for(Player player : players){
             player.addPosition(Randomizer.getRandomVector(10, 400));
             player.addVelocity(Randomizer.getRandomVector(-0.3, 0.3));

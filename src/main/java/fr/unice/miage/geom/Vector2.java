@@ -31,6 +31,23 @@ public class Vector2 {
         }
     }
 
+    public Vector2 limit2(double limit){
+        if (this.length() > limit){
+            double scale = limit / this.length();
+            this.mult2(scale);
+            return this;
+        }
+        return this;
+    }
+
+    public void norm(){
+        this.x = this.x / this.length();
+        this.y = this.y / this.length();
+    }
+
+    public Vector2 norm2(){
+        return new Vector2(this.x / this.length(), this.y / this.length());
+    }
 
     public void add(Vector2 v) {
         this.x += v.x;
