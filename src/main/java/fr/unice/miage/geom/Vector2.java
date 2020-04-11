@@ -24,8 +24,12 @@ public class Vector2 {
         return new Vector2(this.x, this.y);
     }
 
-    public void reverseX(){ this.x = -x; }
-    public void reverseY(){ this.y = y; }
+    public void limit(double limit){
+        if (this.length() > limit){
+            double scale = limit / this.length();
+            this.mult(scale);
+        }
+    }
 
 
     public void add(Vector2 v) {
@@ -50,6 +54,7 @@ public class Vector2 {
         this.x *= scalar;
         this.y *= scalar;
     }
+
 
     public Vector2 mult2(double scalar) {
         return new Vector2(this.x * scalar, this.y * scalar);

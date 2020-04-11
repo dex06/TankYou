@@ -40,60 +40,54 @@ public class Player {
         this.loadPlugins(plugins);
         this.setPlayerWeapons();
     }
-    public void reverseX(){
-        this.position.reverseX();
+
+    public String getName(){ return playerName; }
+
+    // Methods for health
+    public double getHealth(){ return health; }
+    public void setHealth(double value){
+        if(value <= 0) health = 0;
+        else health = value;
     }
-    public void reverseY(){
-        this.position.reverseY();
-    }
+
+    // Methods for speedX and speedY
     public void setSpeedX(double x){ velocity = new Vector2(x, velocity.getY()); }
     public void setSpeedY(double y){ velocity = new Vector2(velocity.getX(), y); }
     public double getSpeedX(){ return velocity.getX(); }
     public double getSpeedY(){ return velocity.getY(); }
 
-    public String getName(){ return this.playerName; }
+    /* Vectors */
+    // Methods for position vectors
+    public Vector2 getPosition(){ return position; }
+    public void setPosition(Vector2 v){ position = v;}
+    public void addPosition(Vector2 v){ position.add(v); }
 
-    public double getHealth(){
-        return this.health;
-    }
-    public void setHealth(double value){
-        if(value <= 0) health = 0;
-        else this.health = value;
-    }
+    // Methods for velocity vectors
+    public Vector2 getVelocity() { return velocity; }
+    public void setVelocity(Vector2 v){ velocity = v; }
+    public void addVelocity(Vector2 v){ velocity.add(v); }
+
+    // Methods for acceleration vectors
+    public Vector2 getAcceleration() { return acceleration; }
+    public void setAcceleration(Vector2 v){ acceleration = v; }
+    public void addAcceleration(Vector2 v){ acceleration.add(v); }
+
+    // Getters for plugins
+    public List<PlugInWeapon> getPlayerWeapons(){ return weapons; }
+    public PlugInMovement getPluginMovement(){ return pluginMovement; }
+    public PlugInWeapon getPluginWeapon(){ return pluginWeapon; }
+    public PlugInGraphic getPluginGraphic(){ return pluginGraphic; }
 
     public void setPlayerWeapons(){ }
-
-    public List<PlugInWeapon> getPlayerWeapons(){ return this.weapons; }
-
-    public PlugInMovement getPluginMovement(){
-        return this.pluginMovement;
-    }
-    public PlugInWeapon getPluginWeapon(){
-        return this.pluginWeapon;
-    }
-    public PlugInGraphic getPluginGraphic(){
-        return this.pluginGraphic;
-    }
 
     public void getHitByProjectile(Projectile projectile){}
 
     public void getHitByPlayer(Player player){}
 
-
-    public Vector2 getVelocity() { return this.velocity; }
-    public void setVelocity(Vector2 v){ this.velocity = v; }
-    public void addVelocity(Vector2 v){ this.velocity.add(v); }
-
-    public Vector2 getPosition(){ return this.position; }
-    public void setPosition(Vector2 v){ this.position = v;}
-    public void addPosition(Vector2 v){ this.position.add(v); }
-
     private void loadPlugins(List<String> plugins) throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
-        this.pluginMovement = this.repository.loadMovement(plugins.get(0));
-        this.pluginWeapon = this.repository.loadWeapon(plugins.get(1));
-        this.pluginGraphic= this.repository.loadGraphic(plugins.get(2));
-        this.pluginGraphic.init(this);
+        pluginMovement = repository.loadMovement(plugins.get(0));
+        pluginWeapon = repository.loadWeapon(plugins.get(1));
+        pluginGraphic= repository.loadGraphic(plugins.get(2));
+        pluginGraphic.init(this);
     }
-
-
 }

@@ -35,11 +35,9 @@ public class CollisionOne implements PlugInCollision {
         double w = player.getPluginGraphic().getPlayerSprite().getWidth();
         double h = player.getPluginGraphic().getPlayerSprite().getHeight();
         if ((x+w) > Config.getWorldWidth() || x < 0) {
-            //player.getVelocity().reverseX();
             player.setSpeedX(-player.getSpeedX());
         }
         if ((y+h)> Config.getWorldHeight() || y < 0) {
-            //player.getVelocity().reverseY();
             player.setSpeedY(-player.getSpeedY());
         }
     }
