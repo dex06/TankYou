@@ -37,15 +37,25 @@ public class Player {
         this.loadPlugins(plugins);
         this.setPlayerWeapons();
     }
+    public void reverseX(){
+        this.position.reverseX();
+    }
+    public void reverseY(){
+        this.position.reverseY();
+    }
+    public void setSpeedX(double x){ velocity = new Vector2(x, velocity.getY()); }
+    public void setSpeedY(double y){ velocity = new Vector2(velocity.getX(), y); }
+    public double getSpeedX(){ return velocity.getX(); }
+    public double getSpeedY(){ return velocity.getY(); }
 
-
-    public String getName(){ return this.playerName;}
+    public String getName(){ return this.playerName; }
 
     public double getHealth(){
         return this.health;
     }
     public void setHealth(double value){
-        this.health = value;
+        if(value <= 0) health = 0;
+        else this.health = value;
     }
 
     public void setPlayerWeapons(){ }

@@ -59,7 +59,7 @@ public class GameEngine  {
     }
 
     public void loadingCollision(String opt) throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
-        this.collision = this.repository.loadCollision(opt);
+        collision = this.repository.loadCollision(opt);
     }
 
     public void loadingPlayers(List<List<String>> playersOptions) throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
@@ -87,8 +87,6 @@ public class GameEngine  {
     public void loop(){
         lastUpdateNanoTime = System.nanoTime();
         new AnimationTimer(){
-            //List<Player> players = this.players;
-
             public void handle(long currentNanoTime) {
                 double t = (currentNanoTime - lastUpdateNanoTime) / 1000000000.0;
                 canvas.clean();
@@ -99,13 +97,10 @@ public class GameEngine  {
                     player.setHealth(player.getHealth()-0.01);
 
                 }
-                if(players.size() > 1) collision.checkAllCollisions(players);
+                //if(players.size() > 1)
+                collision.checkAllCollisions(players);
                 lastUpdateNanoTime = currentNanoTime;
             }
         }.start();
-    }
-
-    public static void main(String[] args) {
-
     }
 }

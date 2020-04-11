@@ -17,9 +17,9 @@ public class CollisionOne implements PlugInCollision {
         for(int i = 0; i < players.size()-2; i++){
             for(int j = i+1; j < players.size()-1; j++){
                 this.checkPlayersCollision(players.get(i), players.get(j));
-                this.checkPlayerToBorderCollision(players.get(i));
             }
         }
+        for(Player player : players) this.checkPlayerToBorderCollision(player);
     }
 
     private void checkPlayersCollision(Player player1, Player player2){
@@ -35,10 +35,12 @@ public class CollisionOne implements PlugInCollision {
         double w = player.getPluginGraphic().getPlayerSprite().getWidth();
         double h = player.getPluginGraphic().getPlayerSprite().getHeight();
         if ((x+w) > Config.getWorldWidth() || x < 0) {
-            player.getVelocity().reverseX();
+            //player.getVelocity().reverseX();
+            player.setSpeedX(-player.getSpeedX());
         }
         if ((y+h)> Config.getWorldHeight() || y < 0) {
-            player.getVelocity().reverseY();
+            //player.getVelocity().reverseY();
+            player.setSpeedY(-player.getSpeedY());
         }
     }
 
