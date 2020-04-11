@@ -3,12 +3,10 @@ package fr.unice.miage.game;
 import fr.unice.miage.game.gui.CanvasGUI;
 import fr.unice.miage.game.gui.GameBoard;
 import fr.unice.miage.game.gui.GameMenu;
-import fr.unice.miage.game.gui.HealthBar;
 import fr.unice.miage.game_objects.Player;
 import fr.unice.miage.plugins.PlugInCollision;
-import fr.unice.miage.sprite.Sprite;
+import fr.unice.miage.utils.Randomizer;
 import javafx.animation.AnimationTimer;
-import javafx.scene.layout.FlowPane;
 import javafx.stage.Stage;
 
 import java.lang.reflect.InvocationTargetException;
@@ -61,7 +59,7 @@ public class GameEngine  {
     }
 
     public void loadingCollision(String opt) throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
-        this.collision = this.repository.loadCollision(opt);
+        this.collision = this.repository.loadCollision(gameBoard, opt);
     }
 
     public void loadingPlayers(List<List<String>> playersOptions) throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
@@ -75,7 +73,15 @@ public class GameEngine  {
         this.gameBoard = new GameBoard(this.stage, 600,600, this.canvas);
         this.gameBoard.init();
         this.gameBoard.start();
+        this.giveRandomPositionsAndVelocityToPlayers();
         this.loop();
+    }
+
+    public void giveRandomPositionsAndVelocityToPlayers(){
+        for(Player player : players){
+            player.addPosition(Randomizer.getRandomVector(10, 400));
+            player.addVelocity(Randomizer.getRandomVector(-0.3, 0.3));
+        }
     }
 
     public void loop(){
@@ -87,14 +93,11 @@ public class GameEngine  {
                 double t = (currentNanoTime - lastUpdateNanoTime) / 1000000000.0;
                 canvas.clean();
                 for(Player player : players){
-                    Sprite playerSprite = player.getPluginGraphic().getPlayerSprite();
-                    player.getPlayerHealthBar().draw();
-                    HealthBar playerHealthBar = player.getPlayerHealthBar();
-                    FlowPane healthBarPanel = playerHealthBar.getHealthBarPanel();
+
+                    player.getPluginMovement().move(player);
+                    player.getPluginGraphic().draw(player, canvas);
                     player.setHealth(player.getHealth()-0.01);
 
-                    player.getPluginMovement().move(player, playerSprite, healthBarPanel, t, gameBoard);
-                    player.getPluginGraphic().draw(canvas);
                 }
                 collision.checkAllCollisions(players);
                 lastUpdateNanoTime = currentNanoTime;

@@ -24,6 +24,10 @@ public class Vector2 {
         return new Vector2(this.x, this.y);
     }
 
+    public void reverseX(){ this.x = -x; }
+    public void reverseY(){ this.y = y; }
+
+
     public void add(Vector2 v) {
         this.x += v.x;
         this.y += v.y;
@@ -63,13 +67,12 @@ public class Vector2 {
         return Math.sqrt(Math.pow(this.x - v.x, 2) + Math.pow(this.y - v.y, 2));
     }
 
-
     public double lerp(double p, double n, String t) {
         double _t = Double.parseDouble(t);
         _t = Math.max(0, Math.min(1, _t));
         return (p + _t * (n - p));
     }
-    //Simple linear interpolation between 2 vectors
+
     public Vector2 lerp2(Vector2 v, Vector2 tv, String t) {
         return  new Vector2(this.lerp(v.x, tv.x, t), this.lerp(v.y, tv.y, t));
     }

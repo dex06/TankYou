@@ -1,8 +1,6 @@
 package fr.unice.miage.game.gui;
 
 import fr.unice.miage.game_objects.Player;
-import fr.unice.miage.sprite.RectangleSprite;
-import fr.unice.miage.sprite.RoundSprite;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
@@ -38,14 +36,6 @@ public class CanvasGUI {
         gc.setFill(Color.AZURE);
         gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
         gc.setFill(Color.BLACK);
-    }
-
-    public RectangleSprite createRectangleSprite(int x, int y, int speedX, int speedY){
-        return new RectangleSprite(x, y, speedX, speedY);
-    }
-
-    public RoundSprite createRoundSprite(int x, int y, int speedX, int speedY, int diameter){
-        return new RoundSprite(x, y , speedX, speedY, diameter);
     }
 
     public void drawHealthBar(Player player, int width, int height, Paint color) {

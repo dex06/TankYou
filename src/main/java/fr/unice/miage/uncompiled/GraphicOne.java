@@ -1,62 +1,37 @@
 package fr.unice.miage.uncompiled;
 
 import fr.unice.miage.game.gui.CanvasGUI;
+import fr.unice.miage.game.gui.HealthBar;
+import fr.unice.miage.game_objects.Player;
 import fr.unice.miage.plugins.PlugInGraphic;
 import fr.unice.miage.sprite.RectangleSprite;
 import fr.unice.miage.sprite.Sprite;
-import fr.unice.miage.utils.Randomizer;
 import javafx.scene.paint.Color;
 
 public class GraphicOne implements PlugInGraphic {
     //private CanvasGUI canvas;
+    private Player player;
     private String name = "rectangle";
     private RectangleSprite playerSprite;
-    private double randX;
-    private double randY;
-    private double randSpeedX;
-    private double randSpeedY;
+    private HealthBar healthBar;
+    private double width = 20;
+    private double height = 20;
+    private Color color = Color.RED;
 
-    {
-        this.init();
+    public void init(Player player){
+        this.player = player;
+        this.playerSprite = new RectangleSprite(player, width, height, color);
+        this.playerSprite.setRandomColor();
+        this.healthBar = new HealthBar(70, 20, Color.GREEN);
     }
-    public GraphicOne(){
 
-    }
-
-    public void init(){
-        this.randX = Randomizer.getRandomDoubleInRange(0,100);
-        this.randY = Randomizer.getRandomDoubleInRange(0,100);
-        this.randSpeedX = Randomizer.getRandomDoubleInRange(0,5);
-        this.randSpeedY = Randomizer.getRandomDoubleInRange(0,5);
-        this.playerSprite = new RectangleSprite(randX, randY,  randSpeedX, randSpeedY);
-        this.playerSprite.setColor((int) Randomizer.getRandomDoubleInRange(0,3));
-    }
-    @Override
-    public void draw(CanvasGUI canvas) {
-        //this.playerSprite.update(t, board);
-        //checkForCollision(s, board.spriteIterator());
-        //canvas.clean()
-        this.playerSprite.render(canvas.getGraphicsContext());
+    public void draw(Player player, CanvasGUI canvas) {
+        this.playerSprite.draw(canvas);
+        this.healthBar.draw(player, canvas);
     }
 
     public String getName(){
         return this.name;
-    }
-
-    public double getRandX(){
-        return Math.random() * 50;
-    }
-
-    public double getRandY(){
-        return Math.random() * 50;
-    }
-
-    public double getRandSpeedX(){
-        return Math.random() * 10;
-    }
-
-    public double getRandSpeedY(){
-        return Math.random() * 10;
     }
 
     public Color getRandomColor(){
@@ -66,4 +41,5 @@ public class GraphicOne implements PlugInGraphic {
     public Sprite getPlayerSprite(){
         return this.playerSprite;
     }
+
 }

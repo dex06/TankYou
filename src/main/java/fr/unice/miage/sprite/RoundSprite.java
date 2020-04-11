@@ -1,50 +1,41 @@
 package fr.unice.miage.sprite;
 
-import fr.unice.miage.game.gui.GameBoard;
+import fr.unice.miage.game.gui.CanvasGUI;
+import fr.unice.miage.game_objects.Player;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 
 public class RoundSprite extends Sprite {
-	
-	private int diameter; 
 
-	public RoundSprite(double x, double y, double speedX, double speedY, int diameter) {
-		super(x, y, speedX, speedY);
+	private Player player;
+	private double diameter;
+	private Color color;
+
+	public RoundSprite(Player player, double diameter, Color color) {
+		super(diameter, diameter, color);
+		this.player = player;
 		this.diameter = diameter;
+		this.color = color;
 	}
 
-	
-	@Override
-	public void update(double time, GameBoard b) {
-		super.update(time, b);
-		if ((this.x+diameter)>b.getWidth() || (this.x) < 0) {
-			this.speedX=-this.speedX;
-		}
-		if ((this.y+diameter)>b.getWidth() || (this.y) < 0) {
-			this.speedY=-this.speedY;
-		}
-	}
-	
-	@Override
-	public void render(GraphicsContext gc) {
-		gc.strokeOval(x,y, diameter, diameter);
-
+	public void draw(CanvasGUI canvas){
+		double x = player.getPosition().getX();
+		double y = player.getPosition().getY();
+		GraphicsContext gc = canvas.getGraphicsContext();
+		Paint save = gc.getFill();
+		gc.setFill(color);
+		gc.strokeOval(x, y, diameter, diameter);
 		gc.fillOval(x, y, diameter, diameter);
-
+		gc.setFill(save);
 	}
-
-
-	@Override
-	public void handleCollision(GameBoard b, Sprite p) {
-		System.out.println("RoundSprite.handleCollision()");
-	}
-
 
 	@Override
 	public Shape getBoundingShape() {
-		return new Rectangle(x,y,diameter,diameter);
-		
+		double x = player.getPosition().getX();
+		double y = player.getPosition().getY();
+		return new Rectangle(x, y, diameter, diameter);
 	}
-
 }

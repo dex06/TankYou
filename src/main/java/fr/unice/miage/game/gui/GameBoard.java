@@ -72,16 +72,5 @@ public class GameBoard {
 		this.height = height;
 	}
 
-	private void checkForCollision(Sprite s, Iterator<Sprite> it) {
-		while (it.hasNext()) {
-			Sprite d = it.next();
-			if (d != s) {
-				if (s.getBoundingShape().getBoundsInParent().intersects(d.getBoundingShape().getBoundsInParent())) {
-					System.out.println(" it's a crash !!!");
-					s.handleCollision(this, d);
-				}
-			}
-		}
-	}
 
 }

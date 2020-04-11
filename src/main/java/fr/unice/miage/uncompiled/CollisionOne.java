@@ -1,5 +1,6 @@
 package fr.unice.miage.uncompiled;
 
+import fr.unice.miage.game.Config;
 import fr.unice.miage.game_objects.Player;
 import fr.unice.miage.game_objects.Projectile;
 import fr.unice.miage.plugins.PlugInCollision;
@@ -11,10 +12,12 @@ import java.util.List;
 
 public class CollisionOne implements PlugInCollision {
 
+
     public void checkAllCollisions(List<Player> players){
         for(int i = 0; i < players.size()-2; i++){
             for(int j = i+1; j < players.size()-1; j++){
                 this.checkPlayersCollision(players.get(i), players.get(j));
+                this.checkPlayerToBorderCollision(players.get(i));
             }
         }
     }
@@ -26,9 +29,22 @@ public class CollisionOne implements PlugInCollision {
         //this.checkWeaponToWeaponCollision(player1, player2);
     }
 
+    private void checkPlayerToBorderCollision(Player player){
+        double x = player.getPosition().getX();
+        double y = player.getPosition().getY();
+        double w = player.getPluginGraphic().getPlayerSprite().getWidth();
+        double h = player.getPluginGraphic().getPlayerSprite().getHeight();
+        if ((x+w)> Config.getWorldWidth() || x < 0) {
+            player.getVelocity().reverseX();
+        }
+        if ((y+h)> Config.getWorldHeight() || y < 0) {
+            player.getVelocity().reverseY();
+        }
+    }
+
 
     private void checkPlayerToWeaponCollision(Player playerA, Player playerB) {
-        Sprite playerSpriteA = playerA.getPlayerSprite();
+        Sprite playerSpriteA = playerA.getPluginGraphic().getPlayerSprite();
         List<PlugInWeapon> playerWeaponsB = playerB.getPlayerWeapons();
         for(PlugInWeapon weapon : playerWeaponsB) {
             Iterator<Projectile> it = weapon.getWeaponProjectiles().iterator();
@@ -44,8 +60,8 @@ public class CollisionOne implements PlugInCollision {
     }
 
     private void  checkPlayerToPlayerCollision(Player player1, Player player2) {
-        Sprite playerSprite1 = player1.getPlayerSprite();
-        Sprite playerSprite2 = player2.getPlayerSprite();
+        Sprite playerSprite1 = player1.getPluginGraphic().getPlayerSprite();
+        Sprite playerSprite2 = player2.getPluginGraphic().getPlayerSprite();
         if (playerSprite1.getBoundingShape().getBoundsInParent().intersects(playerSprite2.getBoundingShape().getBoundsInParent())) {
             System.out.println(player1.getName() + " in collision with " + player2.getName());
             player1.getHitByPlayer(player2);

@@ -1,66 +1,39 @@
 package fr.unice.miage.sprite;
 
 
-import fr.unice.miage.game.gui.GameBoard;
-import javafx.scene.canvas.GraphicsContext;
+import fr.unice.miage.utils.Randomizer;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Shape;
 
 public abstract class Sprite {
-	protected double x;
-	protected double y;
-	protected double speedX;
-	protected double speedY;
 
-	public Sprite(double x, double y, double speedX, double speedY) {
+	private double width;
+	private double height;
+	private Color[] colors = new Color[] { Color.RED, Color.CYAN, Color.DARKCYAN };
+	private Color color;
+
+
+	public Sprite(double width, double height, Color color) {
 		super();
-		this.x = x;
-		this.y = y;
-		this.speedX = speedX;
-		this.speedY = speedY; 
+		this.width = width;
+		this.height = height;
+		this.color = color;
+
 	}
 
-	public void update(double time, GameBoard b) {
-		x += speedX * time;
-		y += speedY * time;
-	}
+	public double getWidth(){ return this.width; }
+
+	public double getHeight(){ return this.height; }
 
 	public abstract Shape getBoundingShape() ;
-	
-	public abstract void render(GraphicsContext gc);
-	
-	public abstract void handleCollision(GameBoard b, Sprite p);
-	
-	
-	public double getX() {
-		return x;
+
+	public void setRandomColor(){
+		this.color = colors[(int) Randomizer.getRandomDoubleInRange(0,this.colors.length-1)];
+	}
+	public Color[] getColors(){
+		return this.colors;
 	}
 
-	public void setX(double x) {
-		this.x = x;
-	}
 
-	public double getY() {
-		return y;
-	}
-
-	public void setY(double y) {
-		this.y = y;
-	}
-
-	public double getSpeedX() {
-		return speedX;
-	}
-
-	public void setSpeedX(double speed) {
-		this.speedX = speed;
-	}
-
-	public double getSpeedY() {
-		return speedY;
-	}
-
-	public void setSpeedY(double speed) {
-		this.speedY = speed;
-	}
 
 }

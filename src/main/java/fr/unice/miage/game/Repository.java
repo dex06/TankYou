@@ -1,5 +1,6 @@
 package fr.unice.miage.game;
 
+import fr.unice.miage.game.gui.GameBoard;
 import fr.unice.miage.plugins.PlugInCollision;
 import fr.unice.miage.plugins.PlugInGraphic;
 import fr.unice.miage.plugins.PlugInMovement;
@@ -124,6 +125,7 @@ public class Repository {
                     this.graphicPlugins.add(loadedClass);
                     break;
                 case "PlugInCollision":
+                    System.out.println("have collision");
                     this.collisionPluginsNames.add(instance.getClass().getSimpleName());
                     this.collisionPlugins.add(loadedClass);
                     break;
@@ -174,7 +176,7 @@ public class Repository {
         return (PlugInGraphic) this.graphicPlugins.get(this.graphicPluginsNames.indexOf(opt)).getDeclaredConstructor().newInstance();
     }
 
-    public PlugInCollision loadCollision(String opt) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
+    public PlugInCollision loadCollision(GameBoard gameBoard, String opt) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
         if(this.testing){ return new CollisionOne(); }
         return (PlugInCollision) this.collisionPlugins.get(this.graphicPluginsNames.indexOf(opt)).getDeclaredConstructor().newInstance();
     }
