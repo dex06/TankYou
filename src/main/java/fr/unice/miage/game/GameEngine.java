@@ -25,11 +25,11 @@ public class GameEngine  {
     private List<Player> players = new ArrayList<>();
 
     private Stage stage;
-    private int stageWidth;
-    private int stageHeight;
+    private double stageWidth;
+    private double stageHeight;
     private String path;
 
-    public GameEngine(Stage stage, int width, int height, String path) {
+    public GameEngine(Stage stage, double width, double height, String path) {
         this.stage = stage;
         this.stageWidth = width;
         this.stageHeight = height;
@@ -59,7 +59,7 @@ public class GameEngine  {
     }
 
     public void loadingCollision(String opt) throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
-        this.collision = this.repository.loadCollision(gameBoard, opt);
+        this.collision = this.repository.loadCollision(opt);
     }
 
     public void loadingPlayers(List<List<String>> playersOptions) throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
@@ -95,11 +95,11 @@ public class GameEngine  {
                 for(Player player : players){
 
                     player.getPluginMovement().move(player);
-                    player.getPluginGraphic().draw(player, canvas);
+                    player.getPluginGraphic().draw(canvas);
                     player.setHealth(player.getHealth()-0.01);
 
                 }
-                collision.checkAllCollisions(players);
+                if(players.size() > 1) collision.checkAllCollisions(players);
                 lastUpdateNanoTime = currentNanoTime;
             }
         }.start();

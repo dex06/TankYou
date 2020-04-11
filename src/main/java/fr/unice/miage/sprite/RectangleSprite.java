@@ -15,13 +15,13 @@ public class RectangleSprite extends Sprite {
 	private Player player;
 	private double width;
 	private double height;
-	private Color color;
-	private Color[] colors = new Color[] { Color.RED, Color.CYAN, Color.DARKCYAN };
+	private Paint color;
+	private Paint[] colors = new Paint[] { Color.RED, Color.CYAN, Color.DARKCYAN };
 	private int currentColor = 0; 
 	
 	private Random r = new Random();
 	
-	public RectangleSprite(Player player, double width, double height, Color color) {
+	public RectangleSprite(Player player, double width, double height, Paint color) {
 		super(width, height, color);
 		this.player = player;
 		this.width = width;
@@ -32,10 +32,8 @@ public class RectangleSprite extends Sprite {
 		double x = player.getPosition().getX();
 		double y = player.getPosition().getY();
 		GraphicsContext gc = canvas.getGraphicsContext();
-		Paint save = gc.getFill();
 		gc.setFill(color);
 		gc.fillRect(x, y, width, height);
-		gc.setFill(save);
 	}
 
 	@Override
@@ -49,7 +47,7 @@ public class RectangleSprite extends Sprite {
 		this.currentColor = num;
 	}
 
-	public Color[] getColors(){
+	public Paint[] getColors(){
 		return this.colors;
 	}
 

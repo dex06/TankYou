@@ -5,8 +5,8 @@ import javafx.scene.paint.Paint;
 
 public class HealthBar {
 
-    private int width = 50;
-    private int height = 10;
+    private int width = 30;
+    private int height = 5;
     private Paint color;
 
     public HealthBar(int width, int height, Paint color){

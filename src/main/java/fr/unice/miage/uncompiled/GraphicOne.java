@@ -7,6 +7,7 @@ import fr.unice.miage.plugins.PlugInGraphic;
 import fr.unice.miage.sprite.RectangleSprite;
 import fr.unice.miage.sprite.Sprite;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 
 public class GraphicOne implements PlugInGraphic {
     //private CanvasGUI canvas;
@@ -22,19 +23,19 @@ public class GraphicOne implements PlugInGraphic {
         this.player = player;
         this.playerSprite = new RectangleSprite(player, width, height, color);
         this.playerSprite.setRandomColor();
-        this.healthBar = new HealthBar(70, 20, Color.GREEN);
+        this.healthBar = new HealthBar(30, 5, Color.GREEN);
     }
 
-    public void draw(Player player, CanvasGUI canvas) {
-        this.playerSprite.draw(canvas);
+    public void draw(CanvasGUI canvas) {
         this.healthBar.draw(player, canvas);
+        this.playerSprite.draw(canvas);
     }
 
     public String getName(){
         return this.name;
     }
 
-    public Color getRandomColor(){
+    public Paint getRandomColor(){
         return this.playerSprite.getColors()[(int) Math.random() * 3];
     }
 

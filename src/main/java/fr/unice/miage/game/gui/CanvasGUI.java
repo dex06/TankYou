@@ -10,7 +10,7 @@ public class CanvasGUI {
    private Canvas canvas;
    private GraphicsContext gc;
 
-    public CanvasGUI(int width, int height){
+    public CanvasGUI(double width, double height){
         this.canvas = new Canvas(width, height);
         this.gc = this.canvas.getGraphicsContext2D();
 
@@ -38,15 +38,16 @@ public class CanvasGUI {
         gc.setFill(Color.BLACK);
     }
 
-    public void drawHealthBar(Player player, int width, int height, Paint color) {
+    public void drawHealthBar(Player player, double width, double height, Paint color) {
         double x = player.getPosition().getX();
         double y = player.getPosition().getY();
         double health = player.getHealth();
         double healthWidth = width * health / 100;
+        double rectifyX = -5;
+        double rectifyY = -10;
         gc.setFill(Color.BLUE);
-        gc.fillRect(x, y, width, height);
+        gc.fillRect(x + rectifyX, y + rectifyY, width, height);
         gc.setFill(color);
-        gc.fillRect(x, y, healthWidth, height);
-
+        gc.fillRect(x + rectifyX, y + rectifyY, healthWidth, height);
     }
 }

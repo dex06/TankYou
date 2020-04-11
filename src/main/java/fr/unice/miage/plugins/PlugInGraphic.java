@@ -5,7 +5,7 @@ import fr.unice.miage.game_objects.Player;
 import fr.unice.miage.sprite.Sprite;
 
 public interface PlugInGraphic {
-    void draw(Player player, CanvasGUI canvas);
+    void draw(CanvasGUI canvas);
     Sprite getPlayerSprite();
     void init(Player player);
 }
