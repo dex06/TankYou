@@ -21,8 +21,8 @@ public class CollisionOne implements PlugInCollision {
     }
 
     public void checkAllCollisions(List<Player> players){
-        for(int i = 0; i < players.size()-2; i++){
-            for(int j = i+1; j < players.size()-1; j++){
+        for(int i = 0; i < players.size()-1; i++){
+            for(int j = i+1; j < players.size(); j++){
                 checkPlayersCollision(players.get(i), players.get(j));
             }
         }
