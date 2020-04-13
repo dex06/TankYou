@@ -11,6 +11,14 @@ import java.util.Iterator;
 import java.util.List;
 
 public class CollisionOne implements PlugInCollision {
+    double collisionDamage = 5;
+
+    public void playerToPlayerCollisionDamage(Player player1, Player player2){
+        double speedFactor1 = (Math.abs(player1.getSpeedX()) + Math.abs(player1.getSpeedY()))/2;
+        double speedFactor2 = (Math.abs(player2.getSpeedX()) + Math.abs(player2.getSpeedY()))/2;
+        player1.setHealth(player1.getHealth()-collisionDamage*speedFactor2);
+        player2.setHealth(player2.getHealth()-collisionDamage*speedFactor1);
+    }
 
     public void checkAllCollisions(List<Player> players){
         for(int i = 0; i < players.size()-2; i++){
@@ -63,8 +71,11 @@ public class CollisionOne implements PlugInCollision {
         Sprite playerSprite2 = player2.getSprite();
         if (playerSprite1.getBoundingShape().getBoundsInParent().intersects(playerSprite2.getBoundingShape().getBoundsInParent())) {
             System.out.println(player1.getName() + " in collision with " + player2.getName());
-            player1.getHitByPlayer(player2);
-            player2.getHitByPlayer(player1);
+            player1.reverseSpeed();
+            player1.getSprite().setRandomColor();
+            player2.reverseSpeed();
+            player2.getSprite().setRandomColor();
+            playerToPlayerCollisionDamage(player1, player2);
         }
     }
 

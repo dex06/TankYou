@@ -11,19 +11,12 @@ import javafx.scene.text.Font;
 
 public class RectangleSprite extends Sprite {
 
-	private Player player;
-	private String playerID;
-	private double width;
-	private double height;
-	private Paint color;
-
+	protected Player player;
+	protected String playerID;
 
 	public RectangleSprite(Player player, double width, double height, Paint color) {
 		super(width, height, color);
 		this.player = player;
-		this.width = width;
-		this.height = height;
-		this.color = color;
 		this.playerID = String.valueOf(player.getPlayerID());
 	}
 	public void draw(CanvasGUI canvas){
@@ -35,7 +28,6 @@ public class RectangleSprite extends Sprite {
 		gc.setFill(Color.BLACK);
 		gc.setFont(Font.font("Arial", 18));
 		gc.fillText(playerID, x+width/4, y+height/1.2);
-
 	}
 
 	@Override

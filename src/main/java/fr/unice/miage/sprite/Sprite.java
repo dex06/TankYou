@@ -8,10 +8,10 @@ import javafx.scene.shape.Shape;
 
 public abstract class Sprite {
 
-	private double width;
-	private double height;
-	private Paint[] colors = new Paint[] { Color.RED, Color.CYAN, Color.DARKCYAN };
-	private Paint color;
+	protected double width;
+	protected double height;
+	protected Paint[] colors = new Paint[] { Color.RED, Color.CYAN, Color.DARKCYAN, Color.TURQUOISE, Color.WHEAT };
+	protected Paint color;
 
 
 	public Sprite(double width, double height, Paint color) {
@@ -27,12 +27,16 @@ public abstract class Sprite {
 
 	public abstract Shape getBoundingShape() ;
 
+	public void setColor(Paint new_color){ color = new_color; }
+
 	public void setRandomColor(){
-		color = colors[(int) Randomizer.getRandomDoubleInRange(0,colors.length-1)];
+		color = colors[Randomizer.getRandomIntInRange(0,colors.length)];
 	}
+
 	public Paint[] getColors(){
 		return colors;
 	}
+
 
 
 

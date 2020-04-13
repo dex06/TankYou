@@ -43,4 +43,8 @@ public class GraphicOne implements PlugInGraphic {
         return playerSprite;
     }
 
+    public void setToDead(){
+        playerSprite.setColor(Color.GRAY);
+    };
+
 }

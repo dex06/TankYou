@@ -94,11 +94,10 @@ public class GameEngine  {
                 double t = (currentNanoTime - lastUpdateNanoTime) / 1000000000.0;
                 canvas.clean();
                 for(Player player : players){
-
-                    player.move();
+                    if(player.isAlive()){
+                        player.move();
+                    };
                     player.draw();
-                    //player.setHealth(player.getHealth()-0.01);
-
                 }
                 collision.checkAllCollisions(players);
                 lastUpdateNanoTime = currentNanoTime;

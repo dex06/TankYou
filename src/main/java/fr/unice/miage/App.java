@@ -5,10 +5,6 @@ import fr.unice.miage.game.GameEngine;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
-/**
- * Hello world!
- *
- */
 public class App extends Application
 {
     @Override

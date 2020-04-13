@@ -6,6 +6,10 @@ import fr.unice.miage.sprite.Sprite;
 
 public interface PlugInGraphic {
     void draw(CanvasGUI canvas);
+
     Sprite getPlayerSprite();
+
     void init(Player player);
+
+    void setToDead();
 }

@@ -28,6 +28,7 @@ public class MoveOne implements PlugInMovement {
     public void setSpeedY(double y){ velocity = new Vector2(velocity.getX(), y); }
     public double getSpeedX(){ return velocity.getX(); }
     public double getSpeedY(){ return velocity.getY(); }
+    public void reverseSpeed(){ velocity = velocity.reverse2(); }
 
     /* Vectors */
     // Methods for position vectors
@@ -45,6 +46,9 @@ public class MoveOne implements PlugInMovement {
     public void setAcceleration(Vector2 v){ acceleration = v; }
     public void addAcceleration(Vector2 v){ acceleration.add(v); }
 
+    public void applyForce(Vector2 f){
+        acceleration.add(f);
+    }
 
     public void move(Player player){
         playerMove(player);

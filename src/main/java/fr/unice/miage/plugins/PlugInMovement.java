@@ -11,6 +11,7 @@ public interface PlugInMovement {
     double getSpeedY();
     void setSpeedX(double x);
     void setSpeedY(double y);
+    void reverseSpeed();
 
     Vector2 getPosition();
     void setPosition(Vector2 v);

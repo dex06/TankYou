@@ -21,16 +21,16 @@ public class Player {
     private PlugInMovement pm;
     private PlugInWeapon pw;
     private PlugInGraphic pg;
-    private double health = 50;
+    private double health = 100;
     private List<PlugInWeapon> weapons;
-    private boolean isAlive;
+    private boolean alive;
 
     public Player(List<String> plugins, Repository repository, CanvasGUI canvas, int playerID) throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
         this.repository = repository;
         this.canvas = canvas;
         this.playerID = playerID;
         this.playerName = "Player" + playerID;
-        this.isAlive = true;
+        this.alive = true;
         this.loadPlugins(plugins);
         this.setPlayerWeapons();
     }
@@ -41,9 +41,15 @@ public class Player {
     // Methods for health
     public double getHealth(){ return health; }
     public void setHealth(double value){
-        if(value <= 0) health = 0;
+        if(value <= 0) {
+            health = 0;
+            alive = false;
+            pg.setToDead();
+        }
         else health = value;
     }
+
+
 
     /** Move methods **/
     public void move(){ pm.move(this); }
@@ -52,6 +58,7 @@ public class Player {
     public void setSpeedY(double y){ pm.setSpeedY(y); }
     public double getSpeedX(){ return pm.getSpeedX(); }
     public double getSpeedY(){ return pm.getSpeedY(); }
+    public void reverseSpeed(){ pm.reverseSpeed(); }
 
     /* Vectors */
     // Methods for position vectors
@@ -69,8 +76,11 @@ public class Player {
     // Methods for player sprite
     public Sprite getSprite(){ return pg.getPlayerSprite(); }
 
+    /** Other methods **/
+    public boolean isAlive(){ return alive; }
 
-    // Getters for plugins
+
+    /** Getters for plugins **/
     public List<PlugInWeapon> getPlayerWeapons(){ return weapons; }
     public PlugInMovement getPluginMovement(){ return pm; }
     public PlugInWeapon getPluginWeapon(){ return pw; }
