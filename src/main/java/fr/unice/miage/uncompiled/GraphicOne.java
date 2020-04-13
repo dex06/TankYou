@@ -27,20 +27,20 @@ public class GraphicOne implements PlugInGraphic {
     }
 
     public void draw(CanvasGUI canvas) {
-        this.healthBar.draw(player, canvas);
-        this.playerSprite.draw(canvas);
+        healthBar.draw(player, canvas);
+        playerSprite.draw(canvas);
     }
 
     public String getName(){
-        return this.name;
+        return name;
     }
 
     public Paint getRandomColor(){
-        return this.playerSprite.getColors()[(int) Math.random() * 3];
+        return playerSprite.getColors()[(int) Math.random() * 3];
     }
 
     public Sprite getPlayerSprite(){
-        return this.playerSprite;
+        return playerSprite;
     }
 
 }

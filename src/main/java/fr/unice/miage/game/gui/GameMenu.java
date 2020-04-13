@@ -57,46 +57,46 @@ public class GameMenu  {
 
     public void init(){
         Label guiLabel = new Label("GUI");
-        guiLabel.setFont(this.labelFont);
+        guiLabel.setFont(labelFont);
         HBox guiHBox = new HBox();
-        VBox gui1 = this.createGUIVBox();
-        VBox gui2 = this.createGUIVBox();
+        VBox gui1 = createGUIVBox();
+        VBox gui2 = createGUIVBox();
         guiHBox.getChildren().addAll(gui1, gui2);
         guiHBox.setSpacing(15);
         guiHBox.setAlignment(Pos.CENTER);
-        this.guis.getChildren().addAll(guiLabel,guiHBox);
+        guis.getChildren().addAll(guiLabel,guiHBox);
 
         Label configLabel = new Label("Configs");
-        configLabel.setFont(this.labelFont);
+        configLabel.setFont(labelFont);
         HBox configHBox = new HBox();
-        VBox collVBox = this.createCollisionVbox();
+        VBox collVBox = createCollisionVbox();
         collVBox.setAlignment(Pos.CENTER);
         configHBox.getChildren().add(collVBox);
         configHBox.setAlignment(Pos.CENTER);
-        this.configs.getChildren().addAll(configLabel,configHBox);
+        configs.getChildren().addAll(configLabel,configHBox);
 
         Label playersLabel = new Label("Joueurs");
-        playersLabel.setFont(this.labelFont);
-        this.players.getChildren().add(playersLabel);
+        playersLabel.setFont(labelFont);
+        players.getChildren().add(playersLabel);
 
         Button addPlayerBtn = new Button("Ajouter un joueur");
         addPlayerBtn.setOnAction(e -> {
-            if(this.nbPlayers < this.maxPlayers) {
-                this.nbPlayers++;
-                this.addPlayerConfig();
-                if(this.nbPlayers >= this.maxPlayers) addPlayerBtn.setDisable(true);
+            if(nbPlayers < maxPlayers) {
+                nbPlayers++;
+                addPlayerConfig();
+                if(nbPlayers >= maxPlayers) addPlayerBtn.setDisable(true);
             }
         });
         //Ajouter un joueur de base
-        this.addPlayerConfig();
+        addPlayerConfig();
 
         Button startGameBtn = new Button("Commencer la partie");
         startGameBtn.setOnAction(e -> {
-            this.listOfGUIOptions = this.getGUIOptions();
-            this.listOfPlayersOptions = this.getPlayersOptions();
-            this.listOfConfigOptions = this.getConfigOptions();
+            listOfGUIOptions = getGUIOptions();
+            listOfPlayersOptions = getPlayersOptions();
+            listOfConfigOptions = getConfigOptions();
             try {
-                this.startGame();
+                startGame();
             } catch (ClassNotFoundException ex) {
                 ex.printStackTrace();
             } catch (NoSuchMethodException ex) {
@@ -117,7 +117,7 @@ public class GameMenu  {
         bottom.setCenter(btnHB);
 
         VBox mainVBox = new VBox();
-        mainVBox.getChildren().addAll(this.guis, this.configs, this.players);
+        mainVBox.getChildren().addAll(guis, configs, players);
         mainVBox.setSpacing(10);
         mainVBox.setPadding(new Insets(25));
 
@@ -128,25 +128,25 @@ public class GameMenu  {
         root.setBackground(new Background(new BackgroundFill(Color.web("#e0e4ec"), null, null)));
 
         Scene scene = new Scene(root);
-        this.stage.setTitle("Menu");
-        this.stage.setScene(scene);
-        this.stage.setWidth(512);
-        this.stage.setHeight(512);
-        this.stage.centerOnScreen();
-        //this.stage.sizeToScene();
-        //this.stage.show();
+        stage.setTitle("Menu");
+        stage.setScene(scene);
+        stage.setWidth(512);
+        stage.setHeight(512);
+        stage.centerOnScreen();
+        //stage.sizeToScene();
+        //stage.show();
     }
 
 
 
     private void addPlayerConfig(){
         HBox playerHBox = new HBox();
-        Label playerLabel = new Label("Joueur " + this.nbPlayers);
-        VBox playerMovementVBox = this.createPlayerVBox("Mouvements");
+        Label playerLabel = new Label("Joueur " + nbPlayers);
+        VBox playerMovementVBox = createPlayerVBox("Mouvements");
         playerMovementVBox.setAlignment(Pos.CENTER);
-        VBox playerWeaponVBox = this.createPlayerVBox("Armes");
+        VBox playerWeaponVBox = createPlayerVBox("Armes");
         playerWeaponVBox.setAlignment(Pos.CENTER);
-        VBox playerGraphicVBox = this.createPlayerVBox("Graphiques");
+        VBox playerGraphicVBox = createPlayerVBox("Graphiques");
         playerGraphicVBox.setAlignment(Pos.CENTER);
         playerHBox.getChildren().addAll(playerLabel, playerMovementVBox, playerWeaponVBox, playerGraphicVBox);
         playerHBox.setSpacing(10);
@@ -158,7 +158,7 @@ public class GameMenu  {
     private VBox createCollisionVbox() {
         VBox collVBox = new VBox();
         Label collLabel = new Label("Collision");
-        ObservableList<String> opts = this.repository.getCollisionPluginsNames();
+        ObservableList<String> opts = repository.getCollisionPluginsNames();
         ComboBox collCB = new ComboBox(opts);
         if(opts.size() > 0) collCB.setValue(opts.get(0));
         collVBox.getChildren().addAll(collLabel, collCB);
@@ -167,7 +167,7 @@ public class GameMenu  {
 
     private VBox createGUIVBox(){
         VBox guiVBox = new VBox();
-        Label guiLabel = new Label("PlugIn " + ++this.nbGUI);
+        Label guiLabel = new Label("PlugIn " + ++nbGUI);
         ObservableList<String> options =
                 FXCollections.observableArrayList(
                         "Option 1",
@@ -188,13 +188,13 @@ public class GameMenu  {
         ObservableList<String> opts = FXCollections.observableArrayList();;
         switch(type){
             case "Mouvements":
-                opts = this.repository.getMovePluginsNames();
+                opts = repository.getMovePluginsNames();
                 break;
             case "Armes":
-                opts = this.repository.getWeaponPluginsNames();
+                opts = repository.getWeaponPluginsNames();
                 break;
             case "Graphiques":
-                opts = this.repository.getGraphicPluginsNames();
+                opts = repository.getGraphicPluginsNames();
                 break;
         }
         ComboBox playerCB = new ComboBox(opts);
@@ -204,13 +204,13 @@ public class GameMenu  {
     }
 
     private void startGame() throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
-        this.stop();
-        this.gameEngine.startGame(listOfGUIOptions, listOfConfigOptions, listOfPlayersOptions);
+        stop();
+        gameEngine.startGame(listOfGUIOptions, listOfConfigOptions, listOfPlayersOptions);
     }
 
     private List<String> getConfigOptions(){
         List<String> optionsList = new ArrayList<>();
-        Set<Node> collSet = this.configs.lookupAll("ComboBox");
+        Set<Node> collSet = configs.lookupAll("ComboBox");
         for(Node cb : collSet){
             ComboBox new_cb = (ComboBox) cb;
             optionsList.add((String)new_cb.getValue());
@@ -220,7 +220,7 @@ public class GameMenu  {
 
     private List<String> getGUIOptions(){
         List<String> optionsList = new ArrayList<>();
-        Set<Node> CBSet =   this.guis.lookupAll("ComboBox");
+        Set<Node> CBSet =   guis.lookupAll("ComboBox");
         for(Node cb : CBSet){
             ComboBox new_cb = (ComboBox) cb;
             optionsList.add((String)new_cb.getValue());
@@ -230,24 +230,18 @@ public class GameMenu  {
 
     private List<List<String>> getPlayersOptions(){
         List<String> optionsList = new ArrayList<>();
-        Set<Node> CBSet = this.players.lookupAll("ComboBox");
+        Set<Node> CBSet = players.lookupAll("ComboBox");
         for(Node cb : CBSet){
             ComboBox new_cb = (ComboBox) cb;
             optionsList.add((String)new_cb.getValue());
         }
 
-        int nbPluginByPlayer = optionsList.size() / this.nbPlayers;
+        int nbPluginByPlayer = optionsList.size() / nbPlayers;
         List<List<String>> listOfOptionsByPlayer = new ArrayList<>();
         for(int i = 0; i < optionsList.size() - 1; i += nbPluginByPlayer){
             List<String> subL = optionsList.subList(i, i + nbPluginByPlayer);
             listOfOptionsByPlayer.add(subL);
         }
          return listOfOptionsByPlayer;
-    }
-
-    public static void main(String[] args) {
-
-
-
     }
 }

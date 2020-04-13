@@ -17,19 +17,19 @@ public class CanvasGUI {
     }
 
     public double getWidth(){
-        return this.canvas.getWidth();
+        return canvas.getWidth();
     }
 
     public double getHeight() {
-        return this.canvas.getHeight();
+        return canvas.getHeight();
     }
 
     public GraphicsContext getGraphicsContext(){
-        return this.gc;
+        return gc;
     }
 
     public Canvas getCanvas(){
-        return this.canvas;
+        return canvas;
     }
 
     public void clean(){

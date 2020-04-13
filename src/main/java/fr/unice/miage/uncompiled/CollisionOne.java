@@ -12,28 +12,27 @@ import java.util.List;
 
 public class CollisionOne implements PlugInCollision {
 
-
     public void checkAllCollisions(List<Player> players){
         for(int i = 0; i < players.size()-2; i++){
             for(int j = i+1; j < players.size()-1; j++){
-                this.checkPlayersCollision(players.get(i), players.get(j));
+                checkPlayersCollision(players.get(i), players.get(j));
             }
         }
-        for(Player player : players) this.checkPlayerToBorderCollision(player);
+        for(Player player : players) checkPlayerToBorderCollision(player);
     }
 
     private void checkPlayersCollision(Player player1, Player player2){
-        this.checkPlayerToPlayerCollision(player1, player2);
-        //this.checkPlayerToWeaponCollision(player1, player2);
-        //this.checkPlayerToWeaponCollision(player2, player1);
-        //this.checkWeaponToWeaponCollision(player1, player2);
+        checkPlayerToPlayerCollision(player1, player2);
+        //checkPlayerToWeaponCollision(player1, player2);
+        //checkPlayerToWeaponCollision(player2, player1);
+        //checkWeaponToWeaponCollision(player1, player2);
     }
 
     private void checkPlayerToBorderCollision(Player player){
         double x = player.getPosition().getX();
         double y = player.getPosition().getY();
-        double w = player.getPluginGraphic().getPlayerSprite().getWidth();
-        double h = player.getPluginGraphic().getPlayerSprite().getHeight();
+        double w = player.getSprite().getWidth();
+        double h = player.getSprite().getHeight();
         if ((x+w) > Config.getWorldWidth() || x < 0) {
             player.setSpeedX(-player.getSpeedX());
         }
@@ -44,7 +43,7 @@ public class CollisionOne implements PlugInCollision {
 
 
     private void checkPlayerToWeaponCollision(Player playerA, Player playerB) {
-        Sprite playerSpriteA = playerA.getPluginGraphic().getPlayerSprite();
+        Sprite playerSpriteA = playerA.getSprite();
         List<PlugInWeapon> playerWeaponsB = playerB.getPlayerWeapons();
         for(PlugInWeapon weapon : playerWeaponsB) {
             Iterator<Projectile> it = weapon.getWeaponProjectiles().iterator();
@@ -60,8 +59,8 @@ public class CollisionOne implements PlugInCollision {
     }
 
     private void  checkPlayerToPlayerCollision(Player player1, Player player2) {
-        Sprite playerSprite1 = player1.getPluginGraphic().getPlayerSprite();
-        Sprite playerSprite2 = player2.getPluginGraphic().getPlayerSprite();
+        Sprite playerSprite1 = player1.getSprite();
+        Sprite playerSprite2 = player2.getSprite();
         if (playerSprite1.getBoundingShape().getBoundsInParent().intersects(playerSprite2.getBoundingShape().getBoundsInParent())) {
             System.out.println(player1.getName() + " in collision with " + player2.getName());
             player1.getHitByPlayer(player2);

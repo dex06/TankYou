@@ -19,20 +19,19 @@ public abstract class Sprite {
 		this.width = width;
 		this.height = height;
 		this.color = color;
-
 	}
 
-	public double getWidth(){ return this.width; }
+	public double getWidth(){ return width; }
 
-	public double getHeight(){ return this.height; }
+	public double getHeight(){ return height; }
 
 	public abstract Shape getBoundingShape() ;
 
 	public void setRandomColor(){
-		this.color = colors[(int) Randomizer.getRandomDoubleInRange(0,this.colors.length-1)];
+		color = colors[(int) Randomizer.getRandomDoubleInRange(0,colors.length-1)];
 	}
 	public Paint[] getColors(){
-		return this.colors;
+		return colors;
 	}
 
 

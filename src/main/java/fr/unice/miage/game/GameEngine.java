@@ -44,40 +44,40 @@ public class GameEngine  {
     }
 
     public void initMenu(){
-        this.gameMenu = new GameMenu(this, this.stage, this.repository);
-        this.gameMenu.init();
+        this.gameMenu = new GameMenu(this, stage, repository);
+        gameMenu.init();
     }
 
     public void startMenu(){
-        this.gameMenu.start();
+        gameMenu.start();
     }
 
     public void startGame(List<String> guiOpts, List<String> configOpts, List<List<String>> playersOpts) throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
-        this.loadingPlayers(playersOpts);
-        this.loadingCollision(configOpts.get(0));
-        this.createGameBoard();
+        loadingPlayers(playersOpts);
+        loadingCollision(configOpts.get(0));
+        createGameBoard();
     }
 
     public void loadingCollision(String opt) throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
-        collision = this.repository.loadCollision(opt);
+        collision = repository.loadCollision(opt);
     }
 
     public void loadingPlayers(List<List<String>> playersOptions) throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
-        this.nbPlayers = playersOptions.size();
+        nbPlayers = playersOptions.size();
         int playerID = 0;
         for(List<String> playerOpts : playersOptions) {
             playerID++;
-            this.players.add(new Player(playerOpts, this.repository, this.canvas, playerID));
+            players.add(new Player(playerOpts, repository, canvas, playerID));
         }
         Finder.setPlayers(players);
     }
 
     public void createGameBoard(){
-        this.gameBoard = new GameBoard(this.stage, 600,600, this.canvas);
-        this.gameBoard.init();
-        this.gameBoard.start();
-        this.giveRandomPositionAndVelocityToPlayers();
-        this.loop();
+        gameBoard = new GameBoard(stage, 600,600, canvas);
+        gameBoard.init();
+        gameBoard.start();
+        giveRandomPositionAndVelocityToPlayers();
+        loop();
     }
 
     public void giveRandomPositionAndVelocityToPlayers(){
@@ -95,9 +95,9 @@ public class GameEngine  {
                 canvas.clean();
                 for(Player player : players){
 
-                    player.getPluginMovement().move(player);
-                    player.getPluginGraphic().draw(canvas);
-                    player.setHealth(player.getHealth()-0.01);
+                    player.move();
+                    player.draw();
+                    //player.setHealth(player.getHealth()-0.01);
 
                 }
                 collision.checkAllCollisions(players);

@@ -6,6 +6,7 @@ import fr.unice.miage.geom.Vector2;
 import fr.unice.miage.plugins.PlugInGraphic;
 import fr.unice.miage.plugins.PlugInMovement;
 import fr.unice.miage.plugins.PlugInWeapon;
+import fr.unice.miage.sprite.Sprite;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.List;
@@ -14,24 +15,17 @@ public class Player {
 
     private String playerName = "Player";
     private int playerID;
-    private Vector2 position;
-    private Vector2 velocity;
-    private Vector2 acceleration;
-    private double rotation;
+
     private Repository repository;
     private CanvasGUI canvas;
-    private PlugInMovement pluginMovement;
-    private PlugInWeapon pluginWeapon;
-    private PlugInGraphic pluginGraphic;
+    private PlugInMovement pm;
+    private PlugInWeapon pw;
+    private PlugInGraphic pg;
     private double health = 50;
     private List<PlugInWeapon> weapons;
     private boolean isAlive;
 
     public Player(List<String> plugins, Repository repository, CanvasGUI canvas, int playerID) throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
-        this.position = new Vector2(100,100);
-        this.velocity = new Vector2(0.1,0.1);
-        this.acceleration = new Vector2();
-        this.rotation = 0;
         this.repository = repository;
         this.canvas = canvas;
         this.playerID = playerID;
@@ -51,33 +45,36 @@ public class Player {
         else health = value;
     }
 
+    /** Move methods **/
+    public void move(){ pm.move(this); }
     // Methods for speedX and speedY
-    public void setSpeedX(double x){ velocity = new Vector2(x, velocity.getY()); }
-    public void setSpeedY(double y){ velocity = new Vector2(velocity.getX(), y); }
-    public double getSpeedX(){ return velocity.getX(); }
-    public double getSpeedY(){ return velocity.getY(); }
+    public void setSpeedX(double x){ pm.setSpeedX(x); }
+    public void setSpeedY(double y){ pm.setSpeedY(y); }
+    public double getSpeedX(){ return pm.getSpeedX(); }
+    public double getSpeedY(){ return pm.getSpeedY(); }
 
     /* Vectors */
     // Methods for position vectors
-    public Vector2 getPosition(){ return position; }
-    public void setPosition(Vector2 v){ position = v;}
-    public void addPosition(Vector2 v){ position.add(v); }
+    public Vector2 getPosition(){ return pm.getPosition(); }
+    public void setPosition(Vector2 v){ pm.setPosition(v);}
+    public void addPosition(Vector2 v){ pm.addPosition(v); }
 
     // Methods for velocity vectors
-    public Vector2 getVelocity() { return velocity; }
-    public void setVelocity(Vector2 v){ velocity = v; }
-    public void addVelocity(Vector2 v){ velocity.add(v); }
+    public Vector2 getVelocity() { return pm.getVelocity(); }
+    public void setVelocity(Vector2 v){ pm.setVelocity(v); }
+    public void addVelocity(Vector2 v){ pm.addVelocity(v); }
 
-    // Methods for acceleration vectors
-    public Vector2 getAcceleration() { return acceleration; }
-    public void setAcceleration(Vector2 v){ acceleration = v; }
-    public void addAcceleration(Vector2 v){ acceleration.add(v); }
+    /** Graphic methods **/
+    public void draw(){ pg.draw(canvas); }
+    // Methods for player sprite
+    public Sprite getSprite(){ return pg.getPlayerSprite(); }
+
 
     // Getters for plugins
     public List<PlugInWeapon> getPlayerWeapons(){ return weapons; }
-    public PlugInMovement getPluginMovement(){ return pluginMovement; }
-    public PlugInWeapon getPluginWeapon(){ return pluginWeapon; }
-    public PlugInGraphic getPluginGraphic(){ return pluginGraphic; }
+    public PlugInMovement getPluginMovement(){ return pm; }
+    public PlugInWeapon getPluginWeapon(){ return pw; }
+    public PlugInGraphic getPluginGraphic(){ return pg; }
 
     public void setPlayerWeapons(){ }
 
@@ -86,10 +83,10 @@ public class Player {
     public void getHitByPlayer(Player player){}
 
     private void loadPlugins(List<String> plugins) throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
-        pluginMovement = repository.loadMovement(plugins.get(0));
-        pluginWeapon = repository.loadWeapon(plugins.get(1));
-        pluginGraphic= repository.loadGraphic(plugins.get(2));
-        pluginGraphic.init(this);
+        pm = repository.loadMovement(plugins.get(0));
+        pw = repository.loadWeapon(plugins.get(1));
+        pg= repository.loadGraphic(plugins.get(2));
+        pg.init(this);
     }
 
 }

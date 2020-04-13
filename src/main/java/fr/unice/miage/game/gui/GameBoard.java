@@ -28,28 +28,28 @@ public class GameBoard {
 		this.canvas = canvas;
 	}
 	public void init(){
-		this.stage.setTitle("Demo de jeu");
-		this.root = new Group();
-		this.theScene = new Scene(root);
-		this.stage.setScene(theScene);
-		root.getChildren().add(this.canvas.getCanvas());
-		this.stage.sizeToScene();
+		stage.setTitle("Demo de jeu");
+		root = new Group();
+		theScene = new Scene(root);
+		stage.setScene(theScene);
+		root.getChildren().add(canvas.getCanvas());
+		stage.sizeToScene();
 	}
 	public void start(){
-		this.stage.show();
+		stage.show();
 	}
 
 	public void stop(){
-		this.stage.close();
+		stage.close();
 	}
 
 	public void addSprite(Sprite p) {
-		this.list.add(p);
+		list.add(p);
 	}
 
 	public void addHealthBar(FlowPane healthBar){
-		this.root.getChildren().remove(healthBar);
-		this.root.getChildren().add(healthBar);
+		root.getChildren().remove(healthBar);
+		root.getChildren().add(healthBar);
 	}
 
 	public Iterator<Sprite> spriteIterator() {
@@ -61,7 +61,7 @@ public class GameBoard {
 	}
 
 	public void setWidth(int width) {
-		this.width = width;
+		width = width;
 	}
 
 	public int getHeight() {
@@ -69,8 +69,6 @@ public class GameBoard {
 	}
 
 	public void setHeight(int height) {
-		this.height = height;
+		height = height;
 	}
-
-
 }
