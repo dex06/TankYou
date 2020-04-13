@@ -11,9 +11,9 @@ public class MoveOne implements PlugInMovement {
     protected Vector2 velocity;
     protected Vector2 acceleration;
     protected double rotation;
-    protected double maxSpeed = 5;
-    protected double maxVelocity = 5;
-    protected double maxForce = 5;
+    protected double maxSpeed = 3;
+    protected double maxVelocity = 1;
+    protected double maxForce = 2;
     protected double mass = 3;
 
     public MoveOne(){

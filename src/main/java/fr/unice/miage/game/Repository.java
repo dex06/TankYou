@@ -51,29 +51,29 @@ public class Repository {
     }
 
     public ObservableList<String> getMovePluginsNames() {
-        return this.movePluginsNames;
+        return movePluginsNames;
     }
 
     public ObservableList<String> getWeaponPluginsNames() {
-        return this.weaponPluginsNames;
+        return weaponPluginsNames;
     }
 
     public ObservableList<String> getGraphicPluginsNames() {
-        return this.graphicPluginsNames;
+        return graphicPluginsNames;
     }
 
-    public ObservableList<String> getCollisionPluginsNames(){ return this.collisionPluginsNames; }
+    public ObservableList<String> getCollisionPluginsNames(){ return collisionPluginsNames; }
 
     public List<Class> getMovePlugins() {
-        return this.movePlugins;
+        return movePlugins;
     }
 
     public List<Class> getWeaponPlugins() {
-        return this.weaponPlugins;
+        return weaponPlugins;
     }
 
     public List<Class> getGraphicPlugins() {
-        return this.graphicPlugins;
+        return graphicPlugins;
     }
 
     public void loadLibraries(String path) throws Exception {
@@ -82,12 +82,12 @@ public class Repository {
             throw new RuntimeException("Invalid library directory");
         }
         for (File file : libDir.listFiles()) {
-            if (!this.isJarFile(file)) {
+            if (!isJarFile(file)) {
                 continue;
             }
             System.out.println("Found library format : " + file.getName());
-            this.unzipJarFile(file);
-            this.loadClassesFromJar(file);
+            unzipJarFile(file);
+            loadClassesFromJar(file);
         }
     }
 
@@ -105,27 +105,27 @@ public class Repository {
                 continue;
             }
             System.out.println("Loading jar class : " + je.getName());
-            String pack = this.packageName + "." + this.appFolderName + "." + je.getName().replace(".class", "");
+            String pack = packageName + "." + appFolderName + "." + je.getName().replace(".class", "");
             Class loadedClass = cl.loadClass(pack);
             Object instance = loadedClass.getDeclaredConstructor().newInstance();
             String interfaceName = instance.getClass().getInterfaces()[0].getSimpleName();
 
             switch (interfaceName) {
                 case "PlugInMovement":
-                    this.movePluginsNames.add(instance.getClass().getSimpleName());
-                    this.movePlugins.add(loadedClass);
+                    movePluginsNames.add(instance.getClass().getSimpleName());
+                    movePlugins.add(loadedClass);
                     break;
                 case "PlugInWeapon":
-                    this.weaponPluginsNames.add(instance.getClass().getSimpleName());
-                    this.weaponPlugins.add(loadedClass);
+                    weaponPluginsNames.add(instance.getClass().getSimpleName());
+                    weaponPlugins.add(loadedClass);
                     break;
                 case "PlugInGraphic":
-                    this.graphicPluginsNames.add(instance.getClass().getSimpleName());
-                    this.graphicPlugins.add(loadedClass);
+                    graphicPluginsNames.add(instance.getClass().getSimpleName());
+                    graphicPlugins.add(loadedClass);
                     break;
                 case "PlugInCollision":
-                    this.collisionPluginsNames.add(instance.getClass().getSimpleName());
-                    this.collisionPlugins.add(loadedClass);
+                    collisionPluginsNames.add(instance.getClass().getSimpleName());
+                    collisionPlugins.add(loadedClass);
                     break;
             }
         }
@@ -145,7 +145,7 @@ public class Repository {
                 fileName = destinationDir + File.separator + entry.getName();
                 f = new File(fileName);
                 //Adding to list of jar files
-                this.jarFiles.add(f);
+                jarFiles.add(f);
                 if (!fileName.endsWith("/")) {
                     InputStream is = jar.getInputStream(entry);
                     FileOutputStream fos = new FileOutputStream(f);
@@ -160,23 +160,23 @@ public class Repository {
     }
 
     public PlugInMovement loadMovement(String opt) throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
-        if(this.testing){ return new MoveOne(); }
-        return (PlugInMovement) this.movePlugins.get(this.movePluginsNames.indexOf(opt)).getDeclaredConstructor().newInstance();
+        if(testing){ return new MoveOne(); }
+        return (PlugInMovement) movePlugins.get(movePluginsNames.indexOf(opt)).getDeclaredConstructor().newInstance();
     }
 
     public PlugInWeapon loadWeapon(String opt) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
-        if(this.testing){ return new WeaponOne(); }
-        return (PlugInWeapon) this.weaponPlugins.get(this.weaponPluginsNames.indexOf(opt)).getDeclaredConstructor().newInstance();
+        if(testing){ return new WeaponOne(); }
+        return (PlugInWeapon) weaponPlugins.get(weaponPluginsNames.indexOf(opt)).getDeclaredConstructor().newInstance();
     }
 
     public PlugInGraphic loadGraphic(String opt) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
-        if(this.testing){ return new GraphicOne(); }
-        return (PlugInGraphic) this.graphicPlugins.get(this.graphicPluginsNames.indexOf(opt)).getDeclaredConstructor().newInstance();
+        if(testing){ return new GraphicOne(); }
+        return (PlugInGraphic) graphicPlugins.get(graphicPluginsNames.indexOf(opt)).getDeclaredConstructor().newInstance();
     }
 
     public PlugInCollision loadCollision(String opt) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
-        if(this.testing){ return new CollisionOne(); }
-        return (PlugInCollision) this.collisionPlugins.get(this.collisionPluginsNames.indexOf(opt)).getDeclaredConstructor().newInstance();
+        if(testing){ return new CollisionOne(); }
+        return (PlugInCollision) collisionPlugins.get(collisionPluginsNames.indexOf(opt)).getDeclaredConstructor().newInstance();
     }
 }
 
