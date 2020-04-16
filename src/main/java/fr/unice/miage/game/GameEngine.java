@@ -4,6 +4,7 @@ import fr.unice.miage.game.gui.CanvasGUI;
 import fr.unice.miage.game.gui.GameBoard;
 import fr.unice.miage.game.gui.GameMenu;
 import fr.unice.miage.game_objects.Player;
+import fr.unice.miage.game_objects.Projectile;
 import fr.unice.miage.plugins.PlugInCollision;
 import fr.unice.miage.utils.Finder;
 import fr.unice.miage.utils.Randomizer;
@@ -24,6 +25,7 @@ public class GameEngine  {
     private PlugInCollision collision;
     private int nbPlayers;
     private List<Player> players = new ArrayList<>();
+
 
     private Stage stage;
     private double stageWidth;
@@ -92,12 +94,26 @@ public class GameEngine  {
         new AnimationTimer(){
             public void handle(long currentNanoTime) {
                 double t = (currentNanoTime - lastUpdateNanoTime) / 1000000000.0;
+//                System.out.println(t);
                 canvas.clean();
                 for(Player player : players){
                     if(player.isAlive()){
                         player.move();
                     };
                     player.draw();
+                    player.checkProjectileOut();
+                    for(Projectile projectile : player.projectiles){
+                        projectile.move();
+                        projectile.draw(canvas);
+                    }
+                    if((currentNanoTime / 1000000000) - player.lastShot > 1){
+                        System.out.println(player.getName() + " shot ");
+                        player.lastShot = currentNanoTime / 1000000000;
+                        System.out.println(player.getName() + " près de " + Finder.findClosestPlayer(player).getName());
+                        player.shot();
+                        System.out.println("Size Projectile " + player.projectiles.size());
+                    }
+
                 }
                 collision.checkAllCollisions(players);
                 lastUpdateNanoTime = currentNanoTime;

@@ -7,8 +7,10 @@ import fr.unice.miage.plugins.PlugInGraphic;
 import fr.unice.miage.plugins.PlugInMovement;
 import fr.unice.miage.plugins.PlugInWeapon;
 import fr.unice.miage.sprite.Sprite;
+import fr.unice.miage.utils.Finder;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Player {
@@ -16,6 +18,9 @@ public class Player {
     private String playerName = "Player";
     private int playerID;
 
+    public List<Projectile> projectiles = new ArrayList<>();
+
+    public double lastShot = 0;
     private Repository repository;
     private CanvasGUI canvas;
     private PlugInMovement pm;
@@ -33,6 +38,14 @@ public class Player {
         this.alive = true;
         this.loadPlugins(plugins);
         this.setPlayerWeapons();
+    }
+
+    public void shot(){
+        Player p = Finder.findClosestPlayer(this);
+        double direction = Math.atan((p.getPosition().getY() - this.getPosition().getY())
+                /
+                (p.getPosition().getX() - this.getPosition().getX()));
+        projectiles.add(new Projectile(new Vector2(pm.getPosition().getX(), pm.getPosition().getY()), direction));
     }
 
     public String getName(){ return playerName; }
@@ -97,6 +110,14 @@ public class Player {
         pw = repository.loadWeapon(plugins.get(1));
         pg= repository.loadGraphic(plugins.get(2));
         pg.init(this);
+    }
+
+    public void checkProjectileOut(){
+        for (int counter = 0; counter < this.projectiles.size(); counter++) {
+            if(projectiles.get(counter).position.getX() > 600 || projectiles.get(counter).position.getX() < 0 || projectiles.get(counter).position.getY() > 600 || projectiles.get(counter).position.getY() < 0){
+                this.projectiles.remove(counter);
+            }
+        }
     }
 
 }
