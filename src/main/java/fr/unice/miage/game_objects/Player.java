@@ -42,9 +42,8 @@ public class Player {
 
     public void shot(){
         Player p = Finder.findClosestPlayer(this);
-        double direction = Math.atan((p.getPosition().getY() - this.getPosition().getY())
-                /
-                (p.getPosition().getX() - this.getPosition().getX()));
+        double direction = Math.atan2(p.getPosition().getY() - this.getPosition().getY(), p.getPosition().getX() - this.getPosition().getX());
+//        System.out.println(this.getName() + " " + direction);
         projectiles.add(new Projectile(new Vector2(pm.getPosition().getX(), pm.getPosition().getY()), direction));
     }
 

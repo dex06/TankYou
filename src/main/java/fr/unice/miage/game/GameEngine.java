@@ -111,7 +111,7 @@ public class GameEngine  {
                         player.lastShot = currentNanoTime / 1000000000;
                         System.out.println(player.getName() + " près de " + Finder.findClosestPlayer(player).getName());
                         player.shot();
-                        System.out.println("Size Projectile " + player.projectiles.size());
+//                        System.out.println("Size Projectile " + player.projectiles.size());
                     }
 
                 }
