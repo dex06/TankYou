@@ -8,11 +8,14 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 
+import java.util.List;
+
 public class Projectile {
     Sprite projectileSprite;
     String projectileName;
 
     protected Vector2 position;
+    protected Vector2 sizeRect;
     protected double velocity;
     protected Vector2 acceleration;
     protected double rotation;
@@ -27,6 +30,7 @@ public class Projectile {
         this.projectileName = "Proj test";
         this.position = position;
         this.rotation = rotation;
+        this.sizeRect = new Vector2(4,4);
         this.velocity = 10;
     }
 
@@ -41,7 +45,7 @@ public class Projectile {
         double y = this.position.getY();
         GraphicsContext gc = canvas.getGraphicsContext();
         gc.setFill(Color.BLACK);
-        gc.fillRect(x, y, 5, 5);
+        gc.fillRect(x, y, this.sizeRect.getX(), this.sizeRect.getX());
 //        gc.setFill(Color.BLACK);
 //        gc.setFont(Font.font("Arial", 18));
 //        gc.fillText(playerID, x+width/4, y+height/1.2);
@@ -56,5 +60,21 @@ public class Projectile {
 
     public void collidedWith(Projectile projectile) {
 
+    }
+
+    //TODO adapté avec une classe sprite et utiliser les fonctions dans checkPlayerToPlayerCollision
+    //mal codé
+    public boolean checkCollisionsWithPlayer(List<Player> players){
+            for(int j = 0; j < players.size(); j++){
+                if(this.position.getX() > players.get(j).getPosition().getX()
+                && this.position.getX() < players.get(j).getPosition().getX() + players.get(j).getSprite().getWidth()
+                && this.position.getY() > players.get(j).getPosition().getY()
+                && this.position.getY() < players.get(j).getPosition().getY() + players.get(j).getSprite().getHeight())
+                {
+                    System.out.println("Collision projectile");
+                    return true;
+                }
+            }
+            return false;
     }
 }
