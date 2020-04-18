@@ -4,7 +4,6 @@ import fr.unice.miage.game.Config;
 import fr.unice.miage.game_objects.Player;
 import fr.unice.miage.game_objects.Projectile;
 import fr.unice.miage.plugins.PlugInCollision;
-import fr.unice.miage.plugins.PlugInWeapon;
 import fr.unice.miage.sprite.Sprite;
 
 import java.util.Iterator;
@@ -52,16 +51,13 @@ public class CollisionOne implements PlugInCollision {
 
     private void checkPlayerToWeaponCollision(Player playerA, Player playerB) {
         Sprite playerSpriteA = playerA.getSprite();
-        List<PlugInWeapon> playerWeaponsB = playerB.getPlayerWeapons();
-        for(PlugInWeapon weapon : playerWeaponsB) {
-            Iterator<Projectile> it = playerB.getProjectiles().iterator();
-            while (it.hasNext()) {
-                Projectile projectile = it.next();
-                Sprite projectileSprite = projectile.getSprite();
-                if (playerSpriteA.getBoundingShape().getBoundsInParent().intersects(projectileSprite.getBoundingShape().getBoundsInParent())) {
-                    System.out.println(playerA.getName() + " in collision with projectile " + projectile.getName());
-                    playerA.getHitByProjectile(projectile);
-                }
+        Iterator<Projectile> it = playerB.getProjectiles().iterator();
+        while (it.hasNext()) {
+            Projectile projectile = it.next();
+            Sprite projectileSprite = projectile.getSprite();
+            if (playerSpriteA.getBoundingShape().getBoundsInParent().intersects(projectileSprite.getBoundingShape().getBoundsInParent())) {
+                System.out.println(playerA.getName() + " in collision with projectile " + projectile.getName());
+                playerA.getHitByProjectile(projectile);
             }
         }
     }
