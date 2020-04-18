@@ -72,6 +72,7 @@ public class Projectile {
                 && this.position.getY() < players.get(j).getPosition().getY() + players.get(j).getSprite().getHeight())
                 {
                     System.out.println("Collision projectile");
+                    players.get(j).setHealth(players.get(j).getHealth()-10);
                     return true;
                 }
             }
