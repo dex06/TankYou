@@ -36,6 +36,7 @@ public class GameMenu  {
     private VBox players = new VBox();
     private Font labelFont = new Font("Arial", 18);
     private List<String> listOfGUI1Options = new ArrayList<>();
+    private List<String> listOfGUI2Options = new ArrayList<>();
     private List<List<String>> listOfPlayersOptions = new ArrayList<>();
     private List<String> listOfConfigOptions = new ArrayList<>();
 
@@ -218,7 +219,7 @@ public class GameMenu  {
 
     private void startGame() throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
         stop();
-        gameEngine.startGame(listOfGUI1Options, listOfConfigOptions, listOfPlayersOptions);
+        gameEngine.startGame(listOfGUI1Options, listOfGUI2Options, listOfConfigOptions, listOfPlayersOptions);
     }
 
     private List<String> getConfigOptions(){
