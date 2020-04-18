@@ -170,11 +170,14 @@ public class GameMenu  {
     private VBox createGUI1VBox(){
         VBox guiVBox = new VBox();
         Label guiLabel = new Label("PlugIn " + ++nbGUI);
+        guiVBox.getChildren().add(guiLabel);
         List<String> opts = repository.getGui1PluginsNames();
         for(String opt : opts){
             CheckBox cb = new CheckBox(opt);
             guiVBox.getChildren().add(cb);
         }
+        guiVBox.getChildren().add(new CheckBox("test1"));
+        guiVBox.getChildren().add(new CheckBox("test2"));
         guiVBox.setSpacing(10);
         guiVBox.setAlignment(Pos.CENTER);
         return guiVBox;
