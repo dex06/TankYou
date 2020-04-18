@@ -4,7 +4,6 @@ import fr.unice.miage.game.gui.CanvasGUI;
 import fr.unice.miage.game.gui.GameBoard;
 import fr.unice.miage.game.gui.GameMenu;
 import fr.unice.miage.game_objects.Player;
-import fr.unice.miage.game_objects.Projectile;
 import fr.unice.miage.plugins.PlugInCollision;
 import fr.unice.miage.utils.Finder;
 import fr.unice.miage.utils.Randomizer;
@@ -89,6 +88,12 @@ public class GameEngine  {
         }
     }
 
+    protected int numberOfPlayersAlive(){
+        int nb = 0;
+        for(Player player : players) if(player.isAlive()) nb++;
+        return nb;
+    }
+
     public void loop(){
         lastUpdateNanoTime = System.nanoTime();
         new AnimationTimer(){
@@ -123,7 +128,7 @@ public class GameEngine  {
                         player.shot();
 //                        System.out.println("Size Projectile " + player.projectiles.size());
                     }
-
+                    if(numberOfPlayersAlive() <= 1) gameBoard.stop();
                 }
                 collision.checkAllCollisions(players);
                 lastUpdateNanoTime = currentNanoTime;

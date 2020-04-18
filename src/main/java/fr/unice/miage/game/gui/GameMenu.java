@@ -152,7 +152,7 @@ public class GameMenu  {
         playerHBox.setSpacing(10);
         playerHBox.setAlignment(Pos.CENTER_LEFT);
         players.getChildren().add(playerHBox);
-
+        stage.sizeToScene();
     }
 
     private VBox createCollisionVbox() {
