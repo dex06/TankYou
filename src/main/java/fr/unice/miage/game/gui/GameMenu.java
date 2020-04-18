@@ -9,6 +9,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
@@ -34,7 +35,7 @@ public class GameMenu  {
     private VBox configs = new VBox();
     private VBox players = new VBox();
     private Font labelFont = new Font("Arial", 18);
-    private List<String> listOfGUIOptions = new ArrayList<>();
+    private List<String> listOfGUI1Options = new ArrayList<>();
     private List<List<String>> listOfPlayersOptions = new ArrayList<>();
     private List<String> listOfConfigOptions = new ArrayList<>();
 
@@ -59,8 +60,8 @@ public class GameMenu  {
         Label guiLabel = new Label("GUI");
         guiLabel.setFont(labelFont);
         HBox guiHBox = new HBox();
-        VBox gui1 = createGUIVBox();
-        VBox gui2 = createGUIVBox();
+        VBox gui1 = createGUI1VBox();
+        VBox gui2 = createGUI2VBox();
         guiHBox.getChildren().addAll(gui1, gui2);
         guiHBox.setSpacing(15);
         guiHBox.setAlignment(Pos.CENTER);
@@ -92,7 +93,7 @@ public class GameMenu  {
 
         Button startGameBtn = new Button("Commencer la partie");
         startGameBtn.setOnAction(e -> {
-            listOfGUIOptions = getGUIOptions();
+            listOfGUI1Options = getGUI1Options();
             listOfPlayersOptions = getPlayersOptions();
             listOfConfigOptions = getConfigOptions();
             try {
@@ -165,7 +166,19 @@ public class GameMenu  {
         return collVBox;
     }
 
-    private VBox createGUIVBox(){
+    private VBox createGUI1VBox(){
+        VBox guiVBox = new VBox();
+        Label guiLabel = new Label("PlugIn " + ++nbGUI);
+        List<String> opts = repository.getGui1PluginsNames();
+        for(String opt : opts){
+            CheckBox cb = new CheckBox(opt);
+            guiVBox.getChildren().add(cb);
+        }
+        guiVBox.setSpacing(10);
+        guiVBox.setAlignment(Pos.CENTER);
+        return guiVBox;
+    }
+    private VBox createGUI2VBox(){
         VBox guiVBox = new VBox();
         Label guiLabel = new Label("PlugIn " + ++nbGUI);
         ObservableList<String> options =
@@ -205,7 +218,7 @@ public class GameMenu  {
 
     private void startGame() throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
         stop();
-        gameEngine.startGame(listOfGUIOptions, listOfConfigOptions, listOfPlayersOptions);
+        gameEngine.startGame(listOfGUI1Options, listOfConfigOptions, listOfPlayersOptions);
     }
 
     private List<String> getConfigOptions(){
@@ -218,7 +231,17 @@ public class GameMenu  {
         return optionsList;
     }
 
-    private List<String> getGUIOptions(){
+    private List<String> getGUI1Options(){
+        List<String> optionsList = new ArrayList<>();
+        Set<Node> CBSet =   guis.lookupAll("CheckBox");
+        for(Node cb : CBSet){
+            CheckBox new_cb = (CheckBox) cb;
+            if(new_cb.isSelected()) optionsList.add(new_cb.getId());
+        }
+        return optionsList;
+    }
+
+    private List<String> getGUI2Options(){
         List<String> optionsList = new ArrayList<>();
         Set<Node> CBSet =   guis.lookupAll("ComboBox");
         for(Node cb : CBSet){
@@ -228,6 +251,7 @@ public class GameMenu  {
         return optionsList;
     }
 
+
     private List<List<String>> getPlayersOptions(){
         List<String> optionsList = new ArrayList<>();
         Set<Node> CBSet = players.lookupAll("ComboBox");
@@ -235,7 +259,6 @@ public class GameMenu  {
             ComboBox new_cb = (ComboBox) cb;
             optionsList.add((String)new_cb.getValue());
         }
-
         int nbPluginByPlayer = optionsList.size() / nbPlayers;
         List<List<String>> listOfOptionsByPlayer = new ArrayList<>();
         for(int i = 0; i < optionsList.size() - 1; i += nbPluginByPlayer){
