@@ -54,7 +54,7 @@ public class CollisionOne implements PlugInCollision {
         Sprite playerSpriteA = playerA.getSprite();
         List<PlugInWeapon> playerWeaponsB = playerB.getPlayerWeapons();
         for(PlugInWeapon weapon : playerWeaponsB) {
-            Iterator<Projectile> it = weapon.getWeaponProjectiles().iterator();
+            Iterator<Projectile> it = playerB.getProjectiles().iterator();
             while (it.hasNext()) {
                 Projectile projectile = it.next();
                 Sprite projectileSprite = projectile.getSprite();
@@ -80,21 +80,15 @@ public class CollisionOne implements PlugInCollision {
     }
 
     private void checkWeaponToWeaponCollision(Player player1, Player player2) {
-        List<PlugInWeapon> playerWeapons1 = player1.getPlayerWeapons();
-        List<PlugInWeapon> playerWeapons2 = player2.getPlayerWeapons();
-        for(int i = 0; i < playerWeapons1.size()-1; i++){
-            for(int j = 0; j < playerWeapons2.size()-1; j++){
-                List<Projectile> weaponProjectiles1 = playerWeapons1.get(i).getWeaponProjectiles();
-                List<Projectile> weaponProjectiles2 = playerWeapons2.get(j).getWeaponProjectiles();
-                for(int k = 0; k < weaponProjectiles1.size()-1; k++){
-                    for(int l = 0; l < weaponProjectiles2.size()-1; l++){
-                        Sprite projectileSprite1 = weaponProjectiles1.get(k).getSprite();
-                        Sprite projectileSprite2 = weaponProjectiles2.get(l).getSprite();
-                        if (projectileSprite1.getBoundingShape().getBoundsInParent().intersects(projectileSprite2.getBoundingShape().getBoundsInParent())){
-                            weaponProjectiles1.get(k).collidedWith(weaponProjectiles2.get(l));
-                            weaponProjectiles2.get(l).collidedWith(weaponProjectiles1.get(k));
-                        }
-                    }
+        List<Projectile> weaponProjectiles1 = player1.getProjectiles();
+        List<Projectile> weaponProjectiles2 = player2.getProjectiles();
+        for(int k = 0; k < weaponProjectiles1.size()-1; k++){
+            for(int l = 0; l < weaponProjectiles2.size()-1; l++){
+                Sprite projectileSprite1 = weaponProjectiles1.get(k).getSprite();
+                Sprite projectileSprite2 = weaponProjectiles2.get(l).getSprite();
+                if (projectileSprite1.getBoundingShape().getBoundsInParent().intersects(projectileSprite2.getBoundingShape().getBoundsInParent())){
+                    weaponProjectiles1.get(k).collidedWith(weaponProjectiles2.get(l));
+                    weaponProjectiles2.get(l).collidedWith(weaponProjectiles1.get(k));
                 }
             }
         }

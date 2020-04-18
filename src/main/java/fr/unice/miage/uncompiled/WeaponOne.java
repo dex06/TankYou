@@ -8,14 +8,12 @@ import java.util.List;
 
 public class WeaponOne implements PlugInWeapon {
 
-    private List<Projectile> weaponProjectiles = new ArrayList<>();
+
 
     public WeaponOne(){}
 
 
-    public List<Projectile> getWeaponProjectiles() {
-        return this.weaponProjectiles;
-    }
+
 
     public void createWeapon(){ }
 }

@@ -17,6 +17,14 @@ public class Player {
 
     private String playerName = "Player";
     private int playerID;
+    protected Vector2 position;
+    protected Vector2 velocity;
+    protected Vector2 acceleration;
+    protected double rotation;
+    protected double maxSpeed = 3;
+    protected double maxVelocity = 1;
+    protected double maxForce = 2;
+    protected double mass = 3;
 
     public List<Projectile> projectiles = new ArrayList<>();
 
@@ -31,12 +39,14 @@ public class Player {
     private boolean alive;
 
     public Player(List<String> plugins, Repository repository, CanvasGUI canvas, int playerID) throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
+
         this.repository = repository;
         this.canvas = canvas;
         this.playerID = playerID;
         this.playerName = "Player" + playerID;
         this.alive = true;
         this.loadPlugins(plugins);
+        this.pm.init(this);
         this.setPlayerWeapons();
     }
 
@@ -44,7 +54,7 @@ public class Player {
         Player p = Finder.findClosestPlayer(this);
         double direction = Math.atan2(p.getPosition().getY() - this.getPosition().getY(), p.getPosition().getX() - this.getPosition().getX());
 //        System.out.println(this.getName() + " " + direction);
-        projectiles.add(new Projectile(new Vector2(pm.getPosition().getX(), pm.getPosition().getY()), direction));
+        projectiles.add(new Projectile(new Vector2(position.getX(), position.getY()), direction));
     }
 
     public String getName(){ return playerName; }
@@ -60,28 +70,50 @@ public class Player {
         }
         else health = value;
     }
-
-
+    // Methods for mass value
+    public double getMass() { return mass; }
+    public void setMass(double m){ mass = m; }
 
     /** Move methods **/
     public void move(){ pm.move(this); }
+
+    // Methods for position x and y
+    public double getX(){ return position.getX(); }
+    public void setX(double x){ position = new Vector2(x, position.getY()); }
+    public double getY(){ return position.getY(); }
+    public void setY(double y){ position = new Vector2(position.getX(), y); }
+
     // Methods for speedX and speedY
-    public void setSpeedX(double x){ pm.setSpeedX(x); }
-    public void setSpeedY(double y){ pm.setSpeedY(y); }
-    public double getSpeedX(){ return pm.getSpeedX(); }
-    public double getSpeedY(){ return pm.getSpeedY(); }
-    public void reverseSpeed(){ pm.reverseSpeed(); }
+    public void setSpeedX(double x){ velocity = new Vector2(x, velocity.getY()); }
+    public void setSpeedY(double y){ velocity = new Vector2(velocity.getX(), y);}
+    public double getSpeedX(){ return velocity.getX(); }
+    public double getSpeedY(){ return velocity.getY(); }
+    public void reverseSpeed(){ velocity = new Vector2(-velocity.getX(), -velocity.getY()); }
 
     /* Vectors */
     // Methods for position vectors
-    public Vector2 getPosition(){ return pm.getPosition(); }
-    public void setPosition(Vector2 v){ pm.setPosition(v);}
-    public void addPosition(Vector2 v){ pm.addPosition(v); }
+    public Vector2 getPosition(){ return position;}
+    public void setPosition(Vector2 v){ position = v;}
+    public void addPosition(Vector2 v){ position.add(v); }
 
     // Methods for velocity vectors
-    public Vector2 getVelocity() { return pm.getVelocity(); }
-    public void setVelocity(Vector2 v){ pm.setVelocity(v); }
-    public void addVelocity(Vector2 v){ pm.addVelocity(v); }
+    public Vector2 getVelocity() { return velocity; }
+    public void setVelocity(Vector2 v){ velocity = v; }
+    public void addVelocity(Vector2 v){ velocity.add(v); }
+
+    // Methods for acceleration vectors
+    public Vector2 getAcceleration(){ return acceleration; }
+    public void setAcceleration(Vector2 v) {  acceleration = v; }
+    public void addAcceleration(Vector2 v){ acceleration.add(v); }
+
+    // Methods for rotation value
+    public void setRotation(double rot) { rotation = rot; }
+    public double getRotation(){ return rotation; }
+
+    // Getters for max values
+    public double getMaxVelocity() { return maxVelocity; }
+    public double getMaxForce() { return maxForce; }
+    public double getMaxSpeed() { return maxSpeed; }
 
     /** Graphic methods **/
     public void draw(){ pg.draw(canvas); }
@@ -90,6 +122,7 @@ public class Player {
 
     /** Other methods **/
     public boolean isAlive(){ return alive; }
+    public List<Projectile> getProjectiles(){ return projectiles; }
 
 
     /** Getters for plugins **/
@@ -125,5 +158,6 @@ public class Player {
             }
         }
     }
+
 
 }
