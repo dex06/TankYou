@@ -94,6 +94,17 @@ public class GameEngine  {
         return nb;
     }
 
+    protected int getWinningPlayerNumber(){
+        int winningPlayerNumber = -1;
+        for(int i = 0; i < players.size()-1; i++){
+            if(players.get(i).isAlive()) {
+                winningPlayerNumber = i;
+                break;
+            }
+        }
+        return winningPlayerNumber;
+    }
+
     public void loop(){
         lastUpdateNanoTime = System.nanoTime();
         new AnimationTimer(){
