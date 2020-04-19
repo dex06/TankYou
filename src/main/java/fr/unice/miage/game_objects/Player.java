@@ -44,7 +44,15 @@ public class Player {
         Player p = Finder.findClosestPlayer(this);
         double direction = Math.atan2(p.getPosition().getY() - this.getPosition().getY(), p.getPosition().getX() - this.getPosition().getX());
 //        System.out.println(this.getName() + " " + direction);
-        projectiles.add(new Projectile(new Vector2(pm.getPosition().getX(), pm.getPosition().getY()), direction));
+        double xCenter = pm.getPosition().getX() + pg.getPlayerSprite().getWidth()/2;
+        double yCenter = pm.getPosition().getY() + pg.getPlayerSprite().getHeight()/2;
+        double longueur = Math.sqrt(Math.pow(pg.getPlayerSprite().getWidth()/2, 2) + Math.pow(pg.getPlayerSprite().getHeight()/2, 2));
+//        new Vector2(pm.getPosition().getX(), pm.getPosition().getY());
+        projectiles.add(new Projectile(new Vector2(xCenter + longueur*Math.cos(direction),
+                yCenter + longueur*Math.sin(direction)),
+                direction));
+//        projectiles.add(new Projectile(new Vector2(pm.getPosition().getX(), pm.getPosition().getY()), direction));
+
     }
 
     public String getName(){ return playerName; }
@@ -113,16 +121,16 @@ public class Player {
 
     public void checkProjectileOut(){
         for (int counter = 0; counter < this.projectiles.size(); counter++) {
-//            if(projectiles.get(counter).position.getX() > 600 || projectiles.get(counter).position.getX() < 0 || projectiles.get(counter).position.getY() > 600 || projectiles.get(counter).position.getY() < 0){
-//                this.projectiles.remove(counter);
-//            }
+            if(projectiles.get(counter).position.getX() > 600 || projectiles.get(counter).position.getX() < 0 || projectiles.get(counter).position.getY() > 600 || projectiles.get(counter).position.getY() < 0){
+                this.projectiles.remove(counter);
+            }
 // POUR DES PROJECTILES QUI PEUVENT REBONDIR SUR DES MURS
-            if(projectiles.get(counter).position.getX() > 600 || projectiles.get(counter).position.getX() < 0){
-                projectiles.get(counter).rotation = Math.PI - projectiles.get(counter).rotation;
-            }
-            else if(projectiles.get(counter).position.getY() > 600 || projectiles.get(counter).position.getY() < 0){
-                projectiles.get(counter).rotation = -projectiles.get(counter).rotation;
-            }
+//            if(projectiles.get(counter).position.getX() > 600 || projectiles.get(counter).position.getX() < 0){
+//                projectiles.get(counter).rotation = Math.PI - projectiles.get(counter).rotation;
+//            }
+//            else if(projectiles.get(counter).position.getY() > 600 || projectiles.get(counter).position.getY() < 0){
+//                projectiles.get(counter).rotation = -projectiles.get(counter).rotation;
+//            }
         }
     }
 
