@@ -3,10 +3,12 @@ package fr.unice.miage.game;
 import fr.unice.miage.game.gui.CanvasGUI;
 import fr.unice.miage.game.gui.GameBoard;
 import fr.unice.miage.game.gui.GameMenu;
+import fr.unice.miage.game.gui.GameStats;
 import fr.unice.miage.game_objects.Player;
 import fr.unice.miage.plugins.PlugInCollision;
 import fr.unice.miage.utils.Finder;
 import fr.unice.miage.utils.Randomizer;
+import fr.unice.miage.utils.Timer;
 import javafx.animation.AnimationTimer;
 import javafx.stage.Stage;
 
@@ -19,6 +21,7 @@ public class GameEngine  {
     private long lastUpdateNanoTime;
     private GameMenu gameMenu;
     private GameBoard gameBoard;
+    private GameStats gameStats;
     private Repository repository;
     private CanvasGUI canvas;
     private PlugInCollision collision;
@@ -53,7 +56,8 @@ public class GameEngine  {
         gameMenu.start();
     }
 
-    public void startGame(List<String> guiOpts, List<String> configOpts, List<List<String>> playersOpts) throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
+    public void startGame(List<String> gui1Opts, List<String> gui2Opts, List<String> configOpts, List<List<String>> playersOpts) throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
+        //loadingGUI1();
         loadingPlayers(playersOpts);
         loadingCollision(configOpts.get(0));
         createGameBoard();
@@ -106,10 +110,11 @@ public class GameEngine  {
     }
 
     public void loop(){
+        Timer timer = new Timer();
         lastUpdateNanoTime = System.nanoTime();
         new AnimationTimer(){
             public void handle(long currentNanoTime) {
-                double t = (currentNanoTime - lastUpdateNanoTime) / 1000000000.0;
+                double t = timer.getTime();
 //                System.out.println(t);
                 canvas.clean();
                 for(Player player : players){

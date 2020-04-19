@@ -1,9 +1,6 @@
 package fr.unice.miage.game;
 
-import fr.unice.miage.plugins.PlugInCollision;
-import fr.unice.miage.plugins.PlugInGraphic;
-import fr.unice.miage.plugins.PlugInMovement;
-import fr.unice.miage.plugins.PlugInWeapon;
+import fr.unice.miage.plugins.*;
 import fr.unice.miage.uncompiled.CollisionOne;
 import fr.unice.miage.uncompiled.GraphicOne;
 import fr.unice.miage.uncompiled.MoveOne;
@@ -31,10 +28,12 @@ public class Repository {
     private ObservableList<String> weaponPluginsNames = FXCollections.observableArrayList();
     private ObservableList<String> graphicPluginsNames = FXCollections.observableArrayList();
     private ObservableList<String> collisionPluginsNames = FXCollections.observableArrayList();
+    private List<String> gui1PluginsNames = new ArrayList<>();
     private List<Class> movePlugins = new ArrayList<>();
     private List<Class> weaponPlugins = new ArrayList<>();
     private List<Class> graphicPlugins = new ArrayList<>();
     private List<Class> collisionPlugins = new ArrayList<>();
+    private List<Class> gui1Plugins = new ArrayList<>();
 
     private String packageName = "fr.unice.miage";
     private String appFolderName = "uncompiled";
@@ -63,6 +62,9 @@ public class Repository {
     }
 
     public ObservableList<String> getCollisionPluginsNames(){ return collisionPluginsNames; }
+
+    public List<String> getGui1PluginsNames(){ return gui1PluginsNames; }
+
 
     public List<Class> getMovePlugins() {
         return movePlugins;
@@ -127,6 +129,10 @@ public class Repository {
                     collisionPluginsNames.add(instance.getClass().getSimpleName());
                     collisionPlugins.add(loadedClass);
                     break;
+                case "PlugInGUI1":
+                    gui1PluginsNames.add(instance.getClass().getSimpleName());
+                    gui1Plugins.add(loadedClass);
+                    break;
             }
         }
     }
@@ -177,6 +183,10 @@ public class Repository {
     public PlugInCollision loadCollision(String opt) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
         if(testing){ return new CollisionOne(); }
         return (PlugInCollision) collisionPlugins.get(collisionPluginsNames.indexOf(opt)).getDeclaredConstructor().newInstance();
+    }
+
+    public PlugInGUI1 loadGUI1(String opt) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
+        return (PlugInGUI1) gui1Plugins.get(gui1PluginsNames.indexOf(opt)).getDeclaredConstructor().newInstance();
     }
 }
 
