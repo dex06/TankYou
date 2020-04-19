@@ -82,17 +82,19 @@ public class GameMenu  {
         players.getChildren().add(playersLabel);
 
         Button addPlayerBtn = new Button("Ajouter un joueur");
+        Button startGameBtn = new Button("Commencer la partie");
+        startGameBtn.setDisable(true);
         addPlayerBtn.setOnAction(e -> {
             if(nbPlayers < maxPlayers) {
                 nbPlayers++;
                 addPlayerConfig();
+                if(nbPlayers > 1) startGameBtn.setDisable(false);
                 if(nbPlayers >= maxPlayers) addPlayerBtn.setDisable(true);
             }
         });
         //Ajouter un joueur de base
         addPlayerConfig();
 
-        Button startGameBtn = new Button("Commencer la partie");
         startGameBtn.setOnAction(e -> {
             listOfGUI1Options = getGUI1Options();
             listOfPlayersOptions = getPlayersOptions();
