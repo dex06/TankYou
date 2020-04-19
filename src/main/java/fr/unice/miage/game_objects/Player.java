@@ -63,8 +63,6 @@ public class Player {
                 yCenter + longueur*Math.sin(direction)),
                 direction));
 //        projectiles.add(new Projectile(new Vector2(pm.getPosition().getX(), pm.getPosition().getY()), direction));
-
-
     }
 
     public String getName(){ return playerName; }

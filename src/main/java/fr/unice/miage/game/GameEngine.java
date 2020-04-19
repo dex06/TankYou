@@ -130,13 +130,6 @@ public class GameEngine  {
                             player.projectiles.remove(counter);
                         }
                     }
-//                    for(Projectile projectile : player.projectiles){
-//                        projectile.move();
-//                        projectile.draw(canvas);
-//                        if(projectile.checkCollisionsWithPlayer(players)){
-////                            player.projectiles.remove()
-//                        }
-//                    }
                     if((currentNanoTime / 1000000000) - player.lastShot > 1){
                         System.out.println(player.getName() + " shot ");
                         player.lastShot = currentNanoTime / 1000000000;
