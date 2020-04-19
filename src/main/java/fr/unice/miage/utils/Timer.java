@@ -11,8 +11,13 @@ public class Timer {
         this.running = true;
     }
 
+    public Timer(double time){
+        this.beginTime = System.nanoTime() + time * 1000000000;
+        this.running = true;
+    }
+
     public void startChrono(){
-        beginTime = System.nanoTime();
+        beginTime = endTime;
         running = true;
     }
 
