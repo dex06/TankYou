@@ -8,6 +8,7 @@ import fr.unice.miage.game_objects.Player;
 import fr.unice.miage.plugins.PlugInCollision;
 import fr.unice.miage.utils.Finder;
 import fr.unice.miage.utils.Randomizer;
+import fr.unice.miage.utils.Timer;
 import javafx.animation.AnimationTimer;
 import javafx.stage.Stage;
 
@@ -109,10 +110,11 @@ public class GameEngine  {
     }
 
     public void loop(){
+        Timer timer = new Timer();
         lastUpdateNanoTime = System.nanoTime();
         new AnimationTimer(){
             public void handle(long currentNanoTime) {
-                double t = (currentNanoTime - lastUpdateNanoTime) / 1000000000.0;
+                double t = timer.getTime();
 //                System.out.println(t);
                 canvas.clean();
                 for(Player player : players){
