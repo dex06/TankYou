@@ -65,6 +65,11 @@ public class Player {
 //        projectiles.add(new Projectile(new Vector2(pm.getPosition().getX(), pm.getPosition().getY()), direction));
     }
 
+    public void moveProjectile(Projectile projectile){
+        this.pw.moveProjectile(projectile);
+
+    }
+
     public String getName(){ return playerName; }
     public int getPlayerID() { return playerID; }
 
@@ -153,18 +158,19 @@ public class Player {
     }
 
     public void checkProjectileOut(){
-        for (int counter = 0; counter < this.projectiles.size(); counter++) {
-            if(projectiles.get(counter).position.getX() > 600 || projectiles.get(counter).position.getX() < 0 || projectiles.get(counter).position.getY() > 600 || projectiles.get(counter).position.getY() < 0){
-                this.projectiles.remove(counter);
-            }
-// POUR DES PROJECTILES QUI PEUVENT REBONDIR SUR DES MURS
-//            if(projectiles.get(counter).position.getX() > 600 || projectiles.get(counter).position.getX() < 0){
-//                projectiles.get(counter).rotation = Math.PI - projectiles.get(counter).rotation;
+        this.pw.checkProjectileOut(this.projectiles);
+//        for (int counter = 0; counter < this.projectiles.size(); counter++) {
+//            if(projectiles.get(counter).position.getX() > 600 || projectiles.get(counter).position.getX() < 0 || projectiles.get(counter).position.getY() > 600 || projectiles.get(counter).position.getY() < 0){
+//                this.projectiles.remove(counter);
 //            }
-//            else if(projectiles.get(counter).position.getY() > 600 || projectiles.get(counter).position.getY() < 0){
-//                projectiles.get(counter).rotation = -projectiles.get(counter).rotation;
-//            }
-        }
+//// POUR DES PROJECTILES QUI PEUVENT REBONDIR SUR DES MURS
+////            if(projectiles.get(counter).position.getX() > 600 || projectiles.get(counter).position.getX() < 0){
+////                projectiles.get(counter).rotation = Math.PI - projectiles.get(counter).rotation;
+////            }
+////            else if(projectiles.get(counter).position.getY() > 600 || projectiles.get(counter).position.getY() < 0){
+////                projectiles.get(counter).rotation = -projectiles.get(counter).rotation;
+////            }
+//        }
     }
 
 

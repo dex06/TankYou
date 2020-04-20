@@ -14,11 +14,17 @@ public class Projectile {
     Sprite projectileSprite;
     String projectileName;
 
-    protected Vector2 position;
-    protected Vector2 sizeRect;
-    protected double velocity;
-    protected Vector2 acceleration;
-    protected double rotation;
+//    protected Vector2 position;
+//    protected Vector2 sizeRect;
+//    protected double velocity;
+//    protected Vector2 acceleration;
+//    protected double rotation;
+
+    public Vector2 position;
+    public Vector2 sizeRect;
+    public double velocity;
+    public Vector2 acceleration;
+    public double rotation;
 
 //    public Projectile(Sprite projectileSprite, String projectileName){
 //        this.projectileSprite = projectileSprite;
@@ -34,10 +40,10 @@ public class Projectile {
         this.velocity = 10;
     }
 
-    public void move(){
-        this.position.setX(this.position.getX() + this.velocity*Math.cos(this.rotation));
-        this.position.setY(this.position.getY() + this.velocity*Math.sin(this.rotation));
-    }
+//    public void move(){
+//        this.position.setX(this.position.getX() + this.velocity*Math.cos(this.rotation));
+//        this.position.setY(this.position.getY() + this.velocity*Math.sin(this.rotation));
+//    }
 
     public void draw(CanvasGUI canvas){
 
