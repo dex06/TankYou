@@ -124,8 +124,7 @@ public class GameEngine  {
                     for (Player player : players) {
                         if (player.isAlive()) {
                             player.move();
-                        }
-                        ;
+                        };
                         player.draw();
                         player.checkProjectileOut();
                         for (int counter = 0; counter < player.projectiles.size(); counter++) {
