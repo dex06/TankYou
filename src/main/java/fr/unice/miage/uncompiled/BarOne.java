@@ -3,14 +3,17 @@ package fr.unice.miage.uncompiled;
 import fr.unice.miage.game.Config;
 import fr.unice.miage.plugins.PlugInGUI1;
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.effect.DropShadow;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
-import java.io.File;
+
 
 public class BarOne extends Application implements PlugInGUI1 {
 
@@ -25,11 +28,14 @@ public class BarOne extends Application implements PlugInGUI1 {
         stage.show();
     }
     public HBox createBar(){
-        File file = new File("src/main/java/fr/unice/miage/sprite/img/playBtn.png");
+
         HBox barVBox = new HBox();
-        //Image imageOk = new Image(getClass().getResourceAsStream(file));
-        //Button playBtn = new Button("Play", new ImageView(imageOk));
+
+        //Image playImg = new Image(getClass().getResourceAsStream("../sprite/img/playBtn.png"));
+        //Image pauseImg = new Image(getClass().getResourceAsStream("../sprite/img/pauseBtn.png"));
+        //Button playBtn = new Button("Play", new ImageView(playImg));
         Button playBtn = new Button("Pause");
+        //playBtn.setGraphic(new ImageView(playImg));
 
         playBtn.setOnAction(e -> {
             if(playBtn.getText().equals("Play")){
@@ -45,12 +51,32 @@ public class BarOne extends Application implements PlugInGUI1 {
         stopBtn.setOnAction(e -> {
             Config.setStop();
         });
+        onMouseEvents(playBtn);
+        onMouseEvents(stopBtn);
 
 
 
         barVBox.getChildren().addAll(playBtn, stopBtn);
+        barVBox.setSpacing(10);
         barVBox.setAlignment(Pos.CENTER);
         return barVBox;
+    }
+
+    private void onMouseEvents(Button btn){
+        DropShadow shadow = new DropShadow();
+        btn.addEventHandler(MouseEvent.MOUSE_ENTERED,
+                new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent e) {
+                        btn.setEffect(shadow);
+                    }
+                });
+        btn.addEventHandler(MouseEvent.MOUSE_EXITED,
+                new EventHandler<MouseEvent>() {
+                    @Override public void handle(MouseEvent e) {
+                        btn.setEffect(null);
+                    }
+                });
     }
 
 
