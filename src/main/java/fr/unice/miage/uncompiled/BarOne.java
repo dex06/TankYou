@@ -11,6 +11,7 @@ import javafx.scene.effect.DropShadow;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 
@@ -29,7 +30,7 @@ public class BarOne extends Application implements PlugInGUI1 {
     }
     public HBox createBar(){
 
-        HBox barVBox = new HBox();
+        HBox barHBox = new HBox();
 
         //Image playImg = new Image(getClass().getResourceAsStream("../sprite/img/playBtn.png"));
         //Image pauseImg = new Image(getClass().getResourceAsStream("../sprite/img/pauseBtn.png"));
@@ -54,12 +55,13 @@ public class BarOne extends Application implements PlugInGUI1 {
         onMouseEvents(playBtn);
         onMouseEvents(stopBtn);
 
+        Text chrono = new Text("00.00:00");
 
 
-        barVBox.getChildren().addAll(playBtn, stopBtn);
-        barVBox.setSpacing(10);
-        barVBox.setAlignment(Pos.CENTER);
-        return barVBox;
+        barHBox.getChildren().addAll(playBtn, stopBtn, chrono);
+        barHBox.setSpacing(10);
+        barHBox.setAlignment(Pos.CENTER);
+        return barHBox;
     }
 
     private void onMouseEvents(Button btn){
@@ -78,8 +80,6 @@ public class BarOne extends Application implements PlugInGUI1 {
                     }
                 });
     }
-
-
 
     public static void main(String[] args) {
             launch(args);

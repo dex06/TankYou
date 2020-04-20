@@ -28,6 +28,7 @@ public class GameEngine  {
     private int nbPlayers;
     private List<Player> players = new ArrayList<>();
     private List<String> gui1Opts = new ArrayList<>();
+    private boolean asBarMenu = false;
 
 
     private Stage stage;
@@ -117,7 +118,7 @@ public class GameEngine  {
         new AnimationTimer(){
             public void handle(long currentNanoTime) {
                 if (Config.getGameState() == Config.getPlayState()) {
-                    timer.startChrono();
+                    if(!timer.isRunning()) timer.startChrono();
                     double t = timer.getTime();
 //                System.out.println(t);
                     canvas.clean();
@@ -126,6 +127,7 @@ public class GameEngine  {
                             player.move();
                         };
                         player.draw();
+                        gameBoard.setTimer(timer);
                         player.checkProjectileOut();
                         for (int counter = 0; counter < player.projectiles.size(); counter++) {
                             player.projectiles.get(counter).move();
@@ -145,7 +147,7 @@ public class GameEngine  {
                     }
                     collision.checkAllCollisions(players);
                     lastUpdateNanoTime = currentNanoTime;
-                } if(Config.getGameState() == Config.getPauseState()) timer.stopChrono();
+                } if(Config.getGameState() == Config.getPauseState()) if(timer.isRunning()) timer.stopChrono();
                 else if(Config.getGameState() == Config.getStopState()) {
                     timer.stopChrono();
                     gameBoard.stop();

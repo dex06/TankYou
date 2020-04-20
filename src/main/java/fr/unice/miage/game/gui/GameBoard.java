@@ -1,13 +1,15 @@
 package fr.unice.miage.game.gui;
 
+import fr.unice.miage.plugins.PlugInGUI1;
 import fr.unice.miage.sprite.Sprite;
 import fr.unice.miage.uncompiled.BarOne;
+import fr.unice.miage.utils.Timer;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
@@ -18,6 +20,8 @@ public class GameBoard {
 	private Stage stage;
 	private Scene theScene;
 	private Group root;
+	private PlugInGUI1 bar;
+	private HBox barMenu;
 	private int width;
 	private int height;
 	private CanvasGUI canvas;
@@ -32,7 +36,8 @@ public class GameBoard {
 		this.canvas = canvas;
 	}
 	public void init(){
-		HBox barMenu = new BarOne().createBar();
+		bar = new BarOne();
+		barMenu = bar.createBar();
 		barMenu.setAlignment(Pos.BOTTOM_CENTER);
 		stage.setTitle("Demo de jeu");
 		BorderPane root = new BorderPane();
@@ -51,14 +56,13 @@ public class GameBoard {
 		stage.close();
 	}
 
-	public void addSprite(Sprite p) {
-		list.add(p);
+	public void setTimer(Timer time){
+		String timeStr = time.chronoToString();
+		Text text = (Text) barMenu.lookup("Text");
+		text.setText(timeStr);
 	}
 
-	public void addHealthBar(FlowPane healthBar){
-		root.getChildren().remove(healthBar);
-		root.getChildren().add(healthBar);
-	}
+
 
 	public Iterator<Sprite> spriteIterator() {
 		return list.iterator();
