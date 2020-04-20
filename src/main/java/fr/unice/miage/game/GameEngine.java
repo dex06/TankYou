@@ -29,6 +29,7 @@ public class GameEngine  {
     private List<Player> players = new ArrayList<>();
     private List<String> gui1Opts = new ArrayList<>();
     private boolean asBarMenu = false;
+    private boolean asWinner = false;
 
 
     private Stage stage;
@@ -88,6 +89,10 @@ public class GameEngine  {
         loop();
     }
 
+    public void createGameStats(){
+        gameStats = new GameStats(stage, 600, 600);
+        gameStats.init(asWinner);
+    }
     public void giveRandomPositionAndVelocityToPlayers(){
         for(Player player : players){
             player.addPosition(Randomizer.getRandomVector(10, 400));
@@ -143,7 +148,11 @@ public class GameEngine  {
                             player.shot();
 //                        System.out.println("Size Projectile " + player.projectiles.size());
                         }
-                        if (numberOfPlayersAlive() <= 1) gameBoard.stop();
+                        if (numberOfPlayersAlive() <= 1) {
+                            asWinner = true;
+                            Player winningPlayer = players.get(getWinningPlayerNumber());
+                            gameBoard.stop();
+                        }
                     }
                     collision.checkAllCollisions(players);
                     lastUpdateNanoTime = currentNanoTime;
