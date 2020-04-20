@@ -27,6 +27,7 @@ public class GameEngine  {
     private PlugInCollision collision;
     private int nbPlayers;
     private List<Player> players = new ArrayList<>();
+    private List<String> gui1Opts = new ArrayList<>();
 
 
     private Stage stage;
@@ -41,6 +42,7 @@ public class GameEngine  {
         this.path = path;
         try {
             this.repository = new Repository(path);
+            this.gui1Opts = repository.getGui1PluginsNames();
             this.canvas = new CanvasGUI(width, height);
         } catch(Exception e){
             System.err.println(e);
@@ -114,33 +116,41 @@ public class GameEngine  {
         lastUpdateNanoTime = System.nanoTime();
         new AnimationTimer(){
             public void handle(long currentNanoTime) {
-                double t = timer.getTime();
+                if (Config.getGameState() == Config.getPlayState()) {
+                    timer.startChrono();
+                    double t = timer.getTime();
 //                System.out.println(t);
-                canvas.clean();
-                for(Player player : players){
-                    if(player.isAlive()){
-                        player.move();
-                    };
-                    player.draw();
-                    player.checkProjectileOut();
-                    for (int counter = 0; counter < player.projectiles.size(); counter++) {
-                        player.projectiles.get(counter).move();
-                        player.projectiles.get(counter).draw(canvas);
-                        if(player.projectiles.get(counter).checkCollisionsWithPlayer(players)){
-                            player.projectiles.remove(counter);
+                    canvas.clean();
+                    for (Player player : players) {
+                        if (player.isAlive()) {
+                            player.move();
                         }
-                    }
-                    if((currentNanoTime / 1000000000) - player.lastShot > 1){
-                        System.out.println(player.getName() + " shot ");
-                        player.lastShot = currentNanoTime / 1000000000;
-                        System.out.println(player.getName() + " près de " + Finder.findClosestPlayer(player).getName());
-                        player.shot();
+                        ;
+                        player.draw();
+                        player.checkProjectileOut();
+                        for (int counter = 0; counter < player.projectiles.size(); counter++) {
+                            player.projectiles.get(counter).move();
+                            player.projectiles.get(counter).draw(canvas);
+                            if (player.projectiles.get(counter).checkCollisionsWithPlayer(players)) {
+                                player.projectiles.remove(counter);
+                            }
+                        }
+                        if ((currentNanoTime / 1000000000) - player.lastShot > 1) {
+                            System.out.println(player.getName() + " shot ");
+                            player.lastShot = currentNanoTime / 1000000000;
+                            System.out.println(player.getName() + " près de " + Finder.findClosestPlayer(player).getName());
+                            player.shot();
 //                        System.out.println("Size Projectile " + player.projectiles.size());
+                        }
+                        if (numberOfPlayersAlive() <= 1) gameBoard.stop();
                     }
-                    if(numberOfPlayersAlive() <= 1) gameBoard.stop();
+                    collision.checkAllCollisions(players);
+                    lastUpdateNanoTime = currentNanoTime;
+                } if(Config.getGameState() == Config.getPauseState()) timer.stopChrono();
+                else if(Config.getGameState() == Config.getStopState()) {
+                    timer.stopChrono();
+                    gameBoard.stop();
                 }
-                collision.checkAllCollisions(players);
-                lastUpdateNanoTime = currentNanoTime;
             }
         }.start();
     }

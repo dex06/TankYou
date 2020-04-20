@@ -2,6 +2,7 @@ package fr.unice.miage.utils;
 
 public class Timer {
 
+    double timeCumulated;
     double beginTime;
     double endTime;
     boolean running;
@@ -23,6 +24,7 @@ public class Timer {
 
     public void stopChrono(){
         endTime = System.nanoTime();
+        timeCumulated += endTime;
         running = false;
     }
 
@@ -31,7 +33,7 @@ public class Timer {
     public double getTime(){ return System.nanoTime() / 1000000000; }
 
     public double getChrono(){
-        if(!running) return (endTime - beginTime) / 1000000000;
+        if(!running) return (endTime - beginTime) / 1000000000 + timeCumulated;
         return (System.nanoTime() - beginTime) / 1000000000;
     }
     public void printChrono(){

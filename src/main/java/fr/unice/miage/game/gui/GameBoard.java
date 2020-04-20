@@ -1,9 +1,13 @@
 package fr.unice.miage.game.gui;
 
 import fr.unice.miage.sprite.Sprite;
+import fr.unice.miage.uncompiled.BarOne;
+import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
@@ -28,11 +32,15 @@ public class GameBoard {
 		this.canvas = canvas;
 	}
 	public void init(){
+		HBox barMenu = new BarOne().createBar();
+		barMenu.setAlignment(Pos.BOTTOM_CENTER);
 		stage.setTitle("Demo de jeu");
-		root = new Group();
+		BorderPane root = new BorderPane();
 		theScene = new Scene(root);
 		stage.setScene(theScene);
-		root.getChildren().add(canvas.getCanvas());
+		root.setCenter(canvas.getCanvas());
+		//root.getChildren().add(canvas.getCanvas());
+		root.setBottom(barMenu);
 		stage.sizeToScene();
 	}
 	public void start(){
