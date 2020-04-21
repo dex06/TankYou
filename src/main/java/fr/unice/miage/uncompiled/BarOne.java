@@ -2,34 +2,24 @@ package fr.unice.miage.uncompiled;
 
 import fr.unice.miage.game.Config;
 import fr.unice.miage.plugins.PlugInGUI1;
-import javafx.application.Application;
 import javafx.geometry.Pos;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
-import javafx.stage.Stage;
+import javafx.scene.text.Text;
 
-import java.io.File;
 
-public class BarOne extends Application implements PlugInGUI1 {
 
-    @Override
-    public void start(Stage stage) {
-        BorderPane root= new BorderPane();
-        root.setCenter(createBar());
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.setWidth(512);
-        stage.setHeight(100);
-        stage.show();
-    }
+public class BarOne implements PlugInGUI1 {
+
     public HBox createBar(){
-        File file = new File("src/main/java/fr/unice/miage/sprite/img/playBtn.png");
-        HBox barVBox = new HBox();
-        //Image imageOk = new Image(getClass().getResourceAsStream(file));
-        //Button playBtn = new Button("Play", new ImageView(imageOk));
+
+        HBox barHBox = new HBox();
+
+        //Image playImg = new Image(getClass().getResourceAsStream("../sprite/img/playBtn.png"));
+        //Image pauseImg = new Image(getClass().getResourceAsStream("../sprite/img/pauseBtn.png"));
+        //Button playBtn = new Button("Play", new ImageView(playImg));
         Button playBtn = new Button("Pause");
+        //playBtn.setGraphic(new ImageView(playImg));
 
         playBtn.setOnAction(e -> {
             if(playBtn.getText().equals("Play")){
@@ -45,17 +35,33 @@ public class BarOne extends Application implements PlugInGUI1 {
         stopBtn.setOnAction(e -> {
             Config.setStop();
         });
+        //onMouseEvents(playBtn);
+        //onMouseEvents(stopBtn);
+
+        Text chrono = new Text("00.00:00");
 
 
-
-        barVBox.getChildren().addAll(playBtn, stopBtn);
-        barVBox.setAlignment(Pos.CENTER);
-        return barVBox;
+        barHBox.getChildren().addAll(playBtn, stopBtn, chrono);
+        barHBox.setSpacing(10);
+        barHBox.setAlignment(Pos.CENTER);
+        return barHBox;
     }
 
+    /*private void onMouseEvents(Button btn){
+        DropShadow shadow = new DropShadow();
+        btn.addEventHandler(MouseEvent.MOUSE_ENTERED,
+                new EventHandler<MouseEvent>() {
+                    @Override
+                    public void handle(MouseEvent e) {
+                        btn.setEffect(shadow);
+                    }
+                });
+        btn.addEventHandler(MouseEvent.MOUSE_EXITED,
+                new EventHandler<MouseEvent>() {
+                    @Override public void handle(MouseEvent e) {
+                        btn.setEffect(null);
+                    }
+                });
+    }*/
 
-
-    public static void main(String[] args) {
-            launch(args);
-    }
 }

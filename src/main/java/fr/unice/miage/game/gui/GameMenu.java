@@ -9,7 +9,6 @@ import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
@@ -97,6 +96,7 @@ public class GameMenu  {
 
         startGameBtn.setOnAction(e -> {
             listOfGUI1Options = getGUI1Options();
+            listOfGUI2Options = getGUI2Options();
             listOfPlayersOptions = getPlayersOptions();
             listOfConfigOptions = getConfigOptions();
             try {
@@ -125,7 +125,7 @@ public class GameMenu  {
         mainVBox.setSpacing(10);
         mainVBox.setPadding(new Insets(25));
 
-        BorderPane root= new BorderPane();
+        BorderPane root = new BorderPane();
         root.setPadding(new Insets(25));
         root.setCenter(mainVBox);
         root.setBottom(bottom);
@@ -172,14 +172,11 @@ public class GameMenu  {
     private VBox createGUI1VBox(){
         VBox guiVBox = new VBox();
         Label guiLabel = new Label("PlugIn " + ++nbGUI);
-        guiVBox.getChildren().add(guiLabel);
-        List<String> opts = repository.getGui1PluginsNames();
-        for(String opt : opts){
-            CheckBox cb = new CheckBox(opt);
-            guiVBox.getChildren().add(cb);
-        }
-        guiVBox.getChildren().add(new CheckBox("test1"));
-        guiVBox.getChildren().add(new CheckBox("test2"));
+        ObservableList<String> opts = FXCollections.observableArrayList(repository.getGui1PluginsNames());
+        opts.add("Aucun");
+        ComboBox guiCB = new ComboBox(opts);
+        if(opts.size() > 0) guiCB.setValue(opts.get(0));
+        guiVBox.getChildren().addAll(guiLabel, guiCB);
         guiVBox.setSpacing(10);
         guiVBox.setAlignment(Pos.CENTER);
         return guiVBox;
@@ -187,14 +184,10 @@ public class GameMenu  {
     private VBox createGUI2VBox(){
         VBox guiVBox = new VBox();
         Label guiLabel = new Label("PlugIn " + ++nbGUI);
-        ObservableList<String> options =
-                FXCollections.observableArrayList(
-                        "Option 1",
-                        "Option 2",
-                        "Option 3"
-                );
-        ComboBox guiCB = new ComboBox(options);
-        guiCB.setValue("Option 1");
+        ObservableList<String> opts = FXCollections.observableArrayList(repository.getGui2PluginsNames());
+        opts.add("Aucun");
+        ComboBox guiCB = new ComboBox(opts);
+        if(opts.size() > 0) guiCB.setValue(opts.get(0));
         guiVBox.getChildren().addAll(guiLabel, guiCB);
         guiVBox.setSpacing(10);
         guiVBox.setAlignment(Pos.CENTER);
@@ -239,17 +232,19 @@ public class GameMenu  {
 
     private List<String> getGUI1Options(){
         List<String> optionsList = new ArrayList<>();
-        Set<Node> CBSet =   guis.lookupAll("CheckBox");
+        VBox gui1VBox = (VBox) guis.lookupAll("VBox").toArray()[1];
+        Set<Node> CBSet =   gui1VBox.lookupAll("ComboBox");
         for(Node cb : CBSet){
-            CheckBox new_cb = (CheckBox) cb;
-            if(new_cb.isSelected()) optionsList.add(new_cb.getId());
+            ComboBox new_cb = (ComboBox) cb;
+            optionsList.add((String)new_cb.getValue());
         }
         return optionsList;
     }
 
     private List<String> getGUI2Options(){
         List<String> optionsList = new ArrayList<>();
-        Set<Node> CBSet =   guis.lookupAll("ComboBox");
+        VBox gui2VBox = (VBox) guis.lookupAll("VBox").toArray()[2];
+        Set<Node> CBSet =   gui2VBox.lookupAll("ComboBox");
         for(Node cb : CBSet){
             ComboBox new_cb = (ComboBox) cb;
             optionsList.add((String)new_cb.getValue());
