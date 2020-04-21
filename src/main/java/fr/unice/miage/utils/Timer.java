@@ -24,7 +24,6 @@ public class Timer {
 
     public void stopChrono(){
         timeCumulated += (System.nanoTime() - beginTime);
-        System.out.println(timeCumulated);
         running = false;
     }
 

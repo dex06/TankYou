@@ -2,32 +2,15 @@ package fr.unice.miage.uncompiled;
 
 import fr.unice.miage.game.Config;
 import fr.unice.miage.plugins.PlugInGUI1;
-import javafx.application.Application;
-import javafx.event.EventHandler;
 import javafx.geometry.Pos;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.effect.DropShadow;
-import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
 
 
 
-public class BarOne extends Application implements PlugInGUI1 {
+public class BarOne implements PlugInGUI1 {
 
-    @Override
-    public void start(Stage stage) {
-        BorderPane root= new BorderPane();
-        root.setCenter(createBar());
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.setWidth(512);
-        stage.setHeight(100);
-        stage.show();
-    }
     public HBox createBar(){
 
         HBox barHBox = new HBox();
@@ -52,8 +35,8 @@ public class BarOne extends Application implements PlugInGUI1 {
         stopBtn.setOnAction(e -> {
             Config.setStop();
         });
-        onMouseEvents(playBtn);
-        onMouseEvents(stopBtn);
+        //onMouseEvents(playBtn);
+        //onMouseEvents(stopBtn);
 
         Text chrono = new Text("00.00:00");
 
@@ -64,7 +47,7 @@ public class BarOne extends Application implements PlugInGUI1 {
         return barHBox;
     }
 
-    private void onMouseEvents(Button btn){
+    /*private void onMouseEvents(Button btn){
         DropShadow shadow = new DropShadow();
         btn.addEventHandler(MouseEvent.MOUSE_ENTERED,
                 new EventHandler<MouseEvent>() {
@@ -79,9 +62,6 @@ public class BarOne extends Application implements PlugInGUI1 {
                         btn.setEffect(null);
                     }
                 });
-    }
+    }*/
 
-    public static void main(String[] args) {
-            launch(args);
-    }
 }

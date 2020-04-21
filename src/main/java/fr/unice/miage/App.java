@@ -9,7 +9,7 @@ public class App extends Application
 {
     @Override
     public void start(Stage stage) {
-        Config.setTesting(true);
+        Config.setTesting(false);
         if(Config.getTesting()) System.out.println("Testing mode");
         Config.setWorldWidth(600);
         Config.setWorldHeight(600);
