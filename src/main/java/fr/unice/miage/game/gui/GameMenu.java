@@ -197,7 +197,7 @@ public class GameMenu  {
     private VBox createPlayerVBox(String type){
         VBox playerVBox = new VBox();
         Label playerLabel = new Label(type);
-        ObservableList<String> opts = FXCollections.observableArrayList();;
+        ObservableList<String> opts = FXCollections.observableArrayList();
         switch(type){
             case "Mouvements":
                 opts = repository.getMovePluginsNames();
@@ -209,7 +209,7 @@ public class GameMenu  {
                 opts = repository.getGraphicPluginsNames();
                 break;
         }
-        ComboBox playerCB = new ComboBox(opts);
+        ComboBox playerCB = new ComboBox(opts);System.out.println(opts);
         if(opts.size() > 0) playerCB.setValue(opts.get(0));
         playerVBox.getChildren().addAll(playerLabel, playerCB);
         return playerVBox;
