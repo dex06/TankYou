@@ -77,4 +77,31 @@ public class Projectile {
 
     public void draw(CanvasGUI canvas) {
     }
+
+    public Sprite getSprite() {
+        return projectileSprite;
+    }
+
+    public Vector2 getPosition() {
+        return position;
+    }
+
+    public double getVelocity() {
+        return velocity;
+    }
+
+    public double getRotation() {
+        return rotation;
+    }
+
+    public void setRotation(double v) {
+        rotation = v;
+    }
+
+    public void collidedWith(Projectile projectile) {
+    }
+
+    public String getName() {
+        return projectileName;
+    }
 }

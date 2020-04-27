@@ -1,6 +1,6 @@
-package fr.unice.miage.game.gui;
+package fr.unice.miage.game_objects;
 
-import fr.unice.miage.game_objects.Player;
+import fr.unice.miage.CanvasGUI;
 import javafx.scene.paint.Paint;
 
 public class HealthBar {

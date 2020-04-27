@@ -35,7 +35,7 @@ public class Repository {
 
     private String packageName = "fr.unice.miage";
     private String appFolderName = "uncompiled";
-    private String destinationDir = "src/main/java/fr/unice/miage/classes";
+    private String destinationDir = "common/src/main/java/fr/unice/miage/classes";
 
     private boolean testing = Config.getTesting();
 

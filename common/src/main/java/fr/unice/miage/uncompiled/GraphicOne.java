@@ -1,7 +1,7 @@
 package fr.unice.miage.uncompiled;
 
-import fr.unice.miage.game.gui.CanvasGUI;
-import fr.unice.miage.game.gui.HealthBar;
+import fr.unice.miage.CanvasGUI;
+import fr.unice.miage.game_objects.HealthBar;
 import fr.unice.miage.game_objects.Player;
 import fr.unice.miage.plugins.PlugInGraphic;
 import fr.unice.miage.sprite.RectangleSprite;

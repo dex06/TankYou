@@ -1,6 +1,6 @@
 package fr.unice.miage.uncompiled;
 
-import fr.unice.miage.game.Config;
+import fr.unice.miage.Config;
 import fr.unice.miage.game_objects.Player;
 import fr.unice.miage.game_objects.Projectile;
 import fr.unice.miage.plugins.PlugInCollision;

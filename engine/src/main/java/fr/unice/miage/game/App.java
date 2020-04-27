@@ -1,7 +1,6 @@
-package fr.unice.miage;
+package fr.unice.miage.game;
 
-import fr.unice.miage.game.Config;
-import fr.unice.miage.game.GameEngine;
+import fr.unice.miage.Config;
 import javafx.application.Application;
 import javafx.stage.Stage;
 
