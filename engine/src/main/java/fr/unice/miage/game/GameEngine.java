@@ -1,6 +1,8 @@
 package fr.unice.miage.game;
 
-import fr.unice.miage.game.gui.CanvasGUI;
+import fr.unice.miage.CanvasGUI;
+import fr.unice.miage.Config;
+import fr.unice.miage.Repository;
 import fr.unice.miage.game.gui.GameBoard;
 import fr.unice.miage.game.gui.GameMenu;
 import fr.unice.miage.game.gui.GameStats;
@@ -133,7 +135,7 @@ public class GameEngine  {
                     for (Player player : players) {
                         if (player.isAlive()) {
                             player.move();
-                        };
+                        }
                         player.draw();
                         if(hasBarMenu) gameBoard.setTimer(timer);
                         player.checkProjectileOut();
