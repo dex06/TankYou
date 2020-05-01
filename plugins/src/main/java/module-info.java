@@ -1,0 +1,3 @@
+module fr.unice.miage {
+
+}
