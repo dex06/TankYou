@@ -123,6 +123,7 @@ public class GameEngine  {
     }
 
     public void loop(){
+        Config.setPlay();
         Timer timer = new Timer();
         lastUpdateNanoTime = System.nanoTime();
         new AnimationTimer(){
@@ -178,14 +179,24 @@ public class GameEngine  {
                 // If we pause the game
                 if(Config.getGameState() == Config.getPauseState()) if(timer.isRunning()) timer.stopChrono();
                 // If we stop the game
-                else if(Config.getGameState() == Config.getStopState()) {
+                if(Config.getGameState() == Config.getStopState()) {
                     if(timer.isRunning()) {
                         timer.stopChrono();
                         gameBoard.stop();
                         this.stop();
                         createGameStats();
                         gameStats.start();
-
+                    }
+                    gameBoard.stop();
+                    createGameStats();
+                    gameStats.start();
+                } else if(Config.getGameState() == Config.getRestartState()){
+                    if(timer.isRunning()) {
+                        timer.stopChrono();
+                        gameBoard.stop();
+                        this.stop();
+                        initMenu();
+                        startMenu();
                     }
                 }
             }

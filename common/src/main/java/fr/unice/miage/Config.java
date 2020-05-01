@@ -5,7 +5,9 @@ public class Config {
     private static double worldWidth = 600;
     private static double worldHeight = 600;
     private static boolean testing = false;
-    private enum States {PLAY, PAUSE, STOP};
+
+
+    private enum States {PLAY, PAUSE, STOP, RESTART};
     private static States gameState = States.PLAY;
 
     public static void setWorldWidth(double width){ worldWidth = width; }
@@ -20,7 +22,9 @@ public class Config {
     public static void setPlay(){ gameState = States.PLAY; }
     public static void setPause(){ gameState = States.PAUSE; }
     public static void setStop(){ gameState = States.STOP; }
+    public static void setRestart() { gameState = States.RESTART; }
     public static States getPlayState(){ return States.PLAY; }
     public static States getPauseState(){ return States.PAUSE; }
     public static States getStopState(){ return States.STOP; }
+    public static States getRestartState() { return States.RESTART; }
 }

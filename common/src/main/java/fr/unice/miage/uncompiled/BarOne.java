@@ -36,11 +36,15 @@ public class BarOne implements PlugInGUI1 {
         });
         //onMouseEvents(playBtn);
         //onMouseEvents(stopBtn);
+        Button restartBtn = new Button("Restart");
+        restartBtn.setOnAction(e -> {
+            Config.setRestart();
+        });
 
         Text chrono = new Text("00.00:00");
 
 
-        barHBox.getChildren().addAll(playBtn, stopBtn, chrono);
+        barHBox.getChildren().addAll(playBtn, stopBtn, restartBtn, chrono);
         barHBox.setSpacing(10);
         barHBox.setAlignment(Pos.CENTER);
         return barHBox;
