@@ -35,7 +35,8 @@ public class Repository {
 
     private String packageName = "fr.unice.miage";
     private String appFolderName = "uncompiled";
-    private String destinationDir = "common/src/main/java/fr/unice/miage/classes";
+    private String s = File.separator;
+    private String destinationDir = "common"+s+"src"+s+"main"+s+"java"+s+"fr"+"unice"+s+"miage"+s+"classes";
 
     private boolean testing = Config.getTesting();
 
@@ -46,6 +47,8 @@ public class Repository {
     public Repository(String base) throws Exception {
         this.loadLibraries(base);
     }
+
+    public List<File> getJarFiles(){ return jarFiles; }
 
     public ObservableList<String> getMovePluginsNames() {
         return movePluginsNames;
@@ -88,7 +91,8 @@ public class Repository {
                 continue;
             }
             System.out.println("Found library format : " + file.getName());
-            unzipJarFile(file);
+            jarFiles.add(file);
+            //unzipJarFile(file);
             loadClassesFromJar(file);
         }
     }
@@ -108,6 +112,8 @@ public class Repository {
             }
             System.out.println("Loading jar class : " + je.getName());
             String pack = packageName + "." + appFolderName + "." + je.getName().replace(".class", "");
+            //String pack = jarFile.getName().replace("\\",".").replace(".jar","") + "." + je.getName().replace(".class","");
+            //String pack = je.getName().replace(".class","");
             Class loadedClass = cl.loadClass(pack);
             Object instance = loadedClass.getDeclaredConstructor().newInstance();
             String interfaceName = instance.getClass().getInterfaces()[0].getSimpleName();
