@@ -1,16 +1,16 @@
 package fr.unice.miage.game;
 
-import fr.unice.miage.CanvasGUI;
-import fr.unice.miage.Config;
-import fr.unice.miage.Repository;
+import fr.unice.miage.common.CanvasGUI;
+import fr.unice.miage.common.Config;
+import fr.unice.miage.common.Repository;
 import fr.unice.miage.game.gui.GameBoard;
 import fr.unice.miage.game.gui.GameMenu;
 import fr.unice.miage.game.gui.GameStats;
-import fr.unice.miage.game_objects.Player;
-import fr.unice.miage.plugins.PlugInCollision;
-import fr.unice.miage.utils.Finder;
-import fr.unice.miage.utils.Randomizer;
-import fr.unice.miage.utils.Timer;
+import fr.unice.miage.common.game_objects.Player;
+import fr.unice.miage.common.plugins.PlugInCollision;
+import fr.unice.miage.common.utils.Finder;
+import fr.unice.miage.common.utils.Randomizer;
+import fr.unice.miage.common.utils.Timer;
 import javafx.animation.AnimationTimer;
 import javafx.stage.Stage;
 

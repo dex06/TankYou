@@ -1,6 +1,6 @@
 package fr.unice.miage.game.gui;
 
-import fr.unice.miage.Repository;
+import fr.unice.miage.common.Repository;
 import fr.unice.miage.game.GameEngine;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

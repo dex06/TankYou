@@ -1,10 +1,10 @@
 package fr.unice.miage.game.gui;
 
-import fr.unice.miage.CanvasGUI;
-import fr.unice.miage.Repository;
-import fr.unice.miage.plugins.PlugInGUI1;
-import fr.unice.miage.sprite.Sprite;
-import fr.unice.miage.utils.Timer;
+import fr.unice.miage.common.CanvasGUI;
+import fr.unice.miage.common.Repository;
+import fr.unice.miage.common.plugins.PlugInGUI1;
+import fr.unice.miage.common.sprite.Sprite;
+import fr.unice.miage.common.utils.Timer;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;

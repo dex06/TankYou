@@ -1,6 +1,6 @@
 package fr.unice.miage.game.gui;
 
-import fr.unice.miage.Repository;
+import fr.unice.miage.common.Repository;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;

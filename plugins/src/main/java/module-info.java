@@ -1,3 +1,3 @@
-module fr.unice.miage {
+module fr.unice.miage.plugins{
 
 }
