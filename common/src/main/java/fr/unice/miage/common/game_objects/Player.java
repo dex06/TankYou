@@ -1,7 +1,7 @@
 package fr.unice.miage.common.game_objects;
 
-import fr.unice.miage.common.Repository;
 import fr.unice.miage.common.CanvasGUI;
+import fr.unice.miage.common.Repository;
 import fr.unice.miage.common.geom.Vector2;
 import fr.unice.miage.common.plugins.PlugInGraphic;
 import fr.unice.miage.common.plugins.PlugInMovement;

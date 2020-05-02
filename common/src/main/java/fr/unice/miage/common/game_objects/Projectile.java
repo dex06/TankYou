@@ -3,6 +3,8 @@ package fr.unice.miage.common.game_objects;
 import fr.unice.miage.common.CanvasGUI;
 import fr.unice.miage.common.geom.Vector2;
 import fr.unice.miage.common.sprite.Sprite;
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
 
 import java.util.List;
 
@@ -35,7 +37,7 @@ public class Projectile {
         this.position.setY(this.position.getY() + this.velocity*Math.sin(this.rotation));
     }
 
-    /*public void draw(CanvasGUI canvas){
+    public void draw(CanvasGUI canvas){
 
         double x = this.position.getX();
         double y = this.position.getY();
@@ -47,36 +49,33 @@ public class Projectile {
 //        gc.fillText(playerID, x+width/4, y+height/1.2);
 
     }
-
+/*
     public Sprite getSprite(){
         return this.projectileSprite;
     }
-
     public String getName(){ return this.projectileName; }
-
     public void collidedWith(Projectile projectile) {
-
     }*/
 
     //TODO adapté avec une classe sprite et utiliser les fonctions dans checkPlayerToPlayerCollision
     //mal codé
     public boolean checkCollisionsWithPlayer(List<Player> players){
-            for(int j = 0; j < players.size(); j++){
-                if(this.position.getX() > players.get(j).getPosition().getX()
-                && this.position.getX() < players.get(j).getPosition().getX() + players.get(j).getSprite().getWidth()
-                && this.position.getY() > players.get(j).getPosition().getY()
-                && this.position.getY() < players.get(j).getPosition().getY() + players.get(j).getSprite().getHeight())
-                {
-                    System.out.println("Collision projectile");
-                    players.get(j).setHealth(players.get(j).getHealth()-10);
-                    return true;
-                }
+        for(int j = 0; j < players.size(); j++){
+            if(this.position.getX() > players.get(j).getPosition().getX()
+                    && this.position.getX() < players.get(j).getPosition().getX() + players.get(j).getSprite().getWidth()
+                    && this.position.getY() > players.get(j).getPosition().getY()
+                    && this.position.getY() < players.get(j).getPosition().getY() + players.get(j).getSprite().getHeight())
+            {
+                System.out.println("Collision projectile");
+                players.get(j).setHealth(players.get(j).getHealth()-10);
+                return true;
             }
-            return false;
+        }
+        return false;
     }
 
-    public void draw(CanvasGUI canvas) {
-    }
+//    public void draw(CanvasGUI canvas) {
+//    }
 
     public Sprite getSprite() {
         return projectileSprite;

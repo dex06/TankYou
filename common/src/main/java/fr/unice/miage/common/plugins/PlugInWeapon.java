@@ -1,6 +1,6 @@
 package fr.unice.miage.common.plugins;
 
-import fr.unice.miage.game_objects.Projectile;
+import fr.unice.miage.common.game_objects.Projectile;
 
 import java.util.List;
 
