@@ -33,7 +33,7 @@ public class Repository {
     private List<Class> gui1Plugins = new ArrayList<>();
     private List<Class> gui2Plugins = new ArrayList<>();
 
-    private String packageName = "fr.unice.miage";
+    private String packageName = "fr.unice.miage.common";
     private String appFolderName = "uncompiled";
     private String s = File.separator;
     private String destinationDir = "common"+s+"src"+s+"main"+s+"java"+s+"fr"+"unice"+s+"miage"+s+"classes";
