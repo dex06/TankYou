@@ -93,7 +93,6 @@
    <maven.compiler.target>11</maven.compiler.target>
  </properties>
   <dependencies>
-
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
@@ -111,5 +110,4 @@
       <version>11.0.2</version>
     </dependency>
   </dependencies>
-
 </project>
