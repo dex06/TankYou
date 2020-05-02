@@ -1,4 +1,4 @@
-package fr.unice.miage;
+package fr.unice.miage.engine;
 
 import org.junit.Test;
 
