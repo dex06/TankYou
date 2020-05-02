@@ -141,7 +141,7 @@ public class GameEngine  {
                         if(hasBarMenu) gameBoard.setTimer(timer);
                         player.checkProjectileOut();
                         for (int counter = 0; counter < player.projectiles.size(); counter++) {
-//                           player.projectiles.get(counter).move();
+                           player.projectiles.get(counter).move();
                             player.moveProjectile(player.projectiles.get(counter));
                             player.projectiles.get(counter).draw(canvas);
                             if (player.projectiles.get(counter).checkCollisionsWithPlayer(players)) {

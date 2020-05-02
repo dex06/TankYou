@@ -3,6 +3,8 @@ package fr.unice.miage.game_objects;
 import fr.unice.miage.CanvasGUI;
 import fr.unice.miage.geom.Vector2;
 import fr.unice.miage.sprite.Sprite;
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
 
 import java.util.List;
 
@@ -35,7 +37,7 @@ public class Projectile {
         this.position.setY(this.position.getY() + this.velocity*Math.sin(this.rotation));
     }
 
-    /*public void draw(CanvasGUI canvas){
+    public void draw(CanvasGUI canvas){
 
         double x = this.position.getX();
         double y = this.position.getY();
@@ -47,7 +49,7 @@ public class Projectile {
 //        gc.fillText(playerID, x+width/4, y+height/1.2);
 
     }
-
+/*
     public Sprite getSprite(){
         return this.projectileSprite;
     }
@@ -75,8 +77,8 @@ public class Projectile {
             return false;
     }
 
-    public void draw(CanvasGUI canvas) {
-    }
+//    public void draw(CanvasGUI canvas) {
+//    }
 
     public Sprite getSprite() {
         return projectileSprite;
