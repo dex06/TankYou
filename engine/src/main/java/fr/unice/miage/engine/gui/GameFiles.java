@@ -1,4 +1,4 @@
-package fr.unice.miage.game.gui;
+package fr.unice.miage.engine.gui;
 
 import fr.unice.miage.common.Repository;
 import javafx.application.Application;

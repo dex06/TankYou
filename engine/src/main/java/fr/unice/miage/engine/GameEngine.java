@@ -1,11 +1,11 @@
-package fr.unice.miage.game;
+package fr.unice.miage.engine;
 
 import fr.unice.miage.common.CanvasGUI;
 import fr.unice.miage.common.Config;
 import fr.unice.miage.common.Repository;
-import fr.unice.miage.game.gui.GameBoard;
-import fr.unice.miage.game.gui.GameMenu;
-import fr.unice.miage.game.gui.GameStats;
+import fr.unice.miage.engine.gui.GameBoard;
+import fr.unice.miage.engine.gui.GameMenu;
+import fr.unice.miage.engine.gui.GameStats;
 import fr.unice.miage.common.game_objects.Player;
 import fr.unice.miage.common.plugins.PlugInCollision;
 import fr.unice.miage.common.utils.Finder;

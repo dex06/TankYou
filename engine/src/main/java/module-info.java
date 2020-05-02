@@ -1,6 +1,6 @@
-module fr.unice.miage.game{
+module fr.unice.miage.engine{
     requires transitive javafx.controls;
 
     requires fr.unice.miage.common;
-    exports fr.unice.miage.game;
+    exports fr.unice.miage.engine;
 }
