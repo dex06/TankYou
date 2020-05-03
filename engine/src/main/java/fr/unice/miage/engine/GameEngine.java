@@ -3,14 +3,15 @@ package fr.unice.miage.engine;
 import fr.unice.miage.common.CanvasGUI;
 import fr.unice.miage.common.Config;
 import fr.unice.miage.common.Repository;
-import fr.unice.miage.engine.gui.GameBoard;
-import fr.unice.miage.engine.gui.GameMenu;
-import fr.unice.miage.engine.gui.GameStats;
 import fr.unice.miage.common.game_objects.Player;
 import fr.unice.miage.common.plugins.PlugInCollision;
+import fr.unice.miage.common.plugins.PlugInObstacle;
 import fr.unice.miage.common.utils.Finder;
 import fr.unice.miage.common.utils.Randomizer;
 import fr.unice.miage.common.utils.Timer;
+import fr.unice.miage.engine.gui.GameBoard;
+import fr.unice.miage.engine.gui.GameMenu;
+import fr.unice.miage.engine.gui.GameStats;
 import javafx.animation.AnimationTimer;
 import javafx.stage.Stage;
 
@@ -27,6 +28,7 @@ public class GameEngine  {
     private Repository repository;
     private CanvasGUI canvas;
     private PlugInCollision collision;
+    private PlugInObstacle obstacles;
     private int nbPlayers;
     private List<Player> players = new ArrayList<>();
     private List<String> gui1Opts = new ArrayList<>();
@@ -67,6 +69,7 @@ public class GameEngine  {
         //loadingGUI1();
         loadingPlayers(playersOpts);
         loadingCollision(configOpts.get(0));
+        loadingObstacle(configOpts.get(1));
         if(!gui1Opts.get(0).equals("Aucun")) hasBarMenu = true;
         if(!gui2Opts.get(0).equals("Aucun")) hasStats = true;
         createGameBoard();
@@ -74,6 +77,10 @@ public class GameEngine  {
 
     public void loadingCollision(String opt) throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
         collision = repository.loadCollision(opt);
+    }
+
+    public void loadingObstacle(String opt) throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
+        obstacles = repository.loadObstacle(opt);
     }
 
     public void loadingPlayers(List<List<String>> playersOptions) throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
