@@ -163,6 +163,7 @@ public class GameEngine  {
                     double t = timer.getTime();
 //                System.out.println(t);
                     canvas.clean();
+                    if(hasBackground) background.draw(canvas);
                     for (Player player : players) {
                         if (player.isAlive()) {
                             player.move();
