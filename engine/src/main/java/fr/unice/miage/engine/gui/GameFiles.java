@@ -38,7 +38,8 @@ public class GameFiles extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
 
-        repoList.add(new Repository());
+        //repoList.add(new Repository());
+        repository = new Repository();
 
         primaryStage.setTitle("Plugin selection");
 
@@ -120,12 +121,10 @@ public class GameFiles extends Application {
     }
 
     public void displayRepos(){
-        for(Repository repo : repoList){
-            List<File> jarFiles = repo.getJarFiles();
-            for(File jar : jarFiles) {
-                CheckBox checkBox = new CheckBox(jar.getName());
-                selectorVBox.getChildren().add(checkBox);
-            }
+        List<File> jarFiles = repository.getJarFiles();
+        for(File jar : jarFiles) {
+            CheckBox checkBox = new CheckBox(jar.getName());
+            selectorVBox.getChildren().add(checkBox);
         }
     }
 }
