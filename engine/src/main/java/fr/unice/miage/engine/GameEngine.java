@@ -167,7 +167,7 @@ public class GameEngine  {
                                 } else createGameStats();
                                 gameBoard.stop();
                                 this.stop();
-                                gameStats.start();
+                                if(hasStats) gameStats.start();
 
                             }
                         }
@@ -185,12 +185,12 @@ public class GameEngine  {
                         gameBoard.stop();
                         this.stop();
                         createGameStats();
-                        gameStats.start();
+                        if(hasStats) gameStats.start();
                     }
                     this.stop();
                     gameBoard.stop();
                     createGameStats();
-                    gameStats.start();
+                    if(hasStats) gameStats.start();
                 } else if(Config.getGameState() == Config.getRestartState()){
                     if(timer.isRunning()) {
                         timer.stopChrono();
