@@ -25,12 +25,14 @@ public class Repository {
     private ObservableList<String> weaponPluginsNames = FXCollections.observableArrayList();
     private ObservableList<String> graphicPluginsNames = FXCollections.observableArrayList();
     private ObservableList<String> collisionPluginsNames = FXCollections.observableArrayList();
+    private ObservableList<String> obstaclePluginsNames = FXCollections.observableArrayList();
     private ObservableList<String> gui1PluginsNames = FXCollections.observableArrayList();
     private ObservableList<String> gui2PluginsNames = FXCollections.observableArrayList();
     private List<Class> movePlugins = new ArrayList<>();
     private List<Class> weaponPlugins = new ArrayList<>();
     private List<Class> graphicPlugins = new ArrayList<>();
     private List<Class> collisionPlugins = new ArrayList<>();
+    private List<Class> obstaclePlugins = new ArrayList<>();
     private List<Class> gui1Plugins = new ArrayList<>();
     private List<Class> gui2Plugins = new ArrayList<>();
 
@@ -64,6 +66,8 @@ public class Repository {
     }
 
     public ObservableList<String> getCollisionPluginsNames(){ return collisionPluginsNames; }
+
+    public ObservableList<String> getObstaclePluginsNames() { return obstaclePluginsNames;}
 
     public List<String> getGui1PluginsNames(){ return gui1PluginsNames; }
 
@@ -136,6 +140,10 @@ public class Repository {
                     collisionPluginsNames.add(instance.getClass().getSimpleName());
                     collisionPlugins.add(loadedClass);
                     break;
+                case "PlugInObstacle":
+                    obstaclePluginsNames.add(instance.getClass().getSimpleName());
+                    obstaclePlugins.add(loadedClass);
+                    break;
                 case "PlugInGUI1":
                     gui1PluginsNames.add(instance.getClass().getSimpleName());
                     gui1Plugins.add(loadedClass);
@@ -171,6 +179,11 @@ public class Repository {
     public PlugInCollision loadCollision(String opt) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
         //if(testing){ return new CollisionOne(); }
         return (PlugInCollision) collisionPlugins.get(collisionPluginsNames.indexOf(opt)).getDeclaredConstructor().newInstance();
+    }
+
+    public PlugInCollision loadObstacle(String opt) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
+        //if(testing){ return new ObstacleOne(); }
+        return (PlugInCollision) obstaclePlugins.get(obstaclePluginsNames.indexOf(opt)).getDeclaredConstructor().newInstance();
     }
 
     public PlugInGUI1 loadGUI1(String opt) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
@@ -232,6 +245,8 @@ public class Repository {
             }
         }
     }
+
+
 }
 
 

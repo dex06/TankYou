@@ -155,7 +155,7 @@ public class GameEngine  {
                             player.shot();
 //                        System.out.println("Size Projectile " + player.projectiles.size());
                         }
-                        // If we have a winner => end of game
+                        // If we have a winner => end of game +- stats
                         if (numberOfPlayersAlive() <= 1) {
                             if(timer.isRunning()) {
                                 timer.stopChrono();
@@ -191,6 +191,7 @@ public class GameEngine  {
                     gameBoard.stop();
                     createGameStats();
                     if(hasStats) gameStats.start();
+                //if we restart the game
                 } else if(Config.getGameState() == Config.getRestartState()){
                     if(timer.isRunning()) {
                         timer.stopChrono();

@@ -72,9 +72,15 @@ public class GameMenu  {
         HBox configHBox = new HBox();
         VBox collVBox = createCollisionVbox();
         collVBox.setAlignment(Pos.CENTER);
-        configHBox.getChildren().add(collVBox);
+        VBox obstacleVBox = createObstacleVBox();
+        configHBox.getChildren().addAll(collVBox, obstacleVBox);
+        configHBox.setSpacing(15);
         configHBox.setAlignment(Pos.CENTER);
+
+
         configs.getChildren().addAll(configLabel,configHBox);
+
+
 
         Label playersLabel = new Label("Joueurs");
         playersLabel.setFont(labelFont);
@@ -164,9 +170,22 @@ public class GameMenu  {
         Label collLabel = new Label("Collision");
         ObservableList<String> opts = repository.getCollisionPluginsNames();
         ComboBox collCB = new ComboBox(opts);
+        System.out.println(opts);
         if(opts.size() > 0) collCB.setValue(opts.get(0));
         collVBox.getChildren().addAll(collLabel, collCB);
         return collVBox;
+    }
+
+    private VBox createObstacleVBox(){
+        VBox obsVBox = new VBox();
+        Label obsLabel = new Label("Obstacles");
+        ObservableList<String> opts = repository.getObstaclePluginsNames();
+        opts.add("Aucun");
+        ComboBox obsCB = new ComboBox(opts);
+        System.out.println(opts);
+        if(opts.size() > 0) obsCB.setValue(opts.get(0));
+        obsVBox.getChildren().addAll(obsLabel, obsCB);
+        return obsVBox;
     }
 
     private VBox createGUI1VBox(){
@@ -209,7 +228,8 @@ public class GameMenu  {
                 opts = repository.getGraphicPluginsNames();
                 break;
         }
-        ComboBox playerCB = new ComboBox(opts);System.out.println(opts);
+        ComboBox playerCB = new ComboBox(opts);
+        System.out.println(opts);
         if(opts.size() > 0) playerCB.setValue(opts.get(0));
         playerVBox.getChildren().addAll(playerLabel, playerCB);
         return playerVBox;
