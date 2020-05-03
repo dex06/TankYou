@@ -16,6 +16,7 @@ import java.util.Enumeration;
 import java.util.List;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
+import java.util.jar.JarOutputStream;
 
 public class Repository {
 
@@ -151,29 +152,6 @@ public class Repository {
         return file.getName().endsWith(".jar");
     }
 
-    private void unzipJarFile(File file) throws IOException, ClassNotFoundException {
-        JarFile jar = new JarFile(file);
-        for (Enumeration<JarEntry> enums = jar.entries(); enums.hasMoreElements(); ) {
-            JarEntry entry = enums.nextElement();
-            String fileName;
-            File f;
-            if (entry.getName().endsWith(".class")) {
-                fileName = destinationDir + File.separator + entry.getName();
-                f = new File(fileName);
-                //Adding to list of jar files
-                jarFiles.add(f);
-                if (!fileName.endsWith("/")) {
-                    InputStream is = jar.getInputStream(entry);
-                    FileOutputStream fos = new FileOutputStream(f);
-                    while (is.available() > 0) {
-                        fos.write(is.read());
-                    }
-                    fos.close();
-                    is.close();
-                }
-            }
-        }
-    }
 
     public PlugInMovement loadMovement(String opt) throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
         //if(testing){ return new MoveOne(); }
@@ -204,5 +182,56 @@ public class Repository {
         //if(testing){ return new StatsOne(); }
         return (PlugInGUI2) gui2Plugins.get(gui2PluginsNames.indexOf(opt)).getDeclaredConstructor().newInstance();
     }
+
+    public static void copyJarFile(JarFile jarFile, File destDir) throws IOException {
+        String fileName = jarFile.getName();
+        String fileNameLastPart = fileName.substring(fileName.lastIndexOf(File.separator));
+        File destFile = new File(destDir, fileNameLastPart);
+
+        JarOutputStream jos = new JarOutputStream(new FileOutputStream(destFile));
+        Enumeration<JarEntry> entries = jarFile.entries();
+
+        while (entries.hasMoreElements()) {
+            JarEntry entry = entries.nextElement();
+            InputStream is = jarFile.getInputStream(entry);
+            //jos.putNextEntry(entry);
+            //create a new entry to avoid ZipException: invalid entry compressed size
+            jos.putNextEntry(new JarEntry(entry.getName()));
+            byte[] buffer = new byte[4096];
+            int bytesRead = 0;
+            while ((bytesRead = is.read(buffer)) != -1) {
+                jos.write(buffer, 0, bytesRead);
+            }
+            is.close();
+            jos.flush();
+            jos.closeEntry();
+        }
+        jos.close();
+    }
+
+    private void unzipJarFile(File file) throws IOException, ClassNotFoundException {
+        JarFile jar = new JarFile(file);
+        for (Enumeration<JarEntry> enums = jar.entries(); enums.hasMoreElements(); ) {
+            JarEntry entry = enums.nextElement();
+            String fileName;
+            File f;
+            if (entry.getName().endsWith(".class")) {
+                fileName = destinationDir + File.separator + entry.getName();
+                f = new File(fileName);
+                //Adding to list of jar files
+                //jarFiles.add(f);
+                if (!fileName.endsWith("/")) {
+                    InputStream is = jar.getInputStream(entry);
+                    FileOutputStream fos = new FileOutputStream(f);
+                    while (is.available() > 0) {
+                        fos.write(is.read());
+                    }
+                    fos.close();
+                    is.close();
+                }
+            }
+        }
+    }
 }
+
 

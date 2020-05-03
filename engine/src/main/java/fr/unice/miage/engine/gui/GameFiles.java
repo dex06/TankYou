@@ -18,6 +18,7 @@ import javafx.stage.Stage;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.jar.JarFile;
 
 public class GameFiles extends Application {
 
@@ -56,33 +57,45 @@ public class GameFiles extends Application {
             String path = textField.getText();
             try {
                 if(new File(path).exists()) {
-                    Repository repo = new Repository(path);
+                    //Repository repo = new Repository(path);
+                    repository.loadLibraries(path);
                 }
             } catch(Exception err){
                 System.err.println(err);
             }
         });
-        Button chooserBtn = new Button("Select Jar File");
+        Button chooserBtn = new Button("Import Jar File");
         chooserBtn.setOnAction(e -> {
             File selectedFile = fileChooser.showOpenDialog(primaryStage);
             if(selectedFile.getName().endsWith(".jar")){
                 try {
-                    Repository repo = new Repository(selectedFile.getCanonicalPath());
-                    if(!repoList.contains(repo)) {
-                        repoList.add(repo);
-                        displayRepos();
-                    }
+                    repository.loadLibraries(selectedFile.getCanonicalPath());
+                    displayRepos();
                 } catch (Exception exception) {
                     exception.printStackTrace();
                 }
-
+            }
+        });
+        Button copyBtn = new Button("Copy Jar File");
+        copyBtn.setOnAction(e -> {
+            File selectedFile = fileChooser.showOpenDialog(primaryStage);
+            if(selectedFile.getName().endsWith(".jar")) {
+                try {
+                    JarFile jar = new JarFile(selectedFile);
+                    repository.copyJarFile(jar, new File("plugins"));
+                    repository.loadLibraries(selectedFile.getCanonicalPath());
+                    displayRepos();
+                } catch (Exception exception) {
+                    exception.printStackTrace();
+                }
             }
         });
         HBox selectHBox = new HBox();
         HBox fieldHBox = new HBox(textField);
         HBox okHBox = new HBox(okBtn);
         HBox chooserHBox = new HBox(chooserBtn);
-        selectHBox.getChildren().addAll(txtFldLabel, fieldHBox, okHBox, chooserHBox);
+        HBox copyHBox = new HBox(copyBtn);
+        selectHBox.getChildren().addAll(txtFldLabel, fieldHBox, okHBox, chooserHBox, copyHBox);
         selectHBox.setPadding(new Insets(10,10,10,10));
         selectHBox.setSpacing(10);
         selectHBox.setAlignment(Pos.TOP_CENTER);
