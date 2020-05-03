@@ -73,7 +73,9 @@ public class GameMenu  {
         VBox collVBox = createCollisionVbox();
         collVBox.setAlignment(Pos.CENTER);
         VBox obstacleVBox = createObstacleVBox();
+        obstacleVBox.setAlignment(Pos.CENTER);
         VBox backgroundVBox = createBackgroundVBox();
+        backgroundVBox.setAlignment(Pos.CENTER);
         configHBox.getChildren().addAll(collVBox, obstacleVBox, backgroundVBox);
         configHBox.setSpacing(15);
         configHBox.setAlignment(Pos.CENTER);
