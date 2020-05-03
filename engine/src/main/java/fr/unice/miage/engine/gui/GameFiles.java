@@ -44,6 +44,12 @@ public class GameFiles extends Application {
         primaryStage.setTitle("Plugin selection");
 
         FileChooser fileChooser = new FileChooser();
+        String userDirectoryString = System.getProperty("user.home");
+        File userDirectory = new File(userDirectoryString);
+        if(!userDirectory.canRead()) {
+            userDirectory = new File("c:/");
+        }
+        fileChooser.setInitialDirectory(userDirectory);
 
         fileChooser.getExtensionFilters().addAll(
                 new FileChooser.ExtensionFilter("Jar Files", "*.jar")
@@ -68,26 +74,30 @@ public class GameFiles extends Application {
         Button chooserBtn = new Button("Import Jar File");
         chooserBtn.setOnAction(e -> {
             File selectedFile = fileChooser.showOpenDialog(primaryStage);
-            if(selectedFile.getName().endsWith(".jar")){
-                try {
-                    repository.loadLibraries(selectedFile.getCanonicalPath());
-                    displayRepos();
-                } catch (Exception exception) {
-                    exception.printStackTrace();
+            if(selectedFile != null) {
+                if (selectedFile.getName().endsWith(".jar")) {
+                    try {
+                        repository.loadLibraries(selectedFile.getCanonicalPath());
+                        displayRepos();
+                    } catch (Exception exception) {
+                        exception.printStackTrace();
+                    }
                 }
             }
         });
         Button copyBtn = new Button("Copy Jar File");
         copyBtn.setOnAction(e -> {
             File selectedFile = fileChooser.showOpenDialog(primaryStage);
-            if(selectedFile.getName().endsWith(".jar")) {
-                try {
-                    JarFile jar = new JarFile(selectedFile);
-                    repository.copyJarFile(jar, new File("plugins"));
-                    repository.loadLibraries(selectedFile.getCanonicalPath());
-                    displayRepos();
-                } catch (Exception exception) {
-                    exception.printStackTrace();
+            if(selectedFile != null) {
+                if (selectedFile.getName().endsWith(".jar")) {
+                    try {
+                        JarFile jar = new JarFile(selectedFile);
+                        repository.copyJarFile(jar, new File("plugins"));
+                        repository.loadLibraries(selectedFile.getCanonicalPath());
+                        displayRepos();
+                    } catch (Exception exception) {
+                        exception.printStackTrace();
+                    }
                 }
             }
         });
