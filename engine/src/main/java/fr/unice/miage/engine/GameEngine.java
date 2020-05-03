@@ -84,11 +84,12 @@ public class GameEngine  {
     }
 
     public void loadingCollision(String opt) throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
-        collision = repository.loadCollision(opt);
+        if(hasCollision) collision = repository.loadCollision(opt);
     }
 
     public void loadingObstacle(String opt) throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
-        obstacles = repository.loadObstacle(opt);
+
+       if(hasObstacles) obstacles = repository.loadObstacle(opt);
     }
 
     public void loadingPlayers(List<List<String>> playersOptions) throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
