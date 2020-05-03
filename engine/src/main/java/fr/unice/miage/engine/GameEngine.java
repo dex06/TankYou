@@ -33,6 +33,8 @@ public class GameEngine  {
     private List<Player> players = new ArrayList<>();
     private List<String> gui1Opts = new ArrayList<>();
     private boolean hasBarMenu = false;
+    private boolean hasCollision = false;
+    private boolean hasObstacles = false;
     private boolean hasStats = false;
     private boolean hasWinner = false;
 
@@ -68,8 +70,14 @@ public class GameEngine  {
     public void startGame(List<String> gui1Opts, List<String> gui2Opts, List<String> configOpts, List<List<String>> playersOpts) throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
         //loadingGUI1();
         loadingPlayers(playersOpts);
-        loadingCollision(configOpts.get(0));
-        loadingObstacle(configOpts.get(1));
+        if(!configOpts.get(0).equals("Aucun")) {
+            loadingCollision(configOpts.get(0));
+            hasCollision = true;
+        }
+        if(!configOpts.get(1).equals("Aucun")) {
+            loadingObstacle(configOpts.get(1));
+            hasObstacles = true;
+        }
         if(!gui1Opts.get(0).equals("Aucun")) hasBarMenu = true;
         if(!gui2Opts.get(0).equals("Aucun")) hasStats = true;
         createGameBoard();
@@ -180,7 +188,7 @@ public class GameEngine  {
                         }
                     }
                     // Checking for all the types of collisions
-                    collision.checkAllCollisions(players);
+                    if(hasCollision) collision.checkAllCollisions(players);
                     lastUpdateNanoTime = currentNanoTime;
                 }
                 // If we pause the game

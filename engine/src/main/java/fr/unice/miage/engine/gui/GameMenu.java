@@ -169,6 +169,7 @@ public class GameMenu  {
         VBox collVBox = new VBox();
         Label collLabel = new Label("Collision");
         ObservableList<String> opts = repository.getCollisionPluginsNames();
+        opts.add("Aucun");
         ComboBox collCB = new ComboBox(opts);
         System.out.println(opts);
         if(opts.size() > 0) collCB.setValue(opts.get(0));
