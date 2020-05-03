@@ -26,6 +26,7 @@ public class Repository {
     private ObservableList<String> graphicPluginsNames = FXCollections.observableArrayList();
     private ObservableList<String> collisionPluginsNames = FXCollections.observableArrayList();
     private ObservableList<String> obstaclePluginsNames = FXCollections.observableArrayList();
+    private ObservableList<String> backgroundPluginsNames = FXCollections.observableArrayList();
     private ObservableList<String> gui1PluginsNames = FXCollections.observableArrayList();
     private ObservableList<String> gui2PluginsNames = FXCollections.observableArrayList();
     private List<Class> movePlugins = new ArrayList<>();
@@ -33,6 +34,7 @@ public class Repository {
     private List<Class> graphicPlugins = new ArrayList<>();
     private List<Class> collisionPlugins = new ArrayList<>();
     private List<Class> obstaclePlugins = new ArrayList<>();
+    private List<Class> backgroundPlugins = new ArrayList<>();
     private List<Class> gui1Plugins = new ArrayList<>();
     private List<Class> gui2Plugins = new ArrayList<>();
 
@@ -68,6 +70,8 @@ public class Repository {
     public ObservableList<String> getCollisionPluginsNames(){ return collisionPluginsNames; }
 
     public ObservableList<String> getObstaclePluginsNames() { return obstaclePluginsNames;}
+
+    public ObservableList<String> getBackgroundPluginsNames() { return backgroundPluginsNames;}
 
     public List<String> getGui1PluginsNames(){ return gui1PluginsNames; }
 
@@ -184,6 +188,11 @@ public class Repository {
     public PlugInObstacle loadObstacle(String opt) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
         //if(testing){ return new ObstacleOne(); }
         return (PlugInObstacle) obstaclePlugins.get(obstaclePluginsNames.indexOf(opt)).getDeclaredConstructor().newInstance();
+    }
+
+    public PlugInBackground loadBackground(String opt) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
+        //if(testing){ return new BackgroundOne(); }
+        return (PlugInBackground) backgroundPlugins.get(backgroundPluginsNames.indexOf(opt)).getDeclaredConstructor().newInstance();
     }
 
     public PlugInGUI1 loadGUI1(String opt) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {

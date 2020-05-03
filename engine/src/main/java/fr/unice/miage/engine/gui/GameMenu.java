@@ -73,7 +73,8 @@ public class GameMenu  {
         VBox collVBox = createCollisionVbox();
         collVBox.setAlignment(Pos.CENTER);
         VBox obstacleVBox = createObstacleVBox();
-        configHBox.getChildren().addAll(collVBox, obstacleVBox);
+        VBox backgroundVBox = createBackgroundVBox();
+        configHBox.getChildren().addAll(collVBox, obstacleVBox, backgroundVBox);
         configHBox.setSpacing(15);
         configHBox.setAlignment(Pos.CENTER);
 
@@ -187,6 +188,17 @@ public class GameMenu  {
         if(opts.size() > 0) obsCB.setValue(opts.get(0));
         obsVBox.getChildren().addAll(obsLabel, obsCB);
         return obsVBox;
+    }
+    private VBox createBackgroundVBox(){
+        VBox bgVBox = new VBox();
+        Label bgLabel = new Label("Aire de jeu");
+        ObservableList<String> opts = repository.getBackgroundPluginsNames();
+        opts.add("Aucun");
+        ComboBox bgCB = new ComboBox(opts);
+        System.out.println(opts);
+        if(opts.size() > 0) bgCB.setValue(opts.get(0));
+        bgVBox.getChildren().addAll(bgLabel, bgCB);
+        return bgVBox;
     }
 
     private VBox createGUI1VBox(){

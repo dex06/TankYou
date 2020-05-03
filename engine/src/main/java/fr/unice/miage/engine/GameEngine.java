@@ -4,6 +4,7 @@ import fr.unice.miage.common.CanvasGUI;
 import fr.unice.miage.common.Config;
 import fr.unice.miage.common.Repository;
 import fr.unice.miage.common.game_objects.Player;
+import fr.unice.miage.common.plugins.PlugInBackground;
 import fr.unice.miage.common.plugins.PlugInCollision;
 import fr.unice.miage.common.plugins.PlugInObstacle;
 import fr.unice.miage.common.utils.Finder;
@@ -29,12 +30,14 @@ public class GameEngine  {
     private CanvasGUI canvas;
     private PlugInCollision collision;
     private PlugInObstacle obstacles;
+    private PlugInBackground background;
     private int nbPlayers;
     private List<Player> players = new ArrayList<>();
     private List<String> gui1Opts = new ArrayList<>();
     private boolean hasBarMenu = false;
     private boolean hasCollision = false;
     private boolean hasObstacles = false;
+    private boolean hasBackground = false;
     private boolean hasStats = false;
     private boolean hasWinner = false;
 
@@ -78,6 +81,10 @@ public class GameEngine  {
             loadingObstacle(configOpts.get(1));
             hasObstacles = true;
         }
+        if(!configOpts.get(1).equals("Aucun")) {
+            loadingBackground(configOpts.get(2));
+            hasBackground = true;
+        }
         if(!gui1Opts.get(0).equals("Aucun")) hasBarMenu = true;
         if(!gui2Opts.get(0).equals("Aucun")) hasStats = true;
         createGameBoard();
@@ -92,6 +99,12 @@ public class GameEngine  {
        obstacles = repository.loadObstacle(opt);
        hasObstacles = true;
     }
+
+    public void loadingBackground(String opt) throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
+        background = repository.loadBackground(opt);
+        hasBackground = true;
+    }
+
 
     public void loadingPlayers(List<List<String>> playersOptions) throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
         nbPlayers = playersOptions.size();
