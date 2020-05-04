@@ -4,7 +4,7 @@ import fr.unice.miage.common.game_objects.Projectile;
 
 import java.util.List;
 
-public interface PlugInWeapon {
+public interface PlugInWeapon extends PlugIn {
 
     //public List<Projectile> getWeaponProjectiles();
 

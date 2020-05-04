@@ -1,4 +1,4 @@
 package fr.unice.miage.common.plugins;
 
-public interface PlugInObstacle {
+public interface PlugInObstacle extends PlugIn {
 }

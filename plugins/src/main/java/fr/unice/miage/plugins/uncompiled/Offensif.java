@@ -1,4 +1,4 @@
-package fr.unice.miage.common.uncompiled;
+package fr.unice.miage.plugins.uncompiled;
 
 import fr.unice.miage.common.game_objects.Player;
 import fr.unice.miage.common.geom.Vector2;
@@ -8,7 +8,7 @@ import fr.unice.miage.common.utils.Randomizer;
 
 import java.util.Random;
 
-public class Hazardeux implements PlugInMovement {
+public class Offensif implements PlugInMovement {
     public void init(Player player){
         player.setPosition(new Vector2(100,100));
         player.setVelocity(new Vector2(0.1,0.1));
@@ -21,7 +21,7 @@ public class Hazardeux implements PlugInMovement {
     }
 
     public void playerMove(Player player){
-        int[] cpmts = {1,1,1,1,1,1,2,2,2,3,3,3};
+        int[] cpmts = {1,1,1,2,2,2,2,2,2,3,3,3};
         int randCpmt = getRandom(cpmts);
         switch (randCpmt){
             case 1 :
@@ -62,12 +62,8 @@ public class Hazardeux implements PlugInMovement {
         player.setPosition(player.getPosition().add2(velocity));
     }
 
-
-
     private static int getRandom(int[] array) {
         int rnd = new Random().nextInt(array.length);
         return array[rnd];
     }
-
-
 }

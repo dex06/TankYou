@@ -29,20 +29,18 @@ public class MyClassLoader extends SecureClassLoader {
         if (b == null || b.length == 0) {
             throw new ClassNotFoundException();
         }
-        System.out.println("Chargement de la classe... si pas erreur alors ok");
         return super.defineClass(name, b, 0, b.length);
     }
 
     private byte[] loadClassData(String name) throws ClassNotFoundException {
         for (int j = 0; j < paths.size(); j++) {
-            File f= paths.get(j);
-            if(f.isDirectory()) {
+            File f = paths.get(j);
+            if (f.isDirectory()) {
                 String namePath = name.replaceAll("\\.", "\\\\") + ".class";
                 Path path = Paths.get(f.getAbsolutePath(), namePath);
                 byte[] b;
                 try {
                     b = Files.readAllBytes(path);
-                    System.out.println("Classe en bytes");
                     return b;
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -66,7 +64,6 @@ public class MyClassLoader extends SecureClassLoader {
                                 nextValue = is.read();
                             }
                             byte[] b = byteStream.toByteArray();
-                            System.out.println("JAR ou ZIP en bytes");
                             return b;
                         }
                     }
@@ -77,37 +74,5 @@ public class MyClassLoader extends SecureClassLoader {
         }
         return null;
     }
-
-//	private void getAllFiles(File f) {
-//		if(f.isFile()) {
-//			this.fileInPath.add(f);
-//		} else {
-//			for(File f2 : f.listFiles()) {
-//				this.getAllFiles(f2);
-//			}
-//		}
-//	}
-
-
-//	private static byte[] readContentIntoByteArray(File file)
-//	{
-//		FileInputStream fileInputStream = null;
-//		byte[] bFile = new byte[(int) file.length()];
-//		try
-//		{
-//			//convert file into array of bytes
-//			fileInputStream = new FileInputStream(file);
-//			fileInputStream.read(bFile);
-//			fileInputStream.close();
-//			for (int i = 0; i < bFile.length; i++)
-//			{
-//				System.out.print((char) bFile[i]);
-//			}
-//		}
-//		catch (Exception e)
-//		{
-//			e.printStackTrace();
-//		}
-//		return bFile;
-//	}
 }
+

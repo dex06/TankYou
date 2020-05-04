@@ -1,4 +1,4 @@
-package fr.unice.miage.common.uncompiled;
+package fr.unice.miage.plugins.uncompiled;
 
 import fr.unice.miage.common.Config;
 import fr.unice.miage.common.plugins.PlugInGUI1;

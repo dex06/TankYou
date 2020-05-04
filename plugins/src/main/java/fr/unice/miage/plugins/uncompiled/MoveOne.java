@@ -1,4 +1,4 @@
-package fr.unice.miage.common.uncompiled;
+package fr.unice.miage.plugins.uncompiled;
 
 import fr.unice.miage.common.game_objects.Player;
 import fr.unice.miage.common.geom.Vector2;
@@ -6,9 +6,8 @@ import fr.unice.miage.common.plugins.PlugInMovement;
 import fr.unice.miage.common.utils.Finder;
 import fr.unice.miage.common.utils.Randomizer;
 
-import java.util.Random;
+public class MoveOne implements PlugInMovement {
 
-public class Offensif implements PlugInMovement {
     public void init(Player player){
         player.setPosition(new Vector2(100,100));
         player.setVelocity(new Vector2(0.1,0.1));
@@ -21,19 +20,9 @@ public class Offensif implements PlugInMovement {
     }
 
     public void playerMove(Player player){
-        int[] cpmts = {1,1,1,2,2,2,2,2,2,3,3,3};
-        int randCpmt = getRandom(cpmts);
-        switch (randCpmt){
-            case 1 :
-                randomMove(player);
-                break;
-            case 2 :
-                seekMove(player);
-                break;
-            case 3:
-                fleeMove(player);
-                break;
-        }
+        randomMove(player);
+        seekMove(player);
+        fleeMove(player);
     }
 
     public void randomMove(Player player){
@@ -60,10 +49,5 @@ public class Offensif implements PlugInMovement {
         steering = steering.limit2(player.getMaxForce()).mult2(1/player.getMass());
         Vector2 velocity = player.getVelocity().add2(steering).limit2(player.getMaxSpeed());
         player.setPosition(player.getPosition().add2(velocity));
-    }
-
-    private static int getRandom(int[] array) {
-        int rnd = new Random().nextInt(array.length);
-        return array[rnd];
     }
 }

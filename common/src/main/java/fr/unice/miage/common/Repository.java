@@ -36,7 +36,7 @@ public class Repository {
     private List<Class> gui1Plugins = new ArrayList<>();
     private List<Class> gui2Plugins = new ArrayList<>();
 
-    private String packageName = "fr.unice.miage.common";
+    private String packageName = "fr.unice.miage.plugins";
     private String appFolderName = "uncompiled";
     private String s = File.separator;
     private String destinationDir = "plugins"+s+"src"+s+"main"+s+"java"+s+"fr"+"unice"+s+"miage"+s+"classes";
@@ -119,8 +119,8 @@ public class Repository {
                     continue;
                 }
                 System.out.println("Loading jar class : " + je.getName());
-                String pack = packageName + "." + appFolderName + "." + je.getName().replace(".class", "");
-                //String pack = je.getName().replace(".class", "");
+                //String pack = packageName + "." + appFolderName + "." + je.getName().replace(".class", "");
+                String pack = je.getName().replace("/", ".").replace(".class", "");
                 Class loadedClass = cl.loadClass(pack);
                 Object instance = loadedClass.getDeclaredConstructor().newInstance();
                 String interfaceName = instance.getClass().getInterfaces()[0].getSimpleName();
