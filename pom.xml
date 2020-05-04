@@ -73,7 +73,7 @@
           </archive>
           <finalName>pa2020</finalName>
           <descriptorRefs>jar-with-dependencies</descriptorRefs>
-          <appendAssemblyId>false</appendAssemblyId>
+
         </configuration>
         <executions>
           <execution>
@@ -90,20 +90,13 @@
         <executions>
           <execution>
             <goals>
-              <goal>exec</goal>
+              <goal>java</goal>
             </goals>
           </execution>
         </executions>
         <configuration>
-          <skip>false</skip>
-          <executable>pa2020</executable>
-          <workingDirectory>target</workingDirectory>
-          <arguments>
-            <argument>--module-path</argument> <!-- or -p  -->
-            <modulepath/>
-            <argument>--module</argument> <!-- or -m -->
-            <argument>engine/fr.unice.miage.engine.App</argument>
-          </arguments>
+          <workingDirectory></workingDirectory>
+          <mainClass>fr.unice.miage.engine.App</mainClass>
 
         </configuration>
       </plugin>
