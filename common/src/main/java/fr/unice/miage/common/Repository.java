@@ -118,7 +118,7 @@ public class Repository {
                 if (je.isDirectory() || !je.getName().endsWith(".class")) {
                     continue;
                 }
-                System.out.println("Loading jar class : " + je.getName());
+                //System.out.println("Loading jar class : " + je.getName());
                 //String pack = packageName + "." + appFolderName + "." + je.getName().replace(".class", "");
                 String pack = je.getName().replace("/", ".").replace(".class", "");
                 Class loadedClass = cl.loadClass(pack);
@@ -168,7 +168,7 @@ public class Repository {
     }
 
 
-    public PlugInMovement loadMovement(String opt) throws ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
+    public PlugInMovement loadMovement(String opt) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
         //if(testing){ return new MoveOne(); }
         return (PlugInMovement) movePlugins.get(movePluginsNames.indexOf(opt)).getDeclaredConstructor().newInstance();
     }
@@ -223,7 +223,7 @@ public class Repository {
             //create a new entry to avoid ZipException: invalid entry compressed size
             jos.putNextEntry(new JarEntry(entry.getName()));
             byte[] buffer = new byte[4096];
-            int bytesRead = 0;
+            int bytesRead;
             while ((bytesRead = is.read(buffer)) != -1) {
                 jos.write(buffer, 0, bytesRead);
             }
@@ -234,7 +234,7 @@ public class Repository {
         jos.close();
     }
 
-    private void unzipJarFile(File file) throws IOException, ClassNotFoundException {
+    private void unzipJarFile(File file) throws IOException {
         JarFile jar = new JarFile(file);
         for (Enumeration<JarEntry> enums = jar.entries(); enums.hasMoreElements(); ) {
             JarEntry entry = enums.nextElement();

@@ -15,7 +15,7 @@ import java.util.jar.JarFile;
 
 
 public class MyClassLoader extends SecureClassLoader {
-    private List<File> paths = null;
+    private List<File> paths;
 
 //	private ArrayList<File> fileInPath = new ArrayList<>();
 
@@ -32,9 +32,8 @@ public class MyClassLoader extends SecureClassLoader {
         return super.defineClass(name, b, 0, b.length);
     }
 
-    private byte[] loadClassData(String name) throws ClassNotFoundException {
-        for (int j = 0; j < paths.size(); j++) {
-            File f = paths.get(j);
+    private byte[] loadClassData(String name) {
+        for (File f : paths) {
             if (f.isDirectory()) {
                 String namePath = name.replaceAll("\\.", "\\\\") + ".class";
                 Path path = Paths.get(f.getAbsolutePath(), namePath);
@@ -49,13 +48,12 @@ public class MyClassLoader extends SecureClassLoader {
                 try {
                     String localName = name.replaceAll("\\.", "/");
                     localName += ".class";
-                    JarFile jarFile = new JarFile(paths.get(j));
+                    JarFile jarFile = new JarFile(f);
                     Enumeration<JarEntry> e = jarFile.entries();
                     while (e.hasMoreElements()) {
                         JarEntry je = e.nextElement();
                         String loadName = je.toString();
                         if (loadName.equals(localName)) {
-                            System.out.println(loadName + " " + name + " " + localName);
                             InputStream is = jarFile.getInputStream(je);
                             ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
                             int nextValue = is.read();
@@ -63,8 +61,7 @@ public class MyClassLoader extends SecureClassLoader {
                                 byteStream.write(nextValue);
                                 nextValue = is.read();
                             }
-                            byte[] b = byteStream.toByteArray();
-                            return b;
+                            return byteStream.toByteArray();
                         }
                     }
                 } catch (IOException e1) {
