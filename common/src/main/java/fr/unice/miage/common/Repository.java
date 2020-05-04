@@ -9,8 +9,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
-import java.net.URL;
-import java.net.URLClassLoader;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.List;
@@ -111,8 +109,10 @@ public class Repository {
         JarFile jarFile = new JarFile(pathToJar);
         Enumeration<JarEntry> e = jarFile.entries();
 
-        URL[] urls = {new URL("jar:file:" + pathToJar + "!/")};
-        URLClassLoader cl = URLClassLoader.newInstance(urls);
+        //URL[] urls = {new URL("jar:file:" + pathToJar + "!/")};
+        //URLClassLoader cl = URLClassLoader.newInstance(urls);
+
+        MyClassLoader cl = new MyClassLoader(jarFiles);
 
         while (e.hasMoreElements()) {
             JarEntry je = e.nextElement();
@@ -120,9 +120,10 @@ public class Repository {
                 continue;
             }
             System.out.println("Loading jar class : " + je.getName());
-            String pack = packageName + "." + appFolderName + "." + je.getName().replace(".class", "");
-            //String pack = je.getName().replace(".class","");
+            //String pack = packageName + "." + appFolderName + "." + je.getName().replace(".class", "");
+            String pack = je.getName().replace(".class","");
             Class loadedClass = cl.loadClass(pack);
+            //Class loadedClass = myCl.findClass(pack);
             Object instance = loadedClass.getDeclaredConstructor().newInstance();
             String interfaceName = instance.getClass().getInterfaces()[0].getSimpleName();
 
