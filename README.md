@@ -1,3 +1,14 @@
+#Installation
+```mvn install```
+#Execution
+```mvn exec:java -pl engine```
+
+#Création d'un fichier jar
+On se place dans le dossier contenant les fichiers à compiler
+
+```jar  -cvf MyJarFile.jar *.class```
+
+
 # Projet Programmation avancée 2019-2020
 
 ## Description  
@@ -20,8 +31,8 @@ Par exemple, on peut imaginer spécifier un comportement différent pour le dép
 ```java
 public class NimporteComment implements PluginMouvement {
 
-	public void move(...) {
-	    ...
+	public void move() {
+	    
 	}
 }
 ```

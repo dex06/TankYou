@@ -147,6 +147,10 @@ public class Repository {
                     obstaclePluginsNames.add(instance.getClass().getSimpleName());
                     obstaclePlugins.add(loadedClass);
                     break;
+                case "PlugInBackground":
+                    backgroundPluginsNames.add(instance.getClass().getSimpleName());
+                    backgroundPlugins.add(loadedClass);
+                    break;
                 case "PlugInGUI1":
                     gui1PluginsNames.add(instance.getClass().getSimpleName());
                     gui1Plugins.add(loadedClass);
