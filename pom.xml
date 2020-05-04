@@ -73,7 +73,7 @@
           </archive>
           <finalName>pa2020</finalName>
           <descriptorRefs>jar-with-dependencies</descriptorRefs>
-          <appendAssemblyId>false</appendAssemblyId>
+          <appendAssemblyId>true</appendAssemblyId>
         </configuration>
         <executions>
           <execution>
@@ -95,6 +95,7 @@
           </execution>
         </executions>
         <configuration>
+          <includePluginDependencies>true</includePluginDependencies>
           <mainClass>fr.unice.miage.engine.App</mainClass>
 
         </configuration>
