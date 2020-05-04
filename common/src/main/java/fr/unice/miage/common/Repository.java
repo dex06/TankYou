@@ -39,12 +39,13 @@ public class Repository {
     private String packageName = "fr.unice.miage.common";
     private String appFolderName = "uncompiled";
     private String s = File.separator;
-    private String destinationDir = "common"+s+"src"+s+"main"+s+"java"+s+"fr"+"unice"+s+"miage"+s+"classes";
+    private String destinationDir = "plugins"+s+"src"+s+"main"+s+"java"+s+"fr"+"unice"+s+"miage"+s+"classes";
 
     private boolean testing = Config.getTesting();
 
     public Repository() throws Exception {
         this.loadLibraries("plugins");
+
     }
 
     public Repository(String base) throws Exception {
@@ -100,66 +101,64 @@ public class Repository {
             System.out.println("Found library format : " + file.getName());
             jarFiles.add(file);
             //unzipJarFile(file);
-            loadClassesFromJar(file);
+
         }
+        loadClassesFromJarFiles();
+
     }
 
 
-    public void loadClassesFromJar(File pathToJar) throws IOException, ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
-        JarFile jarFile = new JarFile(pathToJar);
-        Enumeration<JarEntry> e = jarFile.entries();
-
-        //URL[] urls = {new URL("jar:file:" + pathToJar + "!/")};
-        //URLClassLoader cl = URLClassLoader.newInstance(urls);
-
+    public void loadClassesFromJarFiles() throws IOException, ClassNotFoundException, NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
         MyClassLoader cl = new MyClassLoader(jarFiles);
+        for(File jar : jarFiles) {
+            JarFile jarFile = new JarFile(jar);
+            Enumeration<JarEntry> e = jarFile.entries();
+            while (e.hasMoreElements()) {
+                JarEntry je = e.nextElement();
+                if (je.isDirectory() || !je.getName().endsWith(".class")) {
+                    continue;
+                }
+                System.out.println("Loading jar class : " + je.getName());
+                String pack = packageName + "." + appFolderName + "." + je.getName().replace(".class", "");
+                //String pack = je.getName().replace(".class", "");
+                Class loadedClass = cl.loadClass(pack);
+                Object instance = loadedClass.getDeclaredConstructor().newInstance();
+                String interfaceName = instance.getClass().getInterfaces()[0].getSimpleName();
 
-        while (e.hasMoreElements()) {
-            JarEntry je = e.nextElement();
-            if (je.isDirectory() || !je.getName().endsWith(".class")) {
-                continue;
-            }
-            System.out.println("Loading jar class : " + je.getName());
-            //String pack = packageName + "." + appFolderName + "." + je.getName().replace(".class", "");
-            String pack = je.getName().replace(".class","");
-            Class loadedClass = cl.loadClass(pack);
-            //Class loadedClass = myCl.findClass(pack);
-            Object instance = loadedClass.getDeclaredConstructor().newInstance();
-            String interfaceName = instance.getClass().getInterfaces()[0].getSimpleName();
-
-            switch (interfaceName) {
-                case "PlugInMovement":
-                    movePluginsNames.add(instance.getClass().getSimpleName());
-                    movePlugins.add(loadedClass);
-                    break;
-                case "PlugInWeapon":
-                    weaponPluginsNames.add(instance.getClass().getSimpleName());
-                    weaponPlugins.add(loadedClass);
-                    break;
-                case "PlugInGraphic":
-                    graphicPluginsNames.add(instance.getClass().getSimpleName());
-                    graphicPlugins.add(loadedClass);
-                    break;
-                case "PlugInCollision":
-                    collisionPluginsNames.add(instance.getClass().getSimpleName());
-                    collisionPlugins.add(loadedClass);
-                    break;
-                case "PlugInObstacle":
-                    obstaclePluginsNames.add(instance.getClass().getSimpleName());
-                    obstaclePlugins.add(loadedClass);
-                    break;
-                case "PlugInBackground":
-                    backgroundPluginsNames.add(instance.getClass().getSimpleName());
-                    backgroundPlugins.add(loadedClass);
-                    break;
-                case "PlugInGUI1":
-                    gui1PluginsNames.add(instance.getClass().getSimpleName());
-                    gui1Plugins.add(loadedClass);
-                    break;
-                case "PlugInGUI2":
-                    gui2PluginsNames.add(instance.getClass().getSimpleName());
-                    gui2Plugins.add(loadedClass);
-                    break;
+                switch (interfaceName) {
+                    case "PlugInMovement":
+                        movePluginsNames.add(instance.getClass().getSimpleName());
+                        movePlugins.add(loadedClass);
+                        break;
+                    case "PlugInWeapon":
+                        weaponPluginsNames.add(instance.getClass().getSimpleName());
+                        weaponPlugins.add(loadedClass);
+                        break;
+                    case "PlugInGraphic":
+                        graphicPluginsNames.add(instance.getClass().getSimpleName());
+                        graphicPlugins.add(loadedClass);
+                        break;
+                    case "PlugInCollision":
+                        collisionPluginsNames.add(instance.getClass().getSimpleName());
+                        collisionPlugins.add(loadedClass);
+                        break;
+                    case "PlugInObstacle":
+                        obstaclePluginsNames.add(instance.getClass().getSimpleName());
+                        obstaclePlugins.add(loadedClass);
+                        break;
+                    case "PlugInBackground":
+                        backgroundPluginsNames.add(instance.getClass().getSimpleName());
+                        backgroundPlugins.add(loadedClass);
+                        break;
+                    case "PlugInGUI1":
+                        gui1PluginsNames.add(instance.getClass().getSimpleName());
+                        gui1Plugins.add(loadedClass);
+                        break;
+                    case "PlugInGUI2":
+                        gui2PluginsNames.add(instance.getClass().getSimpleName());
+                        gui2Plugins.add(loadedClass);
+                        break;
+                }
             }
         }
     }
