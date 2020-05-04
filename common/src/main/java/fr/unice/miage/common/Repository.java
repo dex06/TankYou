@@ -121,7 +121,6 @@ public class Repository {
             }
             System.out.println("Loading jar class : " + je.getName());
             String pack = packageName + "." + appFolderName + "." + je.getName().replace(".class", "");
-            //String pack = jarFile.getName().replace("\\",".").replace(".jar","") + "." + je.getName().replace(".class","");
             //String pack = je.getName().replace(".class","");
             Class loadedClass = cl.loadClass(pack);
             Object instance = loadedClass.getDeclaredConstructor().newInstance();

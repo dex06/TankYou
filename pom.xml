@@ -61,7 +61,28 @@
         </plugins>
       </pluginManagement>
     <plugins>
-
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-assembly-plugin</artifactId>
+        <version>3.2.0</version>
+        <configuration>
+          <archive>
+            <manifest>
+              <mainClass>fr.unice.miage.engine.App</mainClass>
+            </manifest>
+          </archive>
+          <finalName>pa2020</finalName>
+          <descriptorRefs>jar-with-dependencies</descriptorRefs>
+          <appendAssemblyId>false</appendAssemblyId>
+        </configuration>
+        <executions>
+          <execution>
+            <id>make-assembly</id>
+            <phase>package</phase>
+            <goals><goal>single</goal></goals>
+          </execution>
+        </executions>
+      </plugin>
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>exec-maven-plugin</artifactId>
@@ -69,13 +90,21 @@
         <executions>
           <execution>
             <goals>
-              <goal>java</goal>
+              <goal>exec</goal>
             </goals>
           </execution>
         </executions>
         <configuration>
-          <skip>true</skip>
-          <mainClass>fr.unice.miage.engine.App</mainClass>
+          <skip>false</skip>
+          <executable>pa2020</executable>
+          <workingDirectory>target</workingDirectory>
+          <arguments>
+            <argument>--module-path</argument> <!-- or -p  -->
+            <modulepath/>
+            <argument>--module</argument> <!-- or -m -->
+            <argument>engine/fr.unice.miage.engine.App</argument>
+          </arguments>
+
         </configuration>
       </plugin>
     </plugins>
