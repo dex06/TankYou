@@ -17,19 +17,26 @@ import java.util.jar.JarFile;
 public class MyClassLoader extends SecureClassLoader {
     private List<File> paths;
 
-//	private ArrayList<File> fileInPath = new ArrayList<>();
+
 
     public MyClassLoader(List<File> p) {
+        super(Thread.currentThread().getContextClassLoader());
         this.paths = p;
     }
 
+
     @Override
     protected Class<?> findClass(String name) throws ClassNotFoundException {
-        byte[] b = loadClassData(name);
-        if (b == null || b.length == 0) {
-            throw new ClassNotFoundException();
+        try {
+            byte[] b = loadClassData(name);
+            if (b == null || b.length == 0) {
+                throw new ClassNotFoundException();
+            }
+            return super.defineClass(name, b, 0, b.length);
+        } catch (ClassNotFoundException e){
+            System.out.println("Parent classloader");
+            return this.getParent().loadClass(name);
         }
-        return super.defineClass(name, b, 0, b.length);
     }
 
     private byte[] loadClassData(String name) {
