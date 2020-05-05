@@ -198,6 +198,7 @@ public class GameEngine  {
                         if(hasRealPlayer & players.indexOf(player) == 0) {
                             realPlayer.handleKeyInput(players.get(0), btnState);
                           player.draw();
+                          //btnState.reset();
                         } else if (player.isAlive()) {
                             player.move();
                         }
