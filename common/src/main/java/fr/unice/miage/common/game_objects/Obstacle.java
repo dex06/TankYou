@@ -17,14 +17,22 @@ import java.util.List;
 public class Obstacle {
     protected Vector2 position;
     protected double rotation;
-    private int height;
-    private int width;
+    private Vector2 size;
 
     private Repository repository;
     private CanvasGUI canvas;
     private PlugInGraphic pg;
 
-    public Obstacle() throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
+    public Obstacle(Vector2 position, Vector2 size) throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
+        this.position = position;
+        this.size = size;
+    }
 
+    public Vector2 getPosition() {
+        return position;
+    }
+
+    public Vector2 getSize() {
+        return size;
     }
 }

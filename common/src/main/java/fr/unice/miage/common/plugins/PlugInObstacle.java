@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface PlugInObstacle extends PlugIn {
 
-    void draw(CanvasGUI canvas);
+    void draw(CanvasGUI canvas,  Obstacle obstacle);
 
     List<Obstacle> generate();
 

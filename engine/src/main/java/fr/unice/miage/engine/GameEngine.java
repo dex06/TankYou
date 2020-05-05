@@ -84,7 +84,7 @@ public class GameEngine  {
             loadingObstacle(configOpts.get(1));
             hasObstacles = true;
         }
-        if(!configOpts.get(1).equals("Aucun")) {
+        if(!configOpts.get(2).equals("Aucun")) {
             loadingBackground(configOpts.get(2));
             hasBackground = true;
         }
@@ -126,7 +126,7 @@ public class GameEngine  {
         gameBoard = new GameBoard(stage, 600,600, canvas, repository);
         gameBoard.init(hasBarMenu);
         if(hasObstacles)
-            obstaclesList =  obstacles.generate();
+            obstaclesList = obstacles.generate();
         gameBoard.start();
         giveRandomPositionAndVelocityToPlayers();
         loop();
@@ -172,6 +172,9 @@ public class GameEngine  {
 //                System.out.println(t);
                     canvas.clean();
                     if(hasBackground) background.draw(canvas);
+                    for (Obstacle obs : obstaclesList){
+                        obstacles.draw(canvas, obs);
+                    }
                     for (Player player : players) {
                         if (player.isAlive()) {
                             player.move();
