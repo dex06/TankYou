@@ -4,11 +4,14 @@ import fr.unice.miage.common.Repository;
 import fr.unice.miage.engine.GameEngine;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.*;
@@ -33,11 +36,15 @@ public class GameMenu  {
     private VBox guis = new VBox();
     private VBox configs = new VBox();
     private VBox players = new VBox();
+    private CheckBox realPlayerCheckBox = new CheckBox();
+    private Label realPlayerLabel = new Label("IA Joueur 1");
+    private boolean hasRealPlayer = false;
     private Font labelFont = new Font("Arial", 18);
     private List<String> listOfGUI1Options = new ArrayList<>();
     private List<String> listOfGUI2Options = new ArrayList<>();
     private List<List<String>> listOfPlayersOptions = new ArrayList<>();
     private List<String> listOfConfigOptions = new ArrayList<>();
+    private List<String> listOfRealPlayerOptions = new ArrayList<>();
 
 
     public GameMenu(GameEngine gameEngine, Stage stage, Repository repository) {
@@ -101,6 +108,7 @@ public class GameMenu  {
             }
         });
         //Ajouter un joueur de base
+        if(repository.getRealPlayerPluginsNames().size() > 0) hasRealPlayer = true;
         addPlayerConfig();
 
         startGameBtn.setOnAction(e -> {
@@ -154,15 +162,45 @@ public class GameMenu  {
 
     private void addPlayerConfig(){
         HBox playerHBox = new HBox();
-        Label playerLabel = new Label("Joueur " + nbPlayers);
+        Label playerLabel;
+
         VBox playerMovementVBox = createPlayerVBox("Mouvements");
         playerMovementVBox.setAlignment(Pos.CENTER);
         VBox playerWeaponVBox = createPlayerVBox("Armes");
         playerWeaponVBox.setAlignment(Pos.CENTER);
         VBox playerGraphicVBox = createPlayerVBox("Graphiques");
         playerGraphicVBox.setAlignment(Pos.CENTER);
-        playerHBox.getChildren().addAll(playerLabel, playerMovementVBox, playerWeaponVBox, playerGraphicVBox);
-        playerHBox.setSpacing(10);
+
+        if(nbPlayers == 1){
+            VBox labelVBox = new VBox(realPlayerLabel);
+            labelVBox.setAlignment(Pos.CENTER);
+            realPlayerCheckBox = new CheckBox();
+            Label checkBoxLabel = new Label("IH");
+            checkBoxLabel.setAlignment(Pos.CENTER);
+            VBox realPlayerVBox = new VBox(checkBoxLabel, realPlayerCheckBox);
+            realPlayerVBox.setAlignment(Pos.CENTER);
+            EventHandler<ActionEvent> event = new EventHandler<ActionEvent>() {
+
+                public void handle(ActionEvent e) {
+                    if (realPlayerCheckBox.isSelected()) {
+                        realPlayerLabel.setText("IH joueur 1");
+                        realPlayerLabel.setTextFill(Color.GREEN);
+                    }
+                    else {
+                        realPlayerLabel.setText("IA joueur 1");
+                        realPlayerLabel.setTextFill(Color.BLACK);
+                    }
+                }
+            };
+            realPlayerCheckBox.setOnAction(event);
+            playerHBox.getChildren().addAll(labelVBox, playerMovementVBox, playerWeaponVBox, playerGraphicVBox, realPlayerVBox);
+        } else {
+            playerLabel = new Label("IA Joueur " + nbPlayers);
+            VBox labelVBox = new VBox(playerLabel);
+            labelVBox.setAlignment(Pos.CENTER);
+            playerHBox.getChildren().addAll(labelVBox, playerMovementVBox, playerWeaponVBox, playerGraphicVBox);
+        }
+        playerHBox.setSpacing(15);
         playerHBox.setAlignment(Pos.CENTER_LEFT);
         players.getChildren().add(playerHBox);
         stage.sizeToScene();
@@ -252,7 +290,7 @@ public class GameMenu  {
 
     private void startGame() throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
         stop();
-        gameEngine.startGame(listOfGUI1Options, listOfGUI2Options, listOfConfigOptions, listOfPlayersOptions);
+        gameEngine.startGame(listOfGUI1Options, listOfGUI2Options, listOfConfigOptions, listOfPlayersOptions, realPlayerCheckBox.isSelected());
     }
 
     private List<String> getConfigOptions(){

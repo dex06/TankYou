@@ -27,6 +27,7 @@ public class Repository {
     private ObservableList<String> backgroundPluginsNames = FXCollections.observableArrayList();
     private ObservableList<String> gui1PluginsNames = FXCollections.observableArrayList();
     private ObservableList<String> gui2PluginsNames = FXCollections.observableArrayList();
+    private ObservableList<String> realPlayerPluginsNames = FXCollections.observableArrayList();
     private List<Class> movePlugins = new ArrayList<>();
     private List<Class> weaponPlugins = new ArrayList<>();
     private List<Class> graphicPlugins = new ArrayList<>();
@@ -35,6 +36,7 @@ public class Repository {
     private List<Class> backgroundPlugins = new ArrayList<>();
     private List<Class> gui1Plugins = new ArrayList<>();
     private List<Class> gui2Plugins = new ArrayList<>();
+    private List<Class> realPlayerPlugins = new ArrayList<>();
 
     private String packageName = "fr.unice.miage.plugins";
     private String appFolderName = "uncompiled";
@@ -75,6 +77,8 @@ public class Repository {
     public List<String> getGui1PluginsNames(){ return gui1PluginsNames; }
 
     public List<String> getGui2PluginsNames(){ return gui2PluginsNames; }
+
+    public List<String> getRealPlayerPluginsNames(){ return realPlayerPluginsNames; }
 
 
     public List<Class> getMovePlugins() {
@@ -118,10 +122,11 @@ public class Repository {
                 if (je.isDirectory() || !je.getName().endsWith(".class")) {
                     continue;
                 }
-                //System.out.println("Loading jar class : " + je.getName());
+                System.out.println("Loading jar class : " + je.getRealName());
                 //String pack = packageName + "." + appFolderName + "." + je.getName().replace(".class", "");
                 String pack = je.getName().replace("/", ".").replace(".class", "");
                 Class loadedClass = cl.loadClass(pack);
+
                 Object instance = loadedClass.getDeclaredConstructor().newInstance();
                 String interfaceName = instance.getClass().getInterfaces()[0].getSimpleName();
 
@@ -158,6 +163,11 @@ public class Repository {
                         gui2PluginsNames.add(instance.getClass().getSimpleName());
                         gui2Plugins.add(loadedClass);
                         break;
+                    case "PlugInRealPlayer":
+                        realPlayerPluginsNames.add(instance.getClass().getSimpleName());
+                        realPlayerPlugins.add(loadedClass);
+                        break;
+
                 }
             }
         }
@@ -207,6 +217,12 @@ public class Repository {
         //if(testing){ return new StatsOne(); }
         return (PlugInGUI2) gui2Plugins.get(gui2PluginsNames.indexOf(opt)).getDeclaredConstructor().newInstance();
     }
+
+    public PlugInRealPlayer loadRealPlayer(String opt) throws NoSuchMethodException, IllegalAccessException, InvocationTargetException, InstantiationException {
+        //if(testing){ return new HumanOne(); }
+        return (PlugInRealPlayer) realPlayerPlugins.get(realPlayerPluginsNames.indexOf(opt)).getDeclaredConstructor().newInstance();
+    }
+
 
     public static void copyJarFile(JarFile jarFile, File destDir) throws IOException {
         String fileName = jarFile.getName();

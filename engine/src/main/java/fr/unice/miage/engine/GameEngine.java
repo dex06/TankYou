@@ -40,6 +40,7 @@ public class GameEngine  {
     private boolean hasBackground = false;
     private boolean hasStats = false;
     private boolean hasWinner = false;
+    private boolean hasRealPlayer = false;
 
 
     private Stage stage;
@@ -70,7 +71,7 @@ public class GameEngine  {
         gameMenu.start();
     }
 
-    public void startGame(List<String> gui1Opts, List<String> gui2Opts, List<String> configOpts, List<List<String>> playersOpts) throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
+    public void startGame(List<String> gui1Opts, List<String> gui2Opts, List<String> configOpts, List<List<String>> playersOpts, boolean asRealPlayer) throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
         //loadingGUI1();
         loadingPlayers(playersOpts);
         if(!configOpts.get(0).equals("Aucun")) {
@@ -87,6 +88,9 @@ public class GameEngine  {
         }
         if(!gui1Opts.get(0).equals("Aucun")) hasBarMenu = true;
         if(!gui2Opts.get(0).equals("Aucun")) hasStats = true;
+
+        this.hasRealPlayer = hasRealPlayer;
+
         createGameBoard();
     }
 
