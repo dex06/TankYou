@@ -6,6 +6,15 @@
   <artifactId>projet</artifactId>
   <packaging>pom</packaging>
   <build>
+    <resources>
+      <resource>
+        <directory>.</directory>
+        <excludes>
+          <exclude>
+            manifest-info.class</exclude>
+        </excludes>
+      </resource>
+    </resources>
 
       <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
         <plugins>

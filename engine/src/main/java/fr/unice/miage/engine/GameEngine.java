@@ -5,9 +5,11 @@ import fr.unice.miage.common.Config;
 import fr.unice.miage.common.Repository;
 import fr.unice.miage.common.game_objects.Obstacle;
 import fr.unice.miage.common.game_objects.Player;
+import fr.unice.miage.common.input.ButtonState;
 import fr.unice.miage.common.plugins.PlugInBackground;
 import fr.unice.miage.common.plugins.PlugInCollision;
 import fr.unice.miage.common.plugins.PlugInObstacle;
+import fr.unice.miage.common.plugins.PlugInRealPlayer;
 import fr.unice.miage.common.utils.Finder;
 import fr.unice.miage.common.utils.Randomizer;
 import fr.unice.miage.common.utils.Timer;
@@ -29,9 +31,11 @@ public class GameEngine  {
     private GameStats gameStats;
     private Repository repository;
     private CanvasGUI canvas;
+    private ButtonState btnState;
     private PlugInCollision collision;
     private PlugInObstacle obstacles;
     private PlugInBackground background;
+    private PlugInRealPlayer realPlayer;
     private int nbPlayers;
     private List<Player> players = new ArrayList<>();
     private List<String> gui1Opts = new ArrayList<>();
@@ -55,6 +59,7 @@ public class GameEngine  {
         this.stageWidth = width;
         this.stageHeight = height;
         this.path = path;
+        this.btnState = new ButtonState();
         try {
             this.repository = new Repository(path);
             this.gui1Opts = repository.getGui1PluginsNames();
@@ -73,7 +78,7 @@ public class GameEngine  {
         gameMenu.start();
     }
 
-    public void startGame(List<String> gui1Opts, List<String> gui2Opts, List<String> configOpts, List<List<String>> playersOpts, boolean asRealPlayer) throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
+    public void startGame(List<String> gui1Opts, List<String> gui2Opts, List<String> configOpts, List<List<String>> playersOpts, List<String> realPlayerOpts) throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
         //loadingGUI1();
         loadingPlayers(playersOpts);
         if(!configOpts.get(0).equals("Aucun")) {
@@ -91,7 +96,10 @@ public class GameEngine  {
         if(!gui1Opts.get(0).equals("Aucun")) hasBarMenu = true;
         if(!gui2Opts.get(0).equals("Aucun")) hasStats = true;
 
-        this.hasRealPlayer = hasRealPlayer;
+        if(!realPlayerOpts.isEmpty()){
+            loadingRealPlayer(realPlayerOpts.get(0));
+            hasRealPlayer = true;
+        }
 
         createGameBoard();
     }
@@ -109,6 +117,14 @@ public class GameEngine  {
     public void loadingBackground(String opt) throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
         background = repository.loadBackground(opt);
         hasBackground = true;
+    }
+
+    public void loadingRealPlayer(String opt) throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
+        realPlayer = repository.loadRealPlayer(opt);
+        realPlayer.handleKeyboard(players.get(0), stage, btnState);
+        realPlayer.handleMouse(players.get(0), stage, btnState);
+        hasRealPlayer = true;
+        System.out.println("Real player created");
     }
 
 
@@ -176,7 +192,10 @@ public class GameEngine  {
                         obstacles.draw(canvas, obs);
                     }
                     for (Player player : players) {
-                        if (player.isAlive()) {
+                        if(hasRealPlayer & players.indexOf(player) == 0) {
+                            realPlayer.handleKeyInput(players.get(0), btnState);
+                          player.draw();
+                        } else if (player.isAlive()) {
                             player.move();
                         }
                         player.draw();

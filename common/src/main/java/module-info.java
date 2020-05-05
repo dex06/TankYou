@@ -8,4 +8,5 @@ module fr.unice.miage.common {
     exports fr.unice.miage.common.utils;
     exports fr.unice.miage.common.sprite;
     exports fr.unice.miage.common.geom;
+    exports fr.unice.miage.common.input;
 }

@@ -108,7 +108,10 @@ public class GameMenu  {
             }
         });
         //Ajouter un joueur de base
-        if(repository.getRealPlayerPluginsNames().size() > 0) hasRealPlayer = true;
+        if(repository.getRealPlayerPluginsNames().size() > 0) {
+            listOfRealPlayerOptions= repository.getRealPlayerPluginsNames();
+            hasRealPlayer = true;
+        }
         addPlayerConfig();
 
         startGameBtn.setOnAction(e -> {
@@ -286,7 +289,7 @@ public class GameMenu  {
 
     private void startGame() throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
         stop();
-        gameEngine.startGame(listOfGUI1Options, listOfGUI2Options, listOfConfigOptions, listOfPlayersOptions, realPlayerCheckBox.isSelected());
+        gameEngine.startGame(listOfGUI1Options, listOfGUI2Options, listOfConfigOptions, listOfPlayersOptions, listOfRealPlayerOptions);
     }
 
     private List<String> getConfigOptions(){

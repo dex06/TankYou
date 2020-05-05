@@ -1,26 +1,35 @@
 package fr.unice.miage.plugins.uncompiled;
 
 import fr.unice.miage.common.game_objects.Player;
+import fr.unice.miage.common.geom.Vector2;
+import fr.unice.miage.common.input.ButtonState;
+import fr.unice.miage.common.input.Keyboard;
+import fr.unice.miage.common.input.Mouse;
 import fr.unice.miage.common.plugins.PlugInRealPlayer;
-import javafx.scene.Scene;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
+import javafx.stage.Stage;
 
 public class HumanOne implements PlugInRealPlayer {
 
-    public void handleKeyboardEvent(Player player, Scene scene){
-        scene.addEventFilter(KeyEvent.KEY_PRESSED, event -> {
-            System.out.println(event);
-            switch (event.getCode()) {
-                case DOWN:
-                    System.out.println("down");
-                    break;
-                case UP:
-                    System.out.println("up");
-                    break;
-            }
-        });
+    public void handleKeyboard(Player player, Stage stage, ButtonState btnState){
+        Keyboard keyboard = new Keyboard();
+        keyboard.handleKeyboardEvent(player, stage, btnState);
     }
 
-    public void handleMouseEvent(Player player, Scene scene){}
+    public void handleMouse(Player player, Stage stage, ButtonState btnState){
+        Mouse mouse = new Mouse();
+        mouse.handleMouseEvent(player, stage, btnState);
+    }
+
+    public void handleKeyInput(Player player, ButtonState btnState) {
+        int dx = 0;
+        int dy = 0;
+
+        if(btnState.up == true) dy -= 1;
+        if(btnState.down == true) dy += 1;
+        if(btnState.left == true) dx -= 1;
+        if(btnState.right == true) dx += 1;
+        if(btnState.shot == true) System.out.println("Shooting");
+
+        player.setPosition(new Vector2(dx,dy));
+    }
 }

@@ -18,12 +18,10 @@ public class MyClassLoader extends SecureClassLoader {
     private List<File> paths;
 
 
-
     public MyClassLoader(List<File> p) {
         super(Thread.currentThread().getContextClassLoader());
         this.paths = p;
     }
-
 
     @Override
     protected Class<?> findClass(String name) throws ClassNotFoundException {
