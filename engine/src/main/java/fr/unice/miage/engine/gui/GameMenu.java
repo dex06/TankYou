@@ -179,18 +179,14 @@ public class GameMenu  {
             checkBoxLabel.setAlignment(Pos.CENTER);
             VBox realPlayerVBox = new VBox(checkBoxLabel, realPlayerCheckBox);
             realPlayerVBox.setAlignment(Pos.CENTER);
-            EventHandler<ActionEvent> event = new EventHandler<ActionEvent>() {
-
-                public void handle(ActionEvent e) {
+            EventHandler<ActionEvent> event = e -> {
                     if (realPlayerCheckBox.isSelected()) {
                         realPlayerLabel.setText("IH joueur 1");
                         realPlayerLabel.setTextFill(Color.GREEN);
-                    }
-                    else {
+                    } else {
                         realPlayerLabel.setText("IA joueur 1");
                         realPlayerLabel.setTextFill(Color.BLACK);
                     }
-                }
             };
             realPlayerCheckBox.setOnAction(event);
             playerHBox.getChildren().addAll(labelVBox, playerMovementVBox, playerWeaponVBox, playerGraphicVBox, realPlayerVBox);
