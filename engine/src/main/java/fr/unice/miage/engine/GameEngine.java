@@ -3,6 +3,7 @@ package fr.unice.miage.engine;
 import fr.unice.miage.common.CanvasGUI;
 import fr.unice.miage.common.Config;
 import fr.unice.miage.common.Repository;
+import fr.unice.miage.common.game_objects.Obstacle;
 import fr.unice.miage.common.game_objects.Player;
 import fr.unice.miage.common.plugins.PlugInBackground;
 import fr.unice.miage.common.plugins.PlugInCollision;
@@ -34,6 +35,7 @@ public class GameEngine  {
     private int nbPlayers;
     private List<Player> players = new ArrayList<>();
     private List<String> gui1Opts = new ArrayList<>();
+    private List<Obstacle> obstaclesList = new ArrayList<>();
     private boolean hasBarMenu = false;
     private boolean hasCollision = false;
     private boolean hasObstacles = false;
@@ -100,7 +102,7 @@ public class GameEngine  {
     }
 
     public void loadingObstacle(String opt) throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
-       obstacles = repository.loadObstacle(opt);
+        obstacles = repository.loadObstacle(opt);
        hasObstacles = true;
     }
 
@@ -123,6 +125,8 @@ public class GameEngine  {
     public void createGameBoard(){
         gameBoard = new GameBoard(stage, 600,600, canvas, repository);
         gameBoard.init(hasBarMenu);
+        if(hasObstacles)
+            obstaclesList =  obstacles.generate();
         gameBoard.start();
         giveRandomPositionAndVelocityToPlayers();
         loop();
