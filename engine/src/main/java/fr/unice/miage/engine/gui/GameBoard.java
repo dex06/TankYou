@@ -52,6 +52,7 @@ public class GameBoard {
 			catch(Exception e){ System.err.println(e); }
 			barMenu = bar.createBar();
 			barMenu.setAlignment(Pos.BOTTOM_CENTER);
+			barMenu.setFocusTraversable(false);
 			root.setBottom(barMenu);
 		}
 		stage.sizeToScene();
@@ -70,7 +71,10 @@ public class GameBoard {
 		text.setText(timeStr);
 	}
 
+	public CanvasGUI getCanvas(){ return canvas; }
+	public void setCanvas(CanvasGUI canvas) { this.canvas = canvas; }
 
+	public Scene getScene(){ return theScene; }
 
 	public Iterator<Sprite> spriteIterator() {
 		return list.iterator();

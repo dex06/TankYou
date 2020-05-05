@@ -96,12 +96,13 @@ public class GameEngine  {
         if(!gui1Opts.get(0).equals("Aucun")) hasBarMenu = true;
         if(!gui2Opts.get(0).equals("Aucun")) hasStats = true;
 
+        createGameBoard();
+
         if(!realPlayerOpts.isEmpty()){
             loadingRealPlayer(realPlayerOpts.get(0));
             hasRealPlayer = true;
         }
 
-        createGameBoard();
     }
 
     public void loadingCollision(String opt) throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
@@ -121,9 +122,11 @@ public class GameEngine  {
 
     public void loadingRealPlayer(String opt) throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
         realPlayer = repository.loadRealPlayer(opt);
-        realPlayer.handleKeyboard(players.get(0), stage, btnState);
-        realPlayer.handleMouse(players.get(0), stage, btnState);
+
+        realPlayer.handleKeyboard(players.get(0), canvas, btnState);
+        realPlayer.handleMouse(players.get(0), canvas, btnState);
         hasRealPlayer = true;
+        //gameBoard.setCanvas(canvas);
         System.out.println("Real player created");
     }
 

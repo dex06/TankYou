@@ -1,16 +1,17 @@
 package fr.unice.miage.common.input;
 
+import fr.unice.miage.common.CanvasGUI;
 import fr.unice.miage.common.game_objects.Player;
 import javafx.event.EventHandler;
-import javafx.scene.Scene;
+import javafx.scene.canvas.Canvas;
 import javafx.scene.input.KeyEvent;
-import javafx.stage.Stage;
 
 public class Keyboard {
 
-    public void handleKeyboardEvent(Player player, Stage stage, ButtonState btnState){
-        Scene scene = stage.getScene();
-        scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+    public void handleKeyboardEvent(Player player, CanvasGUI canvas, ButtonState btnState){
+        Canvas c = canvas.getCanvas();
+        c.setFocusTraversable(true);
+        c.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
                 System.out.println(event);
@@ -39,7 +40,7 @@ public class Keyboard {
             }
         });
 
-        scene.setOnKeyReleased(new EventHandler<KeyEvent>() {
+        c.setOnKeyReleased(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
                 switch (event.getCode()) {
@@ -66,6 +67,5 @@ public class Keyboard {
                 }
             }
         });
-        stage.setScene(scene);
     }
 }
