@@ -85,6 +85,8 @@ public class Projectile {
         return position;
     }
 
+    public Vector2 getSizeRect(){ return sizeRect;}
+
     public double getVelocity() {
         return velocity;
     }

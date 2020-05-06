@@ -52,20 +52,20 @@ public class Player {
         this.setPlayerWeapons();
     }
 
-    public void shot(){
-        Player p = Finder.findClosestPlayer(this);
-        double direction = Math.atan2(p.getPosition().getY() - this.getPosition().getY(), p.getPosition().getX() - this.getPosition().getX());
-//        System.out.println(this.getName() + " " + direction);
-
-        double xCenter = this.position.getX() + pg.getPlayerSprite().getWidth()/2;
-        double yCenter =this.position.getY() + pg.getPlayerSprite().getHeight()/2;
-        double longueur = Math.sqrt(Math.pow(pg.getPlayerSprite().getWidth()/2, 2) + Math.pow(pg.getPlayerSprite().getHeight()/2, 2));
-//        new Vector2(pm.getPosition().getX(), pm.getPosition().getY());
-        projectiles.add(new Projectile(new Vector2(xCenter + longueur*Math.cos(direction),
-                yCenter + longueur*Math.sin(direction)),
-                direction));
-//        projectiles.add(new Projectile(new Vector2(pm.getPosition().getX(), pm.getPosition().getY()), direction));
-    }
+//    public void shot(){
+//        Player p = Finder.findClosestPlayer(this);
+//        double direction = Math.atan2(p.getPosition().getY() - this.getPosition().getY(), p.getPosition().getX() - this.getPosition().getX());
+////        System.out.println(this.getName() + " " + direction);
+//
+//        double xCenter = this.position.getX() + pg.getPlayerSprite().getWidth()/2;
+//        double yCenter =this.position.getY() + pg.getPlayerSprite().getHeight()/2;
+//        double longueur = Math.sqrt(Math.pow(pg.getPlayerSprite().getWidth()/2, 2) + Math.pow(pg.getPlayerSprite().getHeight()/2, 2));
+////        new Vector2(pm.getPosition().getX(), pm.getPosition().getY());
+//        projectiles.add(new Projectile(new Vector2(xCenter + longueur*Math.cos(direction),
+//                yCenter + longueur*Math.sin(direction)),
+//                direction));
+////        projectiles.add(new Projectile(new Vector2(pm.getPosition().getX(), pm.getPosition().getY()), direction));
+//    }
 
     public String getName(){ return playerName; }
     public int getPlayerID() { return playerID; }
@@ -187,6 +187,7 @@ public class Player {
 
 
     public void moveProjectiles() {
-        //pw.moveProjectile(projectiles);
+        for(Projectile prj : projectiles)
+            pw.moveProjectile(prj);
     }
 }
