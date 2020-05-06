@@ -41,7 +41,7 @@ public class Player {
     private List<PlugInWeapon> weapons;
     private boolean alive;
 
-    public Player(List<String> plugins, Repository repository, CanvasGUI canvas, int playerID) throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
+    public Player(List<String> plugins, Repository repository, CanvasGUI canvas, int playerID) throws NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
 
         this.repository = repository;
         this.canvas = canvas;
@@ -128,7 +128,9 @@ public class Player {
     /** Graphic methods **/
     public void draw(){ pg.draw(canvas); }
     // Methods for player sprite
-    public Sprite getSprite(){ return pg.getPlayerSprite(); }
+    public Sprite getSprite(){ if(hasGraphic) return pg.getPlayerSprite();
+        return null;
+    }
 
     /** Other methods **/
     public boolean isAlive(){ return alive; }
@@ -167,6 +169,7 @@ public class Player {
             pg.init(this);
             hasGraphic = true;
         }
+        System.out.println(playerID + " has Graphic : " + hasGraphic);
     }
 
     public void checkProjectileOut(){

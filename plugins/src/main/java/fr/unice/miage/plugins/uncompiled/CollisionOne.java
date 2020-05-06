@@ -36,15 +36,17 @@ public class CollisionOne implements PlugInCollision {
     }
 
     private void checkPlayerToBorderCollision(Player player){
-        double x = player.getPosition().getX();
-        double y = player.getPosition().getY();
-        double w = player.getSprite().getWidth();
-        double h = player.getSprite().getHeight();
-        if ((x+w) > Config.getWorldWidth() || x < 0) {
-            player.setSpeedX(-player.getSpeedX());
-        }
-        if ((y+h)> Config.getWorldHeight() || y < 0) {
-            player.setSpeedY(-player.getSpeedY());
+        if(player.hasGraphic()) {
+            double x = player.getPosition().getX();
+            double y = player.getPosition().getY();
+            double w = player.getSprite().getWidth();
+            double h = player.getSprite().getHeight();
+            if ((x + w) > Config.getWorldWidth() || x < 0) {
+                player.setSpeedX(-player.getSpeedX());
+            }
+            if ((y + h) > Config.getWorldHeight() || y < 0) {
+                player.setSpeedY(-player.getSpeedY());
+            }
         }
     }
 
@@ -65,7 +67,7 @@ public class CollisionOne implements PlugInCollision {
     }
 
     private void  checkPlayerToPlayerCollision(Player player1, Player player2) {
-        if(player1.hasGraphic() & player2.hasGraphic()) {
+        if(player1.hasGraphic() && player2.hasGraphic()) {
             Sprite playerSprite1 = player1.getSprite();
             Sprite playerSprite2 = player2.getSprite();
             if (playerSprite1.getBoundingShape().getBoundsInParent().intersects(playerSprite2.getBoundingShape().getBoundsInParent())) {
@@ -80,7 +82,7 @@ public class CollisionOne implements PlugInCollision {
     }
 
     private void checkWeaponToWeaponCollision(Player player1, Player player2) {
-        if(player1.hasWeapon() & player2.hasWeapon()) {
+        if(player1.hasWeapon() && player2.hasWeapon()) {
             List<Projectile> weaponProjectiles1 = player1.getProjectiles();
             List<Projectile> weaponProjectiles2 = player2.getProjectiles();
             for (int k = 0; k < weaponProjectiles1.size() - 1; k++) {
