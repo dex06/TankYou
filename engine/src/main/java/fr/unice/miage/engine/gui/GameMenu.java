@@ -174,7 +174,7 @@ public class GameMenu  {
         VBox playerGraphicVBox = createPlayerVBox("Graphiques");
         playerGraphicVBox.setAlignment(Pos.CENTER);
 
-        if(nbPlayers == 1){
+        if(hasRealPlayer & nbPlayers == 1){
             VBox labelVBox = new VBox(realPlayerLabel);
             labelVBox.setAlignment(Pos.CENTER);
             realPlayerCheckBox = new CheckBox();

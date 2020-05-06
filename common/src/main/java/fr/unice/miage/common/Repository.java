@@ -38,21 +38,14 @@ public class Repository {
     private List<Class> gui2Plugins = new ArrayList<>();
     private List<Class> realPlayerPlugins = new ArrayList<>();
 
-    private String packageName = "fr.unice.miage.plugins";
-    private String appFolderName = "uncompiled";
     private String s = File.separator;
     private String destinationDir = "plugins"+s+"src"+s+"main"+s+"java"+s+"fr"+"unice"+s+"miage"+s+"classes";
 
     private boolean testing = Config.getTesting();
 
-    public Repository() throws Exception {
-        this.loadLibraries("plugins");
+    public Repository() throws Exception { this.loadLibraries("plugin repository"); }
 
-    }
-
-    public Repository(String base) throws Exception {
-        this.loadLibraries(base);
-    }
+    public Repository(String base) throws Exception { this.loadLibraries(base); }
 
     public List<File> getJarFiles(){ return jarFiles; }
 
@@ -81,18 +74,6 @@ public class Repository {
     public List<String> getRealPlayerPluginsNames(){ return realPlayerPluginsNames; }
 
 
-    public List<Class> getMovePlugins() {
-        return movePlugins;
-    }
-
-    public List<Class> getWeaponPlugins() {
-        return weaponPlugins;
-    }
-
-    public List<Class> getGraphicPlugins() {
-        return graphicPlugins;
-    }
-
     public void loadLibraries(String path) throws Exception {
         File libDir = new File(path);
         if (!libDir.exists() || !libDir.isDirectory()) {
@@ -104,8 +85,6 @@ public class Repository {
             }
             System.out.println("Found library format : " + file.getName());
             jarFiles.add(file);
-            //unzipJarFile(file);
-
         }
         loadClassesFromJarFiles();
 
@@ -235,8 +214,6 @@ public class Repository {
         while (entries.hasMoreElements()) {
             JarEntry entry = entries.nextElement();
             InputStream is = jarFile.getInputStream(entry);
-            //jos.putNextEntry(entry);
-            //create a new entry to avoid ZipException: invalid entry compressed size
             jos.putNextEntry(new JarEntry(entry.getName()));
             byte[] buffer = new byte[4096];
             int bytesRead;

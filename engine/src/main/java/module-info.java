@@ -1,7 +1,8 @@
 module fr.unice.miage.engine{
-    requires transitive javafx.controls;
+    requires transitive fr.unice.miage.common;
+    //requires javafx.controls;
     opens fr.unice.miage.engine.gui to javafx.graphics;
     //requires junit;
-    requires fr.unice.miage.common;
+
     exports fr.unice.miage.engine;
 }

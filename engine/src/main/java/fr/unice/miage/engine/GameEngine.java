@@ -181,6 +181,7 @@ public class GameEngine  {
 
     public void loop(){
         Config.setPlay();
+        btnState.reset();
         Timer timer = new Timer();
         lastUpdateNanoTime = System.nanoTime();
         new AnimationTimer(){
@@ -197,7 +198,7 @@ public class GameEngine  {
                     for (Player player : players) {
                         if(hasRealPlayer & players.indexOf(player) == 0) {
                             realPlayer.handleKeyInput(players.get(0), btnState);
-                          player.draw();
+                           //player.draw();
                           //btnState.reset();
                         } else if (player.isAlive()) {
                             player.move();
