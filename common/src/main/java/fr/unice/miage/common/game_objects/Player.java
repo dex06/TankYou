@@ -15,16 +15,19 @@ import java.util.List;
 
 public class Player {
 
-    private String playerName = "Player";
+    private String playerName;
     private int playerID;
-    protected Vector2 position;
-    protected Vector2 velocity;
-    protected Vector2 acceleration;
-    protected double rotation;
+    protected Vector2 position = new Vector2();
+    protected Vector2 velocity = new Vector2();
+    protected Vector2 acceleration = new Vector2();
+    protected double rotation = 0;
     protected double maxSpeed = 3;
     protected double maxVelocity = 1;
     protected double maxForce = 2;
     protected double mass = 3;
+    protected boolean hasMove = false;
+    protected boolean hasWeapon = false;
+    protected boolean hasGraphic = false;
 
     public List<Projectile> projectiles = new ArrayList<>();
 
@@ -46,7 +49,6 @@ public class Player {
         this.playerName = "Player" + playerID;
         this.alive = true;
         this.loadPlugins(plugins);
-        this.pm.init(this);
         this.setPlayerWeapons();
     }
 
@@ -139,17 +141,32 @@ public class Player {
     public PlugInWeapon getPluginWeapon(){ return pw; }
     public PlugInGraphic getPluginGraphic(){ return pg; }
 
+    /** hasers for plugins **/
+    public boolean hasMove(){ return hasMove; }
+    public boolean hasGraphic(){ return hasGraphic; }
+    public boolean hasWeapon(){ return hasWeapon; }
+
     public void setPlayerWeapons(){ }
 
     public void getHitByProjectile(Projectile projectile){}
 
     public void getHitByPlayer(Player player){}
 
-    private void loadPlugins(List<String> plugins) throws ClassNotFoundException, InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
-        pm = repository.loadMovement(plugins.get(0));
-        pw = repository.loadWeapon(plugins.get(1));
-        pg= repository.loadGraphic(plugins.get(2));
-        pg.init(this);
+    private void loadPlugins(List<String> plugins) throws  InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
+        if(plugins.get(0).equals("Aucun")) {
+            pm = repository.loadMovement(plugins.get(0));
+            pm.init(this);
+            hasMove = true;
+        }
+        if(plugins.get(1).equals("Aucun")) {
+            pw = repository.loadWeapon(plugins.get(1));
+            hasWeapon = true;
+        }
+        if(plugins.get(2).equals("Aucun")) {
+            pg = repository.loadGraphic(plugins.get(2));
+            pg.init(this);
+            hasGraphic = true;
+        }
     }
 
     public void checkProjectileOut(){

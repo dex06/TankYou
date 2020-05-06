@@ -50,41 +50,47 @@ public class CollisionOne implements PlugInCollision {
 
 
     private void checkPlayerToWeaponCollision(Player playerA, Player playerB) {
-        Sprite playerSpriteA = playerA.getSprite();
-        Iterator<Projectile> it = playerB.getProjectiles().iterator();
-        while (it.hasNext()) {
-            Projectile projectile = it.next();
-            Sprite projectileSprite = projectile.getSprite();
-            if (playerSpriteA.getBoundingShape().getBoundsInParent().intersects(projectileSprite.getBoundingShape().getBoundsInParent())) {
-                System.out.println(playerA.getName() + " in collision with projectile " + projectile.getName());
-                playerA.getHitByProjectile(projectile);
+        if(playerA.hasGraphic()) {
+            Sprite playerSpriteA = playerA.getSprite();
+            Iterator<Projectile> it = playerB.getProjectiles().iterator();
+            while (it.hasNext()) {
+                Projectile projectile = it.next();
+                Sprite projectileSprite = projectile.getSprite();
+                if (playerSpriteA.getBoundingShape().getBoundsInParent().intersects(projectileSprite.getBoundingShape().getBoundsInParent())) {
+                    System.out.println(playerA.getName() + " in collision with projectile " + projectile.getName());
+                    playerA.getHitByProjectile(projectile);
+                }
             }
         }
     }
 
     private void  checkPlayerToPlayerCollision(Player player1, Player player2) {
-        Sprite playerSprite1 = player1.getSprite();
-        Sprite playerSprite2 = player2.getSprite();
-        if (playerSprite1.getBoundingShape().getBoundsInParent().intersects(playerSprite2.getBoundingShape().getBoundsInParent())) {
-            System.out.println(player1.getName() + " in collision with " + player2.getName());
-            player1.reverseSpeed();
-            player1.getSprite().setRandomColor();
-            player2.reverseSpeed();
-            player2.getSprite().setRandomColor();
-            playerToPlayerCollisionDamage(player1, player2);
+        if(player1.hasGraphic() & player2.hasGraphic()) {
+            Sprite playerSprite1 = player1.getSprite();
+            Sprite playerSprite2 = player2.getSprite();
+            if (playerSprite1.getBoundingShape().getBoundsInParent().intersects(playerSprite2.getBoundingShape().getBoundsInParent())) {
+                System.out.println(player1.getName() + " in collision with " + player2.getName());
+                player1.reverseSpeed();
+                player1.getSprite().setRandomColor();
+                player2.reverseSpeed();
+                player2.getSprite().setRandomColor();
+                playerToPlayerCollisionDamage(player1, player2);
+            }
         }
     }
 
     private void checkWeaponToWeaponCollision(Player player1, Player player2) {
-        List<Projectile> weaponProjectiles1 = player1.getProjectiles();
-        List<Projectile> weaponProjectiles2 = player2.getProjectiles();
-        for(int k = 0; k < weaponProjectiles1.size()-1; k++){
-            for(int l = 0; l < weaponProjectiles2.size()-1; l++){
-                Sprite projectileSprite1 = weaponProjectiles1.get(k).getSprite();
-                Sprite projectileSprite2 = weaponProjectiles2.get(l).getSprite();
-                if (projectileSprite1.getBoundingShape().getBoundsInParent().intersects(projectileSprite2.getBoundingShape().getBoundsInParent())){
-                    weaponProjectiles1.get(k).collidedWith(weaponProjectiles2.get(l));
-                    weaponProjectiles2.get(l).collidedWith(weaponProjectiles1.get(k));
+        if(player1.hasWeapon() & player2.hasWeapon()) {
+            List<Projectile> weaponProjectiles1 = player1.getProjectiles();
+            List<Projectile> weaponProjectiles2 = player2.getProjectiles();
+            for (int k = 0; k < weaponProjectiles1.size() - 1; k++) {
+                for (int l = 0; l < weaponProjectiles2.size() - 1; l++) {
+                    Sprite projectileSprite1 = weaponProjectiles1.get(k).getSprite();
+                    Sprite projectileSprite2 = weaponProjectiles2.get(l).getSprite();
+                    if (projectileSprite1.getBoundingShape().getBoundsInParent().intersects(projectileSprite2.getBoundingShape().getBoundsInParent())) {
+                        weaponProjectiles1.get(k).collidedWith(weaponProjectiles2.get(l));
+                        weaponProjectiles2.get(l).collidedWith(weaponProjectiles1.get(k));
+                    }
                 }
             }
         }

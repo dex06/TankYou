@@ -65,7 +65,7 @@ public class GameEngine  {
             this.gui1Opts = repository.getGui1PluginsNames();
             this.canvas = new CanvasGUI(width, height);
         } catch(Exception e){
-            System.err.println(e);
+            System.err.println("GameEngine Initialisation error " + e);
         }
     }
 
@@ -201,25 +201,29 @@ public class GameEngine  {
                            //player.draw();
                           //btnState.reset();
                         } else if (player.isAlive()) {
-                            player.move();
+                            if(player.hasMove()) player.move();
                         }
-                        player.draw();
+                        if(player.hasGraphic()) player.draw();
+
                         if(hasBarMenu) gameBoard.setTimer(timer);
-                        player.checkProjectileOut();
-                        for (int counter = 0; counter < player.projectiles.size(); counter++) {
-                           player.projectiles.get(counter).move();
-                            player.moveProjectile(player.projectiles.get(counter));
-                            player.projectiles.get(counter).draw(canvas);
-                            if (player.projectiles.get(counter).checkCollisionsWithPlayer(players)) {
-                                player.projectiles.remove(counter);
+
+                        if(player.hasWeapon()) {
+                            player.checkProjectileOut();
+                            for (int counter = 0; counter < player.projectiles.size(); counter++) {
+                                player.projectiles.get(counter).move();
+                                player.moveProjectile(player.projectiles.get(counter));
+                                player.projectiles.get(counter).draw(canvas);
+                                if (player.projectiles.get(counter).checkCollisionsWithPlayer(players)) {
+                                    player.projectiles.remove(counter);
+                                }
                             }
-                        }
-                        if ((currentNanoTime / 1000000000) - player.lastShot > 1) {
-                            System.out.println(player.getName() + " shot ");
-                            player.lastShot = currentNanoTime / 1000000000;
-                            System.out.println(player.getName() + " près de " + Finder.findClosestPlayer(player).getName());
-                            player.shot();
+                            if ((currentNanoTime / 1000000000) - player.lastShot > 1) {
+                                System.out.println(player.getName() + " shot ");
+                                player.lastShot = currentNanoTime / 1000000000;
+                                System.out.println(player.getName() + " près de " + Finder.findClosestPlayer(player).getName());
+                                player.shot();
 //                        System.out.println("Size Projectile " + player.projectiles.size());
+                            }
                         }
                         // If we have a winner => end of game +- stats
                         if (numberOfPlayersAlive() <= 1) {

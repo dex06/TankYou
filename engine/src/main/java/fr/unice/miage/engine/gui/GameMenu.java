@@ -280,6 +280,7 @@ public class GameMenu  {
                 opts = repository.getGraphicPluginsNames();
                 break;
         }
+        if(!opts.contains("Aucun")) opts.add("Aucun");
         ComboBox playerCB = new ComboBox(opts);
         System.out.println(opts);
         if(opts.size() > 0) playerCB.setValue(opts.get(0));
