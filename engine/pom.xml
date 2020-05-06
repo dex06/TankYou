@@ -12,8 +12,6 @@
     <artifactId>engine</artifactId>
     <packaging>jar</packaging>
     <name>engine</name>
-    <!-- FIXME change it to the project's website -->
-    <url>http://www.example.com</url>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -29,12 +27,6 @@
             <scope>compile</scope>
         </dependency>
 
-        <dependency>
-            <groupId>org.junit.jupiter</groupId> <!-- NOT org.junit here -->
-            <artifactId>junit-jupiter-engine</artifactId>
-            <version>5.3.1</version>
-            <scope>test</scope>
-        </dependency>
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-graphics</artifactId>

@@ -1,6 +1,6 @@
 module fr.unice.miage.common {
-    //requires transitive javafx.graphics;
-    //requires transitive javafx.controls;
+    requires transitive javafx.graphics;
+    requires transitive javafx.controls;
 
     exports fr.unice.miage.common.plugins;
     exports fr.unice.miage.common.game_objects;
