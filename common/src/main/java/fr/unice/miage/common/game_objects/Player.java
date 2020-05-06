@@ -153,16 +153,16 @@ public class Player {
     public void getHitByPlayer(Player player){}
 
     private void loadPlugins(List<String> plugins) throws  InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
-        if(plugins.get(0).equals("Aucun")) {
+        if(!plugins.get(0).equals("Aucun")) {
             pm = repository.loadMovement(plugins.get(0));
             pm.init(this);
             hasMove = true;
         }
-        if(plugins.get(1).equals("Aucun")) {
+        if(!plugins.get(1).equals("Aucun")) {
             pw = repository.loadWeapon(plugins.get(1));
             hasWeapon = true;
         }
-        if(plugins.get(2).equals("Aucun")) {
+        if(!plugins.get(2).equals("Aucun")) {
             pg = repository.loadGraphic(plugins.get(2));
             pg.init(this);
             hasGraphic = true;
@@ -170,7 +170,7 @@ public class Player {
     }
 
     public void checkProjectileOut(){
-        this.pw.checkProjectileOut(this.projectiles);
+        pw.checkProjectileOut(projectiles);
 //        for (int counter = 0; counter < this.projectiles.size(); counter++) {
 //            if(projectiles.get(counter).position.getX() > 600 || projectiles.get(counter).position.getX() < 0 || projectiles.get(counter).position.getY() > 600 || projectiles.get(counter).position.getY() < 0){
 //                this.projectiles.remove(counter);
@@ -186,6 +186,7 @@ public class Player {
     }
 
 
-    public void moveProjectile(Projectile projectile) {
+    public void moveProjectiles() {
+        //pw.moveProjectile(projectiles);
     }
 }

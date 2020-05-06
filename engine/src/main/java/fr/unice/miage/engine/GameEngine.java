@@ -208,22 +208,8 @@ public class GameEngine  {
                         if(hasBarMenu) gameBoard.setTimer(timer);
 
                         if(player.hasWeapon()) {
-                            player.checkProjectileOut();
-                            for (int counter = 0; counter < player.projectiles.size(); counter++) {
-                                player.projectiles.get(counter).move();
-                                player.moveProjectile(player.projectiles.get(counter));
-                                player.projectiles.get(counter).draw(canvas);
-                                if (player.projectiles.get(counter).checkCollisionsWithPlayer(players)) {
-                                    player.projectiles.remove(counter);
-                                }
-                            }
-                            if ((currentNanoTime / 1000000000) - player.lastShot > 1) {
-                                System.out.println(player.getName() + " shot ");
-                                player.lastShot = currentNanoTime / 1000000000;
-                                System.out.println(player.getName() + " près de " + Finder.findClosestPlayer(player).getName());
-                                player.shot();
-//                        System.out.println("Size Projectile " + player.projectiles.size());
-                            }
+                            player.moveProjectiles();
+
                         }
                         // If we have a winner => end of game +- stats
                         if (numberOfPlayersAlive() <= 1) {
