@@ -10,14 +10,9 @@ import java.util.Iterator;
 import java.util.List;
 
 public class CollisionOne implements PlugInCollision {
-    double collisionDamage = 5;
 
-    public void playerToPlayerCollisionDamage(Player player1, Player player2){
-        double speedFactor1 = (Math.abs(player1.getSpeedX()) + Math.abs(player1.getSpeedY()))/2;
-        double speedFactor2 = (Math.abs(player2.getSpeedX()) + Math.abs(player2.getSpeedY()))/2;
-        player1.setHealth(player1.getHealth()-collisionDamage*speedFactor2);
-        player2.setHealth(player2.getHealth()-collisionDamage*speedFactor1);
-    }
+
+
 
     public void checkAllCollisions(List<Player> players){
         for(int i = 0; i < players.size()-1; i++){
@@ -46,6 +41,24 @@ public class CollisionOne implements PlugInCollision {
             }
             if ((y + h) > Config.getWorldHeight() || y < 0) {
                 player.setSpeedY(-player.getSpeedY());
+            }
+        }
+    }
+
+    public void checkWeaponToBorderCollision(Player player){
+        if(player.hasGraphic()) {
+            for (Projectile projectile : player.getProjectiles()) {
+                double w = projectile.getSprite().getWidth();
+                double h = projectile.getSprite().getHeight();
+                double x = projectile.getPosition().getX();
+                double y = projectile.getPosition().getY();
+                if ((x + w) > Config.getWorldWidth() || x < 0) {
+                    player.onProjectileOut("onX", projectile);
+                }
+                if ((y + h) > Config.getWorldHeight() || y < 0) {
+                    player.onProjectileOut("onY", projectile);
+                }
+
             }
         }
     }
@@ -79,6 +92,13 @@ public class CollisionOne implements PlugInCollision {
                 playerToPlayerCollisionDamage(player1, player2);
             }
         }
+    }
+
+    public void playerToPlayerCollisionDamage(Player player1, Player player2){
+        double speedFactor1 = (Math.abs(player1.getSpeedX()) + Math.abs(player1.getSpeedY()))/2;
+        double speedFactor2 = (Math.abs(player2.getSpeedX()) + Math.abs(player2.getSpeedY()))/2;
+        player1.setHealth(player1.getHealth()-5*speedFactor2);
+        player2.setHealth(player2.getHealth()-5*speedFactor1);
     }
 
     private void checkWeaponToWeaponCollision(Player player1, Player player2) {

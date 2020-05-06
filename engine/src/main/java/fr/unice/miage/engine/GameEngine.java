@@ -131,7 +131,7 @@ public class GameEngine  {
     }
 
 
-    public void loadingPlayers(List<List<String>> playersOptions) throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
+    public void loadingPlayers(List<List<String>> playersOptions) throws NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
         nbPlayers = playersOptions.size();
         int playerID = 0;
         for(List<String> playerOpts : playersOptions) {
@@ -217,8 +217,7 @@ public class GameEngine  {
 //                                    player.projectiles.remove(counter);
 //                                }
 //                            }
-                            player.checkProjectileOut();
-                            player.getPluginWeapon().draw(canvas, player.getProjectiles());
+                            player.drawProjectiles();
                             player.getPluginWeapon().shot(player, currentNanoTime);
                             player.moveProjectiles();
 

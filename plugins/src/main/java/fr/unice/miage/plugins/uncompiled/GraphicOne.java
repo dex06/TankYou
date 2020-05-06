@@ -21,7 +21,7 @@ public class GraphicOne implements PlugInGraphic {
 
     public void init(Player player){
         this.player = player;
-        this.playerSprite = new RectangleSprite(player, width, height, color);
+        this.playerSprite = new RectangleSprite(player, width, height, color, true);
         this.playerSprite.setRandomColor();
         this.healthBar = new HealthBar(30, 5, Color.GREEN);
     }
@@ -36,7 +36,7 @@ public class GraphicOne implements PlugInGraphic {
     }
 
     public Paint getRandomColor(){
-        return playerSprite.getColors()[(int) Math.random() * 3];
+        return playerSprite.getColors()[(int) (Math.random() * 3)];
     }
 
     public Sprite getPlayerSprite(){
@@ -45,6 +45,6 @@ public class GraphicOne implements PlugInGraphic {
 
     public void setToDead(){
         playerSprite.setColor(Color.GRAY);
-    };
+    }
 
 }

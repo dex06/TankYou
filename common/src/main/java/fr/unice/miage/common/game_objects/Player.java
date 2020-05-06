@@ -7,7 +7,6 @@ import fr.unice.miage.common.plugins.PlugInGraphic;
 import fr.unice.miage.common.plugins.PlugInMovement;
 import fr.unice.miage.common.plugins.PlugInWeapon;
 import fr.unice.miage.common.sprite.Sprite;
-import fr.unice.miage.common.utils.Finder;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
@@ -52,20 +51,6 @@ public class Player {
         this.setPlayerWeapons();
     }
 
-//    public void shot(){
-//        Player p = Finder.findClosestPlayer(this);
-//        double direction = Math.atan2(p.getPosition().getY() - this.getPosition().getY(), p.getPosition().getX() - this.getPosition().getX());
-////        System.out.println(this.getName() + " " + direction);
-//
-//        double xCenter = this.position.getX() + pg.getPlayerSprite().getWidth()/2;
-//        double yCenter =this.position.getY() + pg.getPlayerSprite().getHeight()/2;
-//        double longueur = Math.sqrt(Math.pow(pg.getPlayerSprite().getWidth()/2, 2) + Math.pow(pg.getPlayerSprite().getHeight()/2, 2));
-////        new Vector2(pm.getPosition().getX(), pm.getPosition().getY());
-//        projectiles.add(new Projectile(new Vector2(xCenter + longueur*Math.cos(direction),
-//                yCenter + longueur*Math.sin(direction)),
-//                direction));
-////        projectiles.add(new Projectile(new Vector2(pm.getPosition().getX(), pm.getPosition().getY()), direction));
-//    }
 
     public String getName(){ return playerName; }
     public int getPlayerID() { return playerID; }
@@ -154,6 +139,15 @@ public class Player {
 
     public void getHitByPlayer(Player player){}
 
+    public void addProjectile(Projectile projectile){ projectiles.add(projectile); }
+    public void drawProjectiles(){ pw.draw(canvas, projectiles); }
+    public void onProjectileOut(String axis, Projectile projectile) { pw.onProjectileOut(axis, projectile); }
+
+    public void moveProjectiles() {
+        for(Projectile prj : projectiles)
+            pw.moveProjectile(prj);
+    }
+
     private void loadPlugins(List<String> plugins) throws  InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
         if(!plugins.get(0).equals("Aucun")) {
             pm = repository.loadMovement(plugins.get(0));
@@ -169,28 +163,5 @@ public class Player {
             pg.init(this);
             hasGraphic = true;
         }
-        System.out.println(playerID + " has Graphic : " + hasGraphic);
-    }
-
-    public void checkProjectileOut(){
-        pw.checkProjectileOut(projectiles);
-//        for (int counter = 0; counter < this.projectiles.size(); counter++) {
-//            if(projectiles.get(counter).position.getX() > 600 || projectiles.get(counter).position.getX() < 0 || projectiles.get(counter).position.getY() > 600 || projectiles.get(counter).position.getY() < 0){
-//                this.projectiles.remove(counter);
-//            }
-// POUR DES PROJECTILES QUI PEUVENT REBONDIR SUR DES MURS
-//            if(projectiles.get(counter).position.getX() > 600 || projectiles.get(counter).position.getX() < 0){
-//                projectiles.get(counter).rotation = Math.PI - projectiles.get(counter).rotation;
-//            }
-//            else if(projectiles.get(counter).position.getY() > 600 || projectiles.get(counter).position.getY() < 0){
-//                projectiles.get(counter).rotation = -projectiles.get(counter).rotation;
-//            }
-//        }
-    }
-
-
-    public void moveProjectiles() {
-        for(Projectile prj : projectiles)
-            pw.moveProjectile(prj);
     }
 }
