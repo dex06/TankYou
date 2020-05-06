@@ -43,7 +43,7 @@ public class Repository {
 
     private boolean testing = Config.getTesting();
 
-    public Repository() throws Exception { this.loadLibraries("plugin repository"); }
+    public Repository() throws Exception { this.loadLibraries("plugins repository"); }
 
     public Repository(String base) throws Exception { this.loadLibraries(base); }
 
