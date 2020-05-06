@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ObstacleCustom implements PlugInObstacle {
-    @Override
+
     public void draw(CanvasGUI canvas, Obstacle obstacle) {
         GraphicsContext gc = canvas.getGraphicsContext();
 //        gc.setStroke(Color.BLACK);
@@ -22,7 +22,7 @@ public class ObstacleCustom implements PlugInObstacle {
 
     }
 
-    @Override
+
     public List<Obstacle> generate() {
         List<Obstacle> listReturn = new ArrayList<>();
 

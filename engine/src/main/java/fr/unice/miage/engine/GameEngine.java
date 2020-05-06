@@ -217,10 +217,11 @@ public class GameEngine  {
 //                                    player.projectiles.remove(counter);
 //                                }
 //                            }
-                            player.checkProjectileOut();
-                            player.getPluginWeapon().draw(canvas, player.getProjectiles());
                             player.getPluginWeapon().shot(player, currentNanoTime);
+                            player.getPluginWeapon().draw(canvas, player.getProjectiles());
                             player.moveProjectiles();
+                            player.getPluginWeapon().shot(player, currentNanoTime);
+                            player.checkProjectileOut();
 
                         }
                         // If we have a winner => end of game +- stats

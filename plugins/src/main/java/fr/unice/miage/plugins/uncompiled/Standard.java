@@ -39,7 +39,6 @@ public class Standard implements PlugInWeapon {
     }
 
 
-    @Override
     public void shot(Player player, long currentTime) {
         if((currentTime / 1000000000) - player.lastShot > 1){
             Player p = Finder.findClosestPlayer(player);
@@ -60,7 +59,6 @@ public class Standard implements PlugInWeapon {
         }
     }
 
-    @Override
     public void draw(CanvasGUI canvas, List<Projectile> projectile) {
         for (int counter = 0; counter < projectile.size(); counter++) {
             double x = projectile.get(counter).getPosition().getX();
