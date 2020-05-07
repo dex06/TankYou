@@ -98,7 +98,7 @@ public class GameEngine  {
 
         createGameBoard();
 
-        if(!realPlayerOpts.isEmpty()){
+        if(!realPlayerOpts.get(0).equals("Aucun")){
             loadingRealPlayer(realPlayerOpts.get(0));
             hasRealPlayer = true;
         }
@@ -122,12 +122,11 @@ public class GameEngine  {
 
     public void loadingRealPlayer(String opt) throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
         realPlayer = repository.loadRealPlayer(opt);
-
         realPlayer.handleKeyboard(players.get(0), canvas, btnState);
         realPlayer.handleMouse(players.get(0), canvas, btnState);
         hasRealPlayer = true;
         //gameBoard.setCanvas(canvas);
-        System.out.println("Real player created");
+
     }
 
 
@@ -197,9 +196,7 @@ public class GameEngine  {
                     }
                     for (Player player : players) {
                         if(hasRealPlayer & players.indexOf(player) == 0) {
-                            realPlayer.handleKeyInput(players.get(0), btnState);
-                           //player.draw();
-                          //btnState.reset();
+                            if(player.isAlive()) realPlayer.handleKeyInput(player, btnState);
                         } else if (player.isAlive()) {
                             if(player.hasMove()) player.move();
                         }
@@ -208,19 +205,10 @@ public class GameEngine  {
                         if(hasBarMenu) gameBoard.setTimer(timer);
 
                         if(player.hasWeapon()) {
-//                            player.checkProjectileOut();
-//                            for (int counter = 0; counter < player.projectiles.size(); counter++) {
-//                                player.projectiles.get(counter).move();
-//                                player.moveProjectile(player.projectiles.get(counter));
-//                                player.projectiles.get(counter).draw(canvas);
-//                                if (player.projectiles.get(counter).checkCollisionsWithPlayer(players)) {
-//                                    player.projectiles.remove(counter);
-//                                }
-//                            }
+
                             player.drawProjectiles();
                             player.getPluginWeapon().shot(player, currentNanoTime);
                             player.moveProjectiles();
-
                         }
                         // If we have a winner => end of game +- stats
                         if (numberOfPlayersAlive() <= 1) {

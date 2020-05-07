@@ -42,16 +42,6 @@
     </dependencies>
 
     <build>
-        <resources>
-            <resource>
-                <directory>.</directory>
-                <excludes>
-                    <exclude>
-                        manifest-info.class</exclude>
-                </excludes>
-            </resource>
-        </resources>
-
         <plugins>
 
             <plugin>

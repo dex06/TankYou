@@ -97,7 +97,7 @@ public class Repository {
             Enumeration<JarEntry> e = jarFile.entries();
             while (e.hasMoreElements()) {
                 JarEntry je = e.nextElement();
-                if (je.isDirectory() || !je.getName().endsWith(".class")) {
+                if (je.isDirectory() || !je.getName().endsWith(".class") || je.getName().contains("module-info.class")) {
                     continue;
                 }
                 System.out.println("Loading jar class : " + je.getRealName());

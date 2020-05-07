@@ -33,7 +33,7 @@ public class MyClassLoader extends SecureClassLoader {
             return super.defineClass(name, b, 0, b.length);
         } catch (ClassNotFoundException e){
             System.out.println("Parent classloader");
-            return this.getParent().loadClass(name);
+            return this.loadClass(name);
         }
     }
 

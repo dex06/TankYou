@@ -14,28 +14,29 @@ public class BarOne implements PlugInGUI1 {
 
         HBox barHBox = new HBox();
 
-        //Image playImg = new Image(getClass().getResourceAsStream("../sprite/img/playBtn.png"));
-        //Image pauseImg = new Image(getClass().getResourceAsStream("../sprite/img/pauseBtn.png"));
-        //Button playBtn = new Button("Play", new ImageView(playImg));
         Button playBtn = new Button("Pause");
-        //playBtn.setGraphic(new ImageView(playImg));
 
+        //Image playImg= new Image(MyClassLoader.class.getResourceAsStream("/src/main/resources/barMenuIcons/playImg.png"));
+        //Image pauseImg = new Image(MyClassLoader.class.getResourceAsStream("/src/main/resources/barMenuIcons/pauseImg.png"));
+        //playBtn.setGraphic(new ImageView(pauseImg));
         playBtn.setOnAction(e -> {
             if(playBtn.getText().equals("Play")){
                 playBtn.setText("Pause");
+                //playBtn.setGraphic(new ImageView(pauseImg));
                 Config.setPlay();
             }
             else {
                 playBtn.setText("Play");
+                //playBtn.setGraphic(new ImageView(playImg));
                 Config.setPause();
             }
         });
         Button stopBtn = new Button("Stop");
+        //Image stopImg = new Image(MyClassLoader.class.getResourceAsStream("/src/resources/barMenuIcons/stopImg.png"));
+        //stopBtn.setGraphic(new ImageView(stopImg));
         stopBtn.setOnAction(e -> {
             Config.setStop();
         });
-        //onMouseEvents(playBtn);
-        //onMouseEvents(stopBtn);
         Button restartBtn = new Button("Restart");
         restartBtn.setOnAction(e -> {
             Config.setRestart();
@@ -49,22 +50,5 @@ public class BarOne implements PlugInGUI1 {
         barHBox.setAlignment(Pos.CENTER);
         return barHBox;
     }
-
-    /*private void onMouseEvents(Button btn){
-        DropShadow shadow = new DropShadow();
-        btn.addEventHandler(MouseEvent.MOUSE_ENTERED,
-                new EventHandler<MouseEvent>() {
-                    @Override
-                    public void handle(MouseEvent e) {
-                        btn.setEffect(shadow);
-                    }
-                });
-        btn.addEventHandler(MouseEvent.MOUSE_EXITED,
-                new EventHandler<MouseEvent>() {
-                    @Override public void handle(MouseEvent e) {
-                        btn.setEffect(null);
-                    }
-                });
-    }*/
 
 }
