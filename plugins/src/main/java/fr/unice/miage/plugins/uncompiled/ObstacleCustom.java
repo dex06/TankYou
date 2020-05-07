@@ -29,6 +29,7 @@ public class ObstacleCustom implements PlugInObstacle {
 
     public void setPlayerCollision(Player player){
         player.reverseSpeed();
+        player.getVelocity().mult2(2);
     }
 
     public void setWeaponCollision(Projectile projectile){

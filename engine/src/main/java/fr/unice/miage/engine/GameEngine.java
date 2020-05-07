@@ -210,9 +210,8 @@ public class GameEngine  {
                         if(hasBarMenu) gameBoard.setTimer(timer);
 
                         if(player.hasWeapon()) {
-
+                            if(player.isAlive()) player.getPluginWeapon().shot(player, currentNanoTime);
                             player.drawProjectiles();
-                            player.getPluginWeapon().shot(player, currentNanoTime);
                             player.moveProjectiles();
                         }
                         // If we have a winner => end of game +- stats

@@ -41,10 +41,10 @@ public class CollisionOne implements PlugInCollision {
             double w = player.getSprite().getWidth();
             double h = player.getSprite().getHeight();
             if ((x + w) > Config.getWorldWidth() || x < 0) {
-                player.setSpeedX(-player.getSpeedX());
+                player.setSpeedX(-player.getSpeedX()*2);
             }
             if ((y + h) > Config.getWorldHeight() || y < 0) {
-                player.setSpeedY(-player.getSpeedY());
+                player.setSpeedY(-player.getSpeedY()*2);
             }
         }
     }
@@ -100,8 +100,10 @@ public class CollisionOne implements PlugInCollision {
             if (playerSprite1.getBoundingShape().getBoundsInParent().intersects(playerSprite2.getBoundingShape().getBoundsInParent())) {
                 System.out.println(player1.getName() + " in collision with " + player2.getName());
                 player1.reverseSpeed();
+                player1.getVelocity().mult2(2);
                 player1.getSprite().setRandomColor();
                 player2.reverseSpeed();
+                player2.getVelocity().mult2(2);
                 player2.getSprite().setRandomColor();
                 playerToPlayerCollisionDamage(player1, player2);
             }
