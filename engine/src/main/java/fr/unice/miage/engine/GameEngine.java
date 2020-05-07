@@ -99,6 +99,7 @@ public class GameEngine  {
         createGameBoard();
 
         if(!realPlayerOpts.get(0).equals("Aucun")){
+            System.out.println(realPlayerOpts.get(0));
             loadingRealPlayer(realPlayerOpts.get(0));
             hasRealPlayer = true;
         }
