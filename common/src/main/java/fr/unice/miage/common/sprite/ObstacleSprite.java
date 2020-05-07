@@ -1,21 +1,29 @@
 package fr.unice.miage.common.sprite;
 
 import fr.unice.miage.common.CanvasGUI;
-import fr.unice.miage.common.game_objects.Player;
+import fr.unice.miage.common.geom.Vector2;
 import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
-import javafx.scene.text.Font;
 
 public class ObstacleSprite extends Sprite {
-    public ObstacleSprite(double width, double height, Paint color) {
+
+    private Vector2 position;
+
+    public ObstacleSprite(Vector2 position, double width, double height, Paint color) {
         super(width, height, color);
+        this.position = position;
+    }
+
+    public void draw(CanvasGUI canvas){
+        GraphicsContext gc = canvas.getGraphicsContext();
+        gc.setFill(color);
+        gc.fillRect(position.getX(), position.getY(), width, height);
     }
 
     @Override
     public Shape getBoundingShape() {
-        return null;
+        return new Rectangle(position.getX(), position.getY(), width, height);
     }
 }

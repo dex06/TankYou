@@ -1,38 +1,39 @@
 package fr.unice.miage.plugins.uncompiled;
 
-import fr.unice.miage.common.CanvasGUI;
 import fr.unice.miage.common.game_objects.Obstacle;
+import fr.unice.miage.common.game_objects.Player;
+import fr.unice.miage.common.game_objects.Projectile;
 import fr.unice.miage.common.geom.Vector2;
 import fr.unice.miage.common.plugins.PlugInObstacle;
-import javafx.scene.canvas.GraphicsContext;
+import fr.unice.miage.common.sprite.ObstacleSprite;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ObstacleCustom2 implements PlugInObstacle {
 
-    public void draw(CanvasGUI canvas, Obstacle obstacle) {
-        GraphicsContext gc = canvas.getGraphicsContext();
-//        gc.setStroke(Color.BLACK);
-//        gc.strokeRect(obstacle.getPosition().getX(), obstacle.getPosition().getY(), obstacle.getSize().getX(), obstacle.getSize().getY());
-        gc.setFill(Color.BLACK);
-        gc.fillRect(obstacle.getPosition().getX(), obstacle.getPosition().getY(), obstacle.getSize().getX(), obstacle.getSize().getY());
-
-    }
 
     private int generateRandom(int min, int max){
         return (int)(min + Math.random() * ((max - min) + 1));
     }
 
-    private List<Obstacle> generateTShape() throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
+    private List<Obstacle> generateTShape() {
         List<Obstacle> listReturnT = new ArrayList<>();
-        Obstacle barre = new Obstacle(new Vector2(generateRandom(10, 300), generateRandom(10, 300)), new Vector2(100, 40));
-        Obstacle barre2 = new Obstacle(new Vector2(barre.getPosition().getX() + barre.getSize().getX()/3,
-                barre.getPosition().getY() + barre.getSize().getY()),
-                new Vector2(barre.getSize().getX()/3,
-                        60));
+
+        Vector2 position = new Vector2(generateRandom(10, 300), generateRandom(10, 300));
+        double width = 100;
+        double height = 40;
+        Paint color = Color.BLACK;
+        ObstacleSprite sprite = new ObstacleSprite(position, width, height, color);
+        Obstacle barre = new Obstacle(this, position, sprite);
+
+        Vector2 position2 = new Vector2(position.getX() + width/3, position.getY() + height);
+        double width2 = width/3;
+        double height2 = 60;
+        ObstacleSprite sprite2 = new ObstacleSprite(position2, width2, height2, color);
+        Obstacle barre2 = new Obstacle(this, position2, sprite2);
 
         listReturnT.add(barre);
         listReturnT.add(barre2);
@@ -45,42 +46,32 @@ public class ObstacleCustom2 implements PlugInObstacle {
     private List<Obstacle> generateUShape(){
         return null;
     }
+
+
     public List<Obstacle> generate() {
         List<Obstacle> listReturn = new ArrayList<>();
-
-        try {
-            for (int i = 0; i < 10 ; i++){
-                int forme = (int)(Math.random() * (2));
-                // 1 - T, 2 - U, 3 - L
-                switch (forme){
-                    case 1:
-                        listReturn.addAll(generateTShape());
-                        break;
-//                    case 2:
-//                        listReturn.addAll(generateUShape());
-//                        break;
-//                    case 3:
-//                        listReturn.addAll(generateLShape());
-//                        break;
-                    default:
-                        listReturn.add(new Obstacle(new Vector2(10 + (int)(Math.random() * ((600 - 10) + 1)), 10 + (int)(Math.random() * ((600 - 10) + 1))), new Vector2(10 + (int)(Math.random() * ((70 - 10) + 1)), 10 + (int)(Math.random() * ((70 - 10) + 1)))));
-                }
-
-//                int nombreAleatoire = 10 + (int)(Math.random() * ((70 - 10) + 1));
-                listReturn.add(new Obstacle(new Vector2(10 + (int)(Math.random() * ((600 - 10) + 1)), 10 + (int)(Math.random() * ((600 - 10) + 1))), new Vector2(10 + (int)(Math.random() * ((70 - 10) + 1)), 10 + (int)(Math.random() * ((70 - 10) + 1)))));
-//                listReturn.add(new Obstacle(new Vector2(100, 100), new Vector2(50, 50)));
+        for (int i = 0; i < 10 ; i++){
+            //int forme = (int)(Math.random() * (2));
+            int forme = 1;
+            // 1 - T, 2 - U, 3 - L
+            switch (forme){
+                case 1:
+                    listReturn.addAll(generateTShape());
+                    break;
+                case 2:
+                    listReturn.addAll(generateUShape());
+                    break;
+                case 3:
+                    listReturn.addAll(generateLShape());
+                    break;
             }
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
-        } catch (InstantiationException e) {
-            e.printStackTrace();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
         }
         return listReturn;
     }
+
+    public void setPlayerCollision(Player player){
+        player.reverseSpeed();
+    }
+
+    public void setWeaponCollision(Projectile projectile){}
 }

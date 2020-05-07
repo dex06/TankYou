@@ -144,8 +144,7 @@ public class GameEngine  {
     public void createGameBoard(){
         gameBoard = new GameBoard(stage, 600,600, canvas, repository);
         gameBoard.init(hasBarMenu);
-        if(hasObstacles)
-            obstaclesList = obstacles.generate();
+        if(hasObstacles) obstaclesList = obstacles.generate();
         gameBoard.start();
         giveRandomPositionAndVelocityToPlayers();
         loop();
@@ -187,13 +186,15 @@ public class GameEngine  {
         new AnimationTimer(){
             public void handle(long currentNanoTime) {
                 if (Config.getGameState() == Config.getPlayState()) {
-                    if(!timer.isRunning()) timer.startChrono();
+                    if (!timer.isRunning()) timer.startChrono();
                     double t = timer.getTime();
 //                System.out.println(t);
                     canvas.clean();
-                    if(hasBackground) background.draw(canvas);
-                    for (Obstacle obs : obstaclesList){
-                        obstacles.draw(canvas, obs);
+                    if (hasBackground) background.draw(canvas);
+                    if (hasObstacles) {
+                        for (Obstacle obs : obstaclesList) {
+                            obs.draw(canvas);
+                        }
                     }
                     for (Player player : players) {
                         if(hasRealPlayer & players.indexOf(player) == 0) {
@@ -229,7 +230,7 @@ public class GameEngine  {
                         }
                     }
                     // Checking for all the types of collisions
-                    if(hasCollision) collision.checkAllCollisions(players);
+                    if(hasCollision) collision.checkAllCollisions(players, obstaclesList);
                     lastUpdateNanoTime = currentNanoTime;
                 }
                 // If we pause the game

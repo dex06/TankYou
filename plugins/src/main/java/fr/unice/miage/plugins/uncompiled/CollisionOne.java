@@ -1,6 +1,7 @@
 package fr.unice.miage.plugins.uncompiled;
 
 import fr.unice.miage.common.Config;
+import fr.unice.miage.common.game_objects.Obstacle;
 import fr.unice.miage.common.game_objects.Player;
 import fr.unice.miage.common.game_objects.Projectile;
 import fr.unice.miage.common.plugins.PlugInCollision;
@@ -14,13 +15,16 @@ public class CollisionOne implements PlugInCollision {
 
 
 
-    public void checkAllCollisions(List<Player> players){
+    public void checkAllCollisions(List<Player> players, List<Obstacle> obstacles){
         for(int i = 0; i < players.size()-1; i++){
             for(int j = i+1; j < players.size(); j++){
                 checkPlayersCollision(players.get(i), players.get(j));
             }
         }
-        for(Player player : players) checkPlayerToBorderCollision(player);
+        for(Player player : players) {
+            checkPlayerToBorderCollision(player);
+            checkPlayerToObstacleCollision(player, obstacles);
+        }
     }
 
     private void checkPlayersCollision(Player player1, Player player2){
@@ -41,6 +45,16 @@ public class CollisionOne implements PlugInCollision {
             }
             if ((y + h) > Config.getWorldHeight() || y < 0) {
                 player.setSpeedY(-player.getSpeedY());
+            }
+        }
+    }
+
+    public void checkPlayerToObstacleCollision(Player player, List<Obstacle> obstacles){
+        for(Obstacle obstacle : obstacles){
+            Sprite playerSprite = player.getSprite();
+            Sprite obstacleSprite = obstacle.getSprite();
+            if(playerSprite.getBoundingShape().getBoundsInParent().intersects(obstacleSprite.getBoundingShape().getBoundsInParent())){
+                obstacle.setPlayerCollision(player);
             }
         }
     }
