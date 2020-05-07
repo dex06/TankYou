@@ -78,7 +78,7 @@ public class GameEngine  {
         gameMenu.start();
     }
 
-    public void startGame(List<String> gui1Opts, List<String> gui2Opts, List<String> configOpts, List<List<String>> playersOpts, List<String> realPlayerOpts) throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
+    public void startGame(List<String> gui1Opts, List<String> gui2Opts, List<String> configOpts, List<List<String>> playersOpts, List<String> realPlayerOpts, boolean hasRP) throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
         //loadingGUI1();
         loadingPlayers(playersOpts);
         if(!configOpts.get(0).equals("Aucun")) {
@@ -98,7 +98,7 @@ public class GameEngine  {
 
         createGameBoard();
 
-        if(!realPlayerOpts.get(0).equals("Aucun")){
+        if(hasRP){
             System.out.println(realPlayerOpts.get(0));
             loadingRealPlayer(realPlayerOpts.get(0));
             hasRealPlayer = true;
@@ -198,7 +198,10 @@ public class GameEngine  {
                     }
                     for (Player player : players) {
                         if(hasRealPlayer & players.indexOf(player) == 0) {
-                            if(player.isAlive()) realPlayer.handleKeyInput(player, btnState);
+                            if(player.isAlive()) {
+                                realPlayer.handleKeyInput(player, btnState);
+                                //btnState.reset();
+                            }
                         } else if (player.isAlive()) {
                             if(player.hasMove()) player.move();
                         }

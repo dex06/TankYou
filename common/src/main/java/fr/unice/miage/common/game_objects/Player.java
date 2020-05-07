@@ -1,6 +1,7 @@
 package fr.unice.miage.common.game_objects;
 
 import fr.unice.miage.common.CanvasGUI;
+import fr.unice.miage.common.Config;
 import fr.unice.miage.common.Repository;
 import fr.unice.miage.common.geom.Vector2;
 import fr.unice.miage.common.plugins.PlugInGraphic;
@@ -163,5 +164,18 @@ public class Player {
             pg.init(this);
             hasGraphic = true;
         }
+    }
+
+    public boolean isOutOfBorders() {
+        if(hasGraphic){
+            double w = this.getSprite().getWidth();
+            double h = this.getSprite().getHeight();
+            if (position.getX() + w > Config.getWorldWidth() || position.getX() < 0) { return true; }
+            if (position.getY() + h  > Config.getWorldHeight() || position.getY() < 0) { return true; }
+        } else {
+            if (position.getX() > Config.getWorldWidth() || position.getX() < 0) { return true; }
+            if (position.getY() > Config.getWorldHeight() || position.getY() < 0) { return true; }
+        }
+        return false;
     }
 }

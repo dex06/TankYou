@@ -290,7 +290,7 @@ public class GameMenu  {
 
     private void startGame() throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
         stop();
-        gameEngine.startGame(listOfGUI1Options, listOfGUI2Options, listOfConfigOptions, listOfPlayersOptions, listOfRealPlayerOptions);
+        gameEngine.startGame(listOfGUI1Options, listOfGUI2Options, listOfConfigOptions, listOfPlayersOptions, listOfRealPlayerOptions, hasRealPlayer);
     }
 
     private List<String> getConfigOptions(){

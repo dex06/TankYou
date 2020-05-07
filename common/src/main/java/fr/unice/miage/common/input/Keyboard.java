@@ -14,26 +14,21 @@ public class Keyboard {
         c.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
-                System.out.println(event);
+                System.out.println(event.getCode());
                 switch (event.getCode()) {
-                    case DOWN:
-                        System.out.println("down pressed");
-                        btnState.down = true;
-                        break;
-                    case UP:
-                        System.out.println("up pressed");
+                    case Z:
                         btnState.up = true;
                         break;
-                    case LEFT:
-                        System.out.println("left pressed");
+                    case S:
+                        btnState.down = true;
+                        break;
+                    case Q:
                         btnState.left = true;
                         break;
-                    case RIGHT:
-                        System.out.println("right pressed");
+                    case D:
                         btnState.right = true;
                         break;
                     case SPACE:
-                        System.out.println("Shot pressed");
                         btnState.shot = true;
                         break;
                 }
@@ -44,24 +39,19 @@ public class Keyboard {
             @Override
             public void handle(KeyEvent event) {
                 switch (event.getCode()) {
-                    case DOWN:
-                        System.out.println("down released");
-                        btnState.down = false;
-                        break;
-                    case UP:
-                        System.out.println("up released");
+                    case S:
                         btnState.up = false;
                         break;
-                    case LEFT:
-                        System.out.println("left released");
+                    case Z:
+                        btnState.down = false;
+                        break;
+                    case Q:
                         btnState.left = false;
                         break;
-                    case RIGHT:
-                        System.out.println("right released");
+                    case D:
                         btnState.right = false;
                         break;
                     case SPACE:
-                        System.out.println("Shot released");
                         btnState.shot = false;
                         break;
                 }
