@@ -8,6 +8,7 @@ import fr.unice.miage.common.game_objects.Player;
 import fr.unice.miage.common.game_objects.Projectile;
 import fr.unice.miage.common.geom.Vector2;
 import fr.unice.miage.common.input.ButtonState;
+import fr.unice.miage.common.input.Mouse;
 import fr.unice.miage.common.plugins.PlugInBackground;
 import fr.unice.miage.common.plugins.PlugInCollision;
 import fr.unice.miage.common.plugins.PlugInObstacle;
@@ -131,6 +132,7 @@ public class GameEngine  {
 
     public void loadingRealPlayer(String opt) throws InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
         realPlayer = repository.loadRealPlayer(opt);
+        Mouse.setMouseOn();
         realPlayer.handleKeyboard(players.get(0), canvas, btnState);
         realPlayer.handleMouse(players.get(0), canvas, btnState);
         hasRealPlayer = true;
@@ -303,6 +305,7 @@ public class GameEngine  {
                         Timer.stopChrono();
                         gameBoard.stop();
                         this.stop();
+                        Mouse.setMouseOff();
                         initMenu();
                         startMenu();
                     }

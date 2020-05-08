@@ -4,6 +4,7 @@ import fr.unice.miage.common.CanvasGUI;
 import fr.unice.miage.common.game_objects.Player;
 import fr.unice.miage.common.game_objects.Projectile;
 import fr.unice.miage.common.geom.Vector2;
+import fr.unice.miage.common.input.Mouse;
 import fr.unice.miage.common.plugins.PlugInWeapon;
 import fr.unice.miage.common.sprite.RectangleSprite;
 import fr.unice.miage.common.sprite.Sprite;
@@ -41,10 +42,16 @@ public class Rebondissante implements PlugInWeapon {
 
     public void shoot(Player player) {
         if(Timer.getChrono() - player.lastShot > 1){
-            Player p = Finder.findClosestPlayer(player);
+
+            Vector2 direction = new Vector2();
+            if(Mouse.isMouseOn()){
+                direction = Mouse.getLastShootingPosition().sub2(player.getPosition()).norm2();
+            } else {
+                Player p = Finder.findClosestPlayer(player);
+                direction = p.getPosition().sub2(player.getPosition()).norm2();  //Vecteur normalisé
+            }
             double damage = 10;
             double lifeSpan = 10;
-            Vector2 direction = p.getPosition().sub2(player.getPosition()).norm2();  //Vecteur normalisé
             double xCenter = player.getX() + player.getSprite().getWidth()/2;
             double yCenter = player.getY() + player.getSprite().getHeight()/2;
             Vector2 position = new Vector2(xCenter, yCenter);

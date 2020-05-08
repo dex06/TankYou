@@ -16,8 +16,7 @@ public class HumanOne implements PlugInRealPlayer {
     }
 
     public void handleMouse(Player player, CanvasGUI canvas, ButtonState btnState){
-        Mouse mouse = new Mouse();
-        mouse.handleMouseEvent(player, canvas, btnState);
+        Mouse.handleMouseEvent(player, canvas, btnState);
     }
 
     public void handleKeyInput(Player player, ButtonState btnState) {
@@ -28,7 +27,7 @@ public class HumanOne implements PlugInRealPlayer {
         if(btnState.down == true) dy += 1;
         if(btnState.left == true) dx -= 1;
         if(btnState.right == true) dx += 1;
-        if(btnState.shot == true) player.shoot();
+        if(btnState.shot == true) { player.shoot(); }
 
         player.addPosition(new Vector2(dx,dy));
         if(player.isOutOfBorders()) player.addPosition(new Vector2(-dx,-dy));
