@@ -27,7 +27,7 @@ public class Standard implements PlugInWeapon {
 
     @Override
     public void shot(Player player, long currentTime) {
-        if((currentTime / 1000000000) - player.lastShot > 1){
+        if((currentTime / 1000000000) - player.lastShot > 0.3){
             Player p = Finder.findClosestPlayer(player);
             //double direction = Math.atan2(p.getPosition().getY() - player.getPosition().getY(), p.getPosition().getX() - player.getPosition().getX());
             Vector2 direction = p.getPosition().sub2(player.getPosition()).norm2();  //Vecteur normalisé
