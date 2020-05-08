@@ -29,8 +29,7 @@ public class Standard implements PlugInWeapon {
     }
 
     public void onProjectileOut(String axis, Projectile projectile){
-
-
+        projectile.hasEnded();
     }
 
     @Override

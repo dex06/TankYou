@@ -1,13 +1,16 @@
 package fr.unice.miage.engine.gui;
 
 import fr.unice.miage.common.CanvasGUI;
+import fr.unice.miage.common.Config;
 import fr.unice.miage.common.Repository;
+import fr.unice.miage.common.plugins.PlugInBackground;
 import fr.unice.miage.common.plugins.PlugInGUI1;
 import fr.unice.miage.common.sprite.Sprite;
 import fr.unice.miage.common.utils.Timer;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.layout.Background;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Text;
@@ -21,6 +24,7 @@ public class GameBoard {
 	private Stage stage;
 	private Scene theScene;
 	private Group root;
+	private HBox canvasBox;
 	private PlugInGUI1 bar;
 	private HBox barMenu;
 	private int width;
@@ -44,7 +48,10 @@ public class GameBoard {
 		BorderPane root = new BorderPane();
 		theScene = new Scene(root);
 		stage.setScene(theScene);
-		root.setCenter(canvas.getCanvas());
+		canvasBox = new HBox(canvas.getCanvas());
+		canvasBox.setMinWidth(Config.getWorldWidth());
+		canvasBox.setMinHeight(Config.getWorldHeight());
+		root.setCenter(canvasBox);
 		//root.getChildren().add(canvas.getCanvas());
 		if(hasBarMenu) {
 			String gui1ClassName = repository.getGui1PluginsNames().get(0);
@@ -56,6 +63,7 @@ public class GameBoard {
 			root.setBottom(barMenu);
 		}
 		stage.sizeToScene();
+
 	}
 	public void start(){
 		stage.show();
@@ -69,6 +77,10 @@ public class GameBoard {
 		String timeStr = time.chronoToString();
 		Text text = (Text) barMenu.lookup("Text");
 		text.setText(timeStr);
+	}
+	public void setBackground(PlugInBackground bg){
+		Background newBg = bg.createBackground();
+		canvasBox.setBackground(newBg);
 	}
 
 	public CanvasGUI getCanvas(){ return canvas; }

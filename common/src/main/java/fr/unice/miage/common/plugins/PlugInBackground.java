@@ -1,7 +1,7 @@
 package fr.unice.miage.common.plugins;
 
-import fr.unice.miage.common.CanvasGUI;
+import javafx.scene.layout.Background;
 
 public interface PlugInBackground extends PlugIn {
-    void draw(CanvasGUI canvas);
+    Background createBackground();
 }

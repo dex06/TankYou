@@ -93,14 +93,18 @@ public class GameEngine  {
             loadingCollision(configOpts.get(0));
             hasCollision = true;
         }
-        if(!configOpts.get(2).equals("Aucun")) {
-            loadingBackground(configOpts.get(2));
-            hasBackground = true;
-        }
+
+
         if(!gui1Opts.get(0).equals("Aucun")) hasBarMenu = true;
         if(!gui2Opts.get(0).equals("Aucun")) hasStats = true;
 
         createGameBoard();
+
+        if(!configOpts.get(2).equals("Aucun")) {
+            loadingBackground(configOpts.get(2));
+            hasBackground = true;
+            gameBoard.setBackground(background);
+        }
 
         if(hasRP){
             System.out.println(realPlayerOpts.get(0));
@@ -221,9 +225,8 @@ public class GameEngine  {
                 if (Config.getGameState() == Config.getPlayState()) {
                     if (!timer.isRunning()) timer.startChrono();
                     double t = timer.getTime();
-//                System.out.println(t);
+
                     canvas.clean();
-                    if (hasBackground) background.draw(canvas);
                     if (hasObstacles) {
                         for (Obstacle obs : obstaclesList) {
                             obs.draw(canvas);

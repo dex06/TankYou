@@ -29,13 +29,7 @@ public class WeaponOne implements PlugInWeapon {
     }
 
     public void onProjectileOut(String axis, Projectile projectile){
-        if(axis.equals("onX")){
-            projectile.setSpeedX(-projectile.getSpeedX());
-        }
-        if(axis.equals("onY")){
-            projectile.setSpeedY(-projectile.getSpeedY());
-        }
-
+        projectile.hasEnded();
     }
 
     @Override

@@ -84,7 +84,6 @@ public class CollisionOne implements PlugInCollision {
                 if (checkProjectileHitsPlayer(projectile, playerA)) {
                     playerA.getHitByProjectile(projectile);
                     projectile.endProjectile();
-                    //playerB.removeProjectile(projectile);
                 }
             }
         }

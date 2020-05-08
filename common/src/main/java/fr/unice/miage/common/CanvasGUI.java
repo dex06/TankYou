@@ -33,9 +33,10 @@ public class CanvasGUI {
     }
 
     public void clean(){
-        gc.setFill(Color.AZURE);
-        gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
-        gc.setFill(Color.BLACK);
+        gc.clearRect(0,0,canvas.getWidth(), canvas.getHeight());
+        //gc.setFill(Color.AZURE);
+        //gc.fillRect(0, 0, canvas.getWidth(), canvas.getHeight());
+        //gc.setFill(Color.BLACK);
     }
 
     public void drawHealthBar(Player player, double width, double height, Paint color) {
