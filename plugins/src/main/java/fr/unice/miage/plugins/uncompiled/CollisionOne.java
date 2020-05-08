@@ -109,8 +109,10 @@ public class CollisionOne implements PlugInCollision {
     public void playerToPlayerCollisionDamage(Player player1, Player player2){
         double speedFactor1 = (Math.abs(player1.getSpeedX()) + Math.abs(player1.getSpeedY()))/2;
         double speedFactor2 = (Math.abs(player2.getSpeedX()) + Math.abs(player2.getSpeedY()))/2;
-        player1.setHealth(player1.getHealth()-5*speedFactor2);
-        player2.setHealth(player2.getHealth()-5*speedFactor1);
+        if(player1.isAlive() & player2.isAlive()) {
+            player1.setHealth(player1.getHealth() - 5 * speedFactor2);
+            player2.setHealth(player2.getHealth() - 5 * speedFactor1);
+        }
     }
 
     private void checkWeaponToWeaponCollision(Player player1, Player player2) {

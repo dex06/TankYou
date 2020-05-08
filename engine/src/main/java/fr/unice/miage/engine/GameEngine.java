@@ -5,6 +5,8 @@ import fr.unice.miage.common.Config;
 import fr.unice.miage.common.Repository;
 import fr.unice.miage.common.game_objects.Obstacle;
 import fr.unice.miage.common.game_objects.Player;
+import fr.unice.miage.common.game_objects.Projectile;
+import fr.unice.miage.common.geom.Vector2;
 import fr.unice.miage.common.input.ButtonState;
 import fr.unice.miage.common.plugins.PlugInBackground;
 import fr.unice.miage.common.plugins.PlugInCollision;
@@ -80,14 +82,16 @@ public class GameEngine  {
 
     public void startGame(List<String> gui1Opts, List<String> gui2Opts, List<String> configOpts, List<List<String>> playersOpts, List<String> realPlayerOpts, boolean hasRP) throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
         //loadingGUI1();
-        loadingPlayers(playersOpts);
-        if(!configOpts.get(0).equals("Aucun")) {
-            loadingCollision(configOpts.get(0));
-            hasCollision = true;
-        }
         if(!configOpts.get(1).equals("Aucun")) {
             loadingObstacle(configOpts.get(1));
             hasObstacles = true;
+        }
+        /** Loading players **/
+        loadingPlayers(playersOpts);
+
+        if(!configOpts.get(0).equals("Aucun")) {
+            loadingCollision(configOpts.get(0));
+            hasCollision = true;
         }
         if(!configOpts.get(2).equals("Aucun")) {
             loadingBackground(configOpts.get(2));
@@ -156,10 +160,29 @@ public class GameEngine  {
     }
     public void giveRandomPositionAndVelocityToPlayers(){
         for(Player player : players){
-            player.addPosition(Randomizer.getRandomVector(10, 400));
+            Vector2 randVector = createRandPosition();
+            player.addPosition(randVector);
             player.addVelocity(Randomizer.getRandomVector(-0.3, 0.3));
         }
     }
+    public Vector2 createRandPosition(){
+        Vector2 randVector = Randomizer.getRandomVector(10, 400);
+        if(!outOfObstacles(randVector)) createRandPosition();
+        return randVector;
+    }
+
+    public boolean outOfObstacles(Vector2 v){
+        boolean isOut = false;
+        for(Obstacle obs : obstaclesList){
+            double xMin = obs.getPosition().getX();
+            double yMin = obs.getPosition().getY();
+            double xMax = xMin + obs.getSprite().getWidth();
+            double yMax = yMin + obs.getSprite().getHeight();
+            if(v.getX() >= xMin & v.getY() >= yMin & v.getX() <= xMax & v.getY() <= yMax) isOut = true;
+        }
+        return isOut;
+    }
+
 
     protected int numberOfPlayersAlive(){
         int nb = 0;
@@ -176,6 +199,16 @@ public class GameEngine  {
             }
         }
         return winningPlayerNumber;
+    }
+
+    protected void removeDeadProjectiles(){
+        for(Player player : players){
+            List<Projectile> prjList = new ArrayList<>();
+            for(Projectile prj : player.getProjectiles()){
+                if(!prj.hasEnded()) prjList.add(prj);
+            }
+            player.setProjectiles(prjList);
+        }
     }
 
     public void loop(){
@@ -233,6 +266,7 @@ public class GameEngine  {
                     }
                     // Checking for all the types of collisions
                     if(hasCollision) collision.checkAllCollisions(players, obstaclesList);
+                    removeDeadProjectiles();
                     lastUpdateNanoTime = currentNanoTime;
                 }
                 // If we pause the game

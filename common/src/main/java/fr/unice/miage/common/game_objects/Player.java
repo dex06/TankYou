@@ -144,12 +144,14 @@ public class Player {
 
     public void addProjectile(Projectile projectile){ projectiles.add(projectile); }
     public void removeProjectile(Projectile projectile) { projectiles.remove(projectile); }
-    public void drawProjectiles(){
-        for(Projectile prj : projectiles) pw.draw(canvas, prj); }
+    public void drawProjectiles(){ for(Projectile prj : projectiles) pw.draw(canvas, prj); }
     public void onProjectileOut(String axis, Projectile projectile) { pw.onProjectileOut(axis, projectile); }
 
     public void moveProjectiles() {
         for(Projectile prj : projectiles) pw.moveProjectile(prj);
+    }
+    public void setProjectiles(List<Projectile> prjList) {
+        projectiles = prjList;
     }
 
     private void loadPlugins(List<String> plugins) throws  InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
