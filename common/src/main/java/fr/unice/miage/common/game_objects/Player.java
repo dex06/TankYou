@@ -183,4 +183,8 @@ public class Player {
         }
         return false;
     }
+
+    public void shoot() {
+        pw.shoot(this);
+    }
 }

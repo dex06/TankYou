@@ -2,42 +2,33 @@ package fr.unice.miage.common.utils;
 
 public class Timer {
 
-    double timeCumulated;
-    double beginTime;
-    double endTime;
-    boolean running;
+    private static double timeCumulated;
+    private static double beginTime;
+    private static double endTime;
+    private static boolean running;
 
-    public Timer(){
-        //this.beginTime = System.nanoTime();
-        //this.running = true;
-    }
 
-    public Timer(double time){
-        this.beginTime = System.nanoTime() + time * 1000000000;
-        this.running = true;
-    }
-
-    public void startChrono(){
+    public static void startChrono(){
         beginTime = System.nanoTime();
         running = true;
     }
 
-    public void stopChrono(){
+    public static void stopChrono(){
         timeCumulated += (System.nanoTime() - beginTime);
         running = false;
     }
 
-    public boolean isRunning(){ return running; }
+    public static boolean isRunning(){ return running; }
 
-    public double getTime(){ return System.nanoTime() / 1000000000; }
+    public static double getTime(){ return System.nanoTime() / 1000000000; }
 
-    public double getChrono(){
+    public static double getChrono(){
         return (System.nanoTime() - beginTime + timeCumulated) / 1000000000;
     }
     public void printChrono(){
         System.out.println(chronoToString());
     }
-    public String chronoToString(){
+    public static String chronoToString(){
         int chrono = (int) getChrono();
         int minutes = chrono / 60;
         int hours = minutes / 60;

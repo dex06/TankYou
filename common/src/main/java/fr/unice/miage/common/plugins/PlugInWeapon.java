@@ -10,7 +10,7 @@ public interface PlugInWeapon extends PlugIn {
 
      void moveProjectile(Projectile projectile);
 
-     void shot(Player player, long currentTime);
+     void shoot(Player player);
 
      void draw(CanvasGUI canvas, Projectile projectile);
 

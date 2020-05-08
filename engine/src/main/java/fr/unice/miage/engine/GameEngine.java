@@ -229,13 +229,12 @@ public class GameEngine  {
     public void loop(){
         Config.setPlay();
         btnState.reset();
-        Timer timer = new Timer();
         lastUpdateNanoTime = System.nanoTime();
         new AnimationTimer(){
             public void handle(long currentNanoTime) {
                 if (Config.getGameState() == Config.getPlayState()) {
-                    if (!timer.isRunning()) timer.startChrono();
-                    double t = timer.getTime();
+                    if (!Timer.isRunning()) Timer.startChrono();
+                    double t = Timer.getTime();
 
                     canvas.clean();
                     if (hasObstacles) {
@@ -254,17 +253,17 @@ public class GameEngine  {
                         }
                         if(player.hasGraphic()) player.draw();
 
-                        if(hasBarMenu) gameBoard.setTimer(timer);
+                        if(hasBarMenu) gameBoard.setTimer();
 
                         if(player.hasWeapon()) {
-                            if(player.isAlive()) player.getPluginWeapon().shot(player, currentNanoTime);
+                            if(player.isAlive() & !hasRealPlayer) player.shoot();
                             player.drawProjectiles();
                             player.moveProjectiles();
                         }
                         // If we have a winner => end of game +- stats
                         if (numberOfPlayersAlive() <= 1) {
-                            if(timer.isRunning()) {
-                                timer.stopChrono();
+                            if(Timer.isRunning()) {
+                                Timer.stopChrono();
                                 if (getWinningPlayerNumber() != -1) {
                                     hasWinner = true;
                                     createGameStats();
@@ -284,11 +283,11 @@ public class GameEngine  {
                     lastUpdateNanoTime = currentNanoTime;
                 }
                 // If we pause the game
-                if(Config.getGameState() == Config.getPauseState()) if(timer.isRunning()) timer.stopChrono();
+                if(Config.getGameState() == Config.getPauseState()) if(Timer.isRunning()) Timer.stopChrono();
                 // If we stop the game
                 if(Config.getGameState() == Config.getStopState()) {
-                    if(timer.isRunning()) {
-                        timer.stopChrono();
+                    if(Timer.isRunning()) {
+                        Timer.stopChrono();
                         gameBoard.stop();
                         this.stop();
                         createGameStats();
@@ -300,8 +299,8 @@ public class GameEngine  {
                     if(hasStats) gameStats.start();
                 //if we restart the game
                 } else if(Config.getGameState() == Config.getRestartState()){
-                    if(timer.isRunning()) {
-                        timer.stopChrono();
+                    if(Timer.isRunning()) {
+                        Timer.stopChrono();
                         gameBoard.stop();
                         this.stop();
                         initMenu();

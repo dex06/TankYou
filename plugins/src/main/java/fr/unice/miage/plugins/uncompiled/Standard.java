@@ -8,6 +8,7 @@ import fr.unice.miage.common.plugins.PlugInWeapon;
 import fr.unice.miage.common.sprite.RectangleSprite;
 import fr.unice.miage.common.sprite.Sprite;
 import fr.unice.miage.common.utils.Finder;
+import fr.unice.miage.common.utils.Timer;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
@@ -32,9 +33,9 @@ public class Standard implements PlugInWeapon {
         projectile.hasEnded();
     }
 
-    @Override
-    public void shot(Player player, long currentTime) {
-        if((currentTime / 1000000000) - player.lastShot > 0.3){
+
+    public void shoot(Player player) {
+        if(Timer.getChrono() - player.lastShot > 0.3){
             Player p = Finder.findClosestPlayer(player);
             //double direction = Math.atan2(p.getPosition().getY() - player.getPosition().getY(), p.getPosition().getX() - player.getPosition().getX());
             Vector2 direction = p.getPosition().sub2(player.getPosition()).norm2();  //Vecteur normalisé
@@ -47,7 +48,7 @@ public class Standard implements PlugInWeapon {
             player.addProjectile(new Projectile(this, player, position, velocity, sprite, "rebondissante"));
 //
             System.out.println(player.getName() + " shot ");
-            player.lastShot = currentTime / 1000000000;
+            player.lastShot = Timer.getChrono();
             System.out.println(player.getName() + " près de " + Finder.findClosestPlayer(player).getName());
 //        projectiles.add(new Projectile(new Vector2(pm.getPosition().getX(), pm.getPosition().getY()), direction));
         }

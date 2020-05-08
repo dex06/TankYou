@@ -8,6 +8,7 @@ import fr.unice.miage.common.plugins.PlugInWeapon;
 import fr.unice.miage.common.sprite.RectangleSprite;
 import fr.unice.miage.common.sprite.Sprite;
 import fr.unice.miage.common.utils.Finder;
+import fr.unice.miage.common.utils.Timer;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
@@ -38,9 +39,8 @@ public class Rebondissante implements PlugInWeapon {
 
     }
 
-    @Override
-    public void shot(Player player, long currentTime) {
-        if((currentTime / 1000000000) - player.lastShot > 1){
+    public void shoot(Player player) {
+        if(Timer.getChrono() - player.lastShot > 1){
             Player p = Finder.findClosestPlayer(player);
             double damage = 10;
             double lifeSpan = 10;
@@ -53,7 +53,7 @@ public class Rebondissante implements PlugInWeapon {
             player.addProjectile(new Projectile(this, player, position, velocity, sprite, "rebondissante"));
 
 
-            player.lastShot = currentTime / 1000000000;
+            player.lastShot = Timer.getChrono();
             System.out.println(player.getName() + " près de " + Finder.findClosestPlayer(player).getName());
 
         }

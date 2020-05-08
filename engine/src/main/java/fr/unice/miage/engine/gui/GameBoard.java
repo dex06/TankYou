@@ -73,8 +73,8 @@ public class GameBoard {
 		stage.close();
 	}
 
-	public void setTimer(Timer time){
-		String timeStr = time.chronoToString();
+	public void setTimer(){
+		String timeStr = Timer.chronoToString();
 		Text text = (Text) barMenu.lookup("Text");
 		text.setText(timeStr);
 	}
