@@ -57,9 +57,12 @@ public class Standard implements PlugInWeapon {
         return new RectangleSprite(player,5,5, Color.BLUE, false);
     }
 
-    public void setPlayerImpact(Player player) {
+    public void applyPlayerImpact(Player player) {
         player.setHealth(player.getHealth()-3);
+    }
 
+    public void applyObstacleCollision(Projectile projectile){
+        projectile.hasEnded();
     }
 
     public void createWeapon(){ }

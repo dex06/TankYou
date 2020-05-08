@@ -168,27 +168,34 @@ public class GameEngine  {
     }
     public void giveRandomPositionAndVelocityToPlayers(){
         for(Player player : players){
-            Vector2 randVector = createRandPosition();
+            Vector2 randVector = createRandPosition(player);
             player.addPosition(randVector);
             player.addVelocity(Randomizer.getRandomVector(-0.3, 0.3));
         }
     }
-    public Vector2 createRandPosition(){
+    public Vector2 createRandPosition(Player player){
         Vector2 randVector = Randomizer.getRandomVector(10, 400);
-        if(!outOfObstacles(randVector)) createRandPosition();
+        if(!outOfObstacles(player, randVector)) createRandPosition(player);
         return randVector;
     }
 
-    public boolean outOfObstacles(Vector2 v){
-        boolean isOut = false;
+    public boolean outOfObstacles(Player player, Vector2 v){
+
         for(Obstacle obs : obstaclesList){
             double xMin = obs.getPosition().getX();
             double yMin = obs.getPosition().getY();
             double xMax = xMin + obs.getSprite().getWidth();
             double yMax = yMin + obs.getSprite().getHeight();
-            if(v.getX() >= xMin & v.getY() >= yMin & v.getX() <= xMax & v.getY() <= yMax) isOut = true;
+            double pxMin = v.getX();
+            double pyMin = v.getY();
+            double pxMax = pxMin + player.getSprite().getWidth();
+            double pyMax = pyMin + player.getSprite().getHeight();
+            if(pxMin >= xMin & pyMin >= yMin & pxMin <= xMax & pyMin <= yMax) return false;
+            if(pxMax >= xMin & pyMax >= yMin & pxMax <= xMax & pyMax <= yMax) return false;
+            if(pxMax >= xMin & pyMin >= yMin & pxMax <= xMax & pyMin <= yMax) return  false;
+            if(pxMin >= xMin & pyMax >= yMin & pxMin <= xMax & pyMax <= yMax) return false;
         }
-        return isOut;
+        return true;
     }
 
 

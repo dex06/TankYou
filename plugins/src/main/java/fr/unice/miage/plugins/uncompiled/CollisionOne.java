@@ -22,6 +22,7 @@ public class CollisionOne implements PlugInCollision {
             checkPlayerToBorderCollision(player);
             checkPlayerToObstacleCollision(player, obstacles);
             checkWeaponToBorderCollision(player);
+            checkWeaponToObstacleCollision(player, obstacles);
         }
     }
 
@@ -49,10 +50,18 @@ public class CollisionOne implements PlugInCollision {
 
     public void checkPlayerToObstacleCollision(Player player, List<Obstacle> obstacles){
         for(Obstacle obstacle : obstacles){
-            Sprite playerSprite = player.getSprite();
-            Sprite obstacleSprite = obstacle.getSprite();
-            if(playerSprite.getBoundingShape().getBoundsInParent().intersects(obstacleSprite.getBoundingShape().getBoundsInParent())){
+            if(checkPlayerHitsObstacle(obstacle, player)){
                 obstacle.setPlayerCollision(player);
+            }
+        }
+    }
+
+    public void checkWeaponToObstacleCollision(Player player, List<Obstacle> obstacles){
+        for(Obstacle obs : obstacles){
+            for(Projectile prj : player.getProjectiles()){
+                if(checkProjectileHitsObstacle(prj, obs)){
+                    prj.applyObstacleCollision(obs);
+                }
             }
         }
     }
@@ -131,16 +140,54 @@ public class CollisionOne implements PlugInCollision {
         }
     }
 
-    private boolean checkProjectileHitsPlayer(Projectile projectile,Player player){
+    private boolean checkProjectileHitsPlayer(Projectile prj,Player player){
 
-        double pjxMin = projectile.getX();
-        double pjxMax = pjxMin + projectile.getSprite().getWidth();
-        double pjyMin = projectile.getY();
-        double pjyMax = pjyMin + projectile.getSprite().getHeight();
+        double pjxMin = prj.getX();
+        double pjxMax = pjxMin + prj.getSprite().getWidth();
+        double pjyMin = prj.getY();
+        double pjyMax = pjyMin + prj.getSprite().getHeight();
         double plxMin = player.getX();
         double plxMax = plxMin + player.getSprite().getWidth();
         double plyMin = player.getY();
         double plyMax = plyMin + player.getSprite().getHeight();
+
+        if(pjxMax >= plxMin & pjyMax >= plyMin & pjxMax <= plxMax & pjyMax <= plyMax) return true;
+        if(pjxMin >= plxMin & pjyMin >= plyMin & pjxMin <= plxMax & pjyMin <= plyMax) return true;
+        if(pjxMax >= plxMin & pjyMin >= plyMin & pjxMax <= plxMax & pjyMin <= plyMax) return true;
+        if(pjxMin >= plxMin & pjyMax >= plyMin & pjxMin <= plxMax & pjyMax <= plyMax) return true;
+
+        return false;
+    }
+
+    private boolean checkPlayerHitsObstacle(Obstacle obs,Player player){
+
+        double pjxMin = player.getX();
+        double pjxMax = pjxMin + player.getSprite().getWidth();
+        double pjyMin = player.getY();
+        double pjyMax = pjyMin + player.getSprite().getHeight();
+        double plxMin = obs.getPosition().getX();
+        double plxMax = plxMin + obs.getSprite().getWidth();
+        double plyMin = obs.getPosition().getY();
+        double plyMax = plyMin + obs.getSprite().getHeight();
+
+        if(pjxMax >= plxMin & pjyMax >= plyMin & pjxMax <= plxMax & pjyMax <= plyMax) return true;
+        if(pjxMin >= plxMin & pjyMin >= plyMin & pjxMin <= plxMax & pjyMin <= plyMax) return true;
+        if(pjxMax >= plxMin & pjyMin >= plyMin & pjxMax <= plxMax & pjyMin <= plyMax) return true;
+        if(pjxMin >= plxMin & pjyMax >= plyMin & pjxMin <= plxMax & pjyMax <= plyMax) return true;
+
+        return false;
+    }
+
+    private boolean checkProjectileHitsObstacle(Projectile prj, Obstacle obs){
+
+        double pjxMin = prj.getX();
+        double pjxMax = pjxMin + prj.getSprite().getWidth();
+        double pjyMin = prj.getY();
+        double pjyMax = pjyMin + prj.getSprite().getHeight();
+        double plxMin = obs.getPosition().getX();
+        double plxMax = plxMin + obs.getSprite().getWidth();
+        double plyMin = obs.getPosition().getY();
+        double plyMax = plyMin + obs.getSprite().getHeight();
 
         if(pjxMax >= plxMin & pjyMax >= plyMin & pjxMax <= plxMax & pjyMax <= plyMax) return true;
         if(pjxMin >= plxMin & pjyMin >= plyMin & pjxMin <= plxMax & pjyMin <= plyMax) return true;

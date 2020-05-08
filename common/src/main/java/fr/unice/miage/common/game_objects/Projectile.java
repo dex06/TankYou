@@ -85,11 +85,15 @@ public class Projectile {
     public void collidedWith(Projectile projectile) {
     }
 
-    public void setPlayerImpact(Player player) {
-        pw.setPlayerImpact(player);
+    public void applyPlayerImpact(Player player) {
+        pw.applyPlayerImpact(player);
         hasEnded = true;
     }
     public boolean hasEnded(){ return hasEnded; }
 
     public void endProjectile(){ hasEnded = true; }
+
+    public void applyObstacleCollision(Obstacle obs) {
+        pw.applyObstacleCollision(this);
+    }
 }

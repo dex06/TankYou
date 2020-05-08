@@ -137,7 +137,7 @@ public class Player {
     public void setPlayerWeapons(){ }
 
     public void getHitByProjectile(Projectile projectile){
-        projectile.setPlayerImpact(this);
+        projectile.applyPlayerImpact(this);
     }
 
     public void getHitByPlayer(Player player){}

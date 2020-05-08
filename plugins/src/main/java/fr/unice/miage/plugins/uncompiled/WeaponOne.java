@@ -57,8 +57,12 @@ public class WeaponOne implements PlugInWeapon {
     }
 
 
-    public void setPlayerImpact(Player player) {
+    public void applyPlayerImpact(Player player) {
         player.setHealth(player.getHealth()-1);
+    }
+
+    public void applyObstacleCollision(Projectile projectile){
+        projectile.hasEnded();
     }
 
     public void createWeapon(){ }

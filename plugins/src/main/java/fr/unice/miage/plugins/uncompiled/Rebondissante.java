@@ -60,13 +60,16 @@ public class Rebondissante implements PlugInWeapon {
     }
 
     public Sprite createSprite(Player player){
-        return new RectangleSprite(player,5,5, Color.BLACK, false);
+        return new RectangleSprite(player,5,5, Color.FLORALWHITE, false);
     }
 
-    public void setPlayerImpact(Player player){
+    public void applyPlayerImpact(Player player){
         player.setHealth(player.getHealth()-2);
     }
 
+    public void applyObstacleCollision(Projectile projectile){
+        projectile.reverseSpeed();
+    }
 
     public void createWeapon(){ }
 }
