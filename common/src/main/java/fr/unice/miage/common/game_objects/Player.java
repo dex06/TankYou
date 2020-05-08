@@ -1,6 +1,7 @@
 package fr.unice.miage.common.game_objects;
 
 import fr.unice.miage.common.CanvasGUI;
+import fr.unice.miage.common.Config;
 import fr.unice.miage.common.Repository;
 import fr.unice.miage.common.geom.Vector2;
 import fr.unice.miage.common.plugins.PlugInGraphic;
@@ -135,17 +136,20 @@ public class Player {
 
     public void setPlayerWeapons(){ }
 
-    public void getHitByProjectile(Projectile projectile){}
+    public void getHitByProjectile(Projectile projectile){
+        projectile.setPlayerImpact(this);
+    }
 
     public void getHitByPlayer(Player player){}
 
     public void addProjectile(Projectile projectile){ projectiles.add(projectile); }
-    public void drawProjectiles(){ pw.draw(canvas, projectiles); }
+    public void removeProjectile(Projectile projectile) { projectiles.remove(projectile); }
+    public void drawProjectiles(){
+        for(Projectile prj : projectiles) pw.draw(canvas, prj); }
     public void onProjectileOut(String axis, Projectile projectile) { pw.onProjectileOut(axis, projectile); }
 
     public void moveProjectiles() {
-        for(Projectile prj : projectiles)
-            pw.moveProjectile(prj);
+        for(Projectile prj : projectiles) pw.moveProjectile(prj);
     }
 
     private void loadPlugins(List<String> plugins) throws  InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
@@ -163,5 +167,18 @@ public class Player {
             pg.init(this);
             hasGraphic = true;
         }
+    }
+
+    public boolean isOutOfBorders() {
+        if(hasGraphic){
+            double w = this.getSprite().getWidth();
+            double h = this.getSprite().getHeight();
+            if (position.getX() + w > Config.getWorldWidth() || position.getX() < 0) { return true; }
+            if (position.getY() + h  > Config.getWorldHeight() || position.getY() < 0) { return true; }
+        } else {
+            if (position.getX() > Config.getWorldWidth() || position.getX() < 0) { return true; }
+            if (position.getY() > Config.getWorldHeight() || position.getY() < 0) { return true; }
+        }
+        return false;
     }
 }

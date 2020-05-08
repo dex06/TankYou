@@ -38,6 +38,7 @@ public class GameMenu  {
     private VBox players = new VBox();
     private CheckBox realPlayerCheckBox = new CheckBox();
     private Label realPlayerLabel = new Label("IA Joueur 1");
+    private boolean hasRealPlayerPlugin = false;
     private boolean hasRealPlayer = false;
     private Font labelFont = new Font("Arial", 18);
     private List<String> listOfGUI1Options = new ArrayList<>();
@@ -110,7 +111,7 @@ public class GameMenu  {
         //Ajouter un joueur de base
         if(repository.getRealPlayerPluginsNames().size() > 0) {
             listOfRealPlayerOptions= repository.getRealPlayerPluginsNames();
-            hasRealPlayer = true;
+            hasRealPlayerPlugin = true;
         }
         addPlayerConfig();
 
@@ -174,7 +175,7 @@ public class GameMenu  {
         VBox playerGraphicVBox = createPlayerVBox("Graphiques");
         playerGraphicVBox.setAlignment(Pos.CENTER);
 
-        if(hasRealPlayer & nbPlayers == 1){
+        if(hasRealPlayerPlugin & nbPlayers == 1){
             VBox labelVBox = new VBox(realPlayerLabel);
             labelVBox.setAlignment(Pos.CENTER);
             realPlayerCheckBox = new CheckBox();
@@ -186,9 +187,11 @@ public class GameMenu  {
                     if (realPlayerCheckBox.isSelected()) {
                         realPlayerLabel.setText("IH joueur 1");
                         realPlayerLabel.setTextFill(Color.GREEN);
+                        hasRealPlayer = true;
                     } else {
                         realPlayerLabel.setText("IA joueur 1");
                         realPlayerLabel.setTextFill(Color.BLACK);
+                        hasRealPlayer = false;
                     }
             };
             realPlayerCheckBox.setOnAction(event);
@@ -290,7 +293,7 @@ public class GameMenu  {
 
     private void startGame() throws ClassNotFoundException, NoSuchMethodException, InvocationTargetException, InstantiationException, IllegalAccessException {
         stop();
-        gameEngine.startGame(listOfGUI1Options, listOfGUI2Options, listOfConfigOptions, listOfPlayersOptions, listOfRealPlayerOptions);
+        gameEngine.startGame(listOfGUI1Options, listOfGUI2Options, listOfConfigOptions, listOfPlayersOptions, listOfRealPlayerOptions, hasRealPlayer);
     }
 
     private List<String> getConfigOptions(){

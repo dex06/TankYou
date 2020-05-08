@@ -2,6 +2,7 @@ package fr.unice.miage.common.game_objects;
 
 import fr.unice.miage.common.CanvasGUI;
 import fr.unice.miage.common.geom.Vector2;
+import fr.unice.miage.common.plugins.PlugInWeapon;
 import fr.unice.miage.common.sprite.Sprite;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
@@ -9,7 +10,7 @@ import javafx.scene.paint.Color;
 public class Projectile {
     Sprite projectileSprite;
     String projectileName;
-
+    protected PlugInWeapon pw;
     protected Player player;
     protected Vector2 position;
     protected Vector2 velocity;
@@ -17,9 +18,11 @@ public class Projectile {
     protected double rotation;
     protected double width;
     protected double height;
+    protected boolean hasEnded = false;
 
 
-    public Projectile(Player player, Vector2 position, Vector2 velocity, Sprite projectileSprite, String projectileName){
+    public Projectile(PlugInWeapon pw, Player player, Vector2 position, Vector2 velocity, Sprite projectileSprite, String projectileName){
+        this.pw = pw;
         this.player = player;
         this.position = position;
         this.velocity = velocity;
@@ -38,14 +41,11 @@ public class Projectile {
         GraphicsContext gc = canvas.getGraphicsContext();
         gc.setFill(Color.BLACK);
         gc.fillRect(x, y, width, height);
-//        gc.setFill(Color.BLACK);
-//        gc.setFont(Font.font("Arial", 18));
-//        gc.fillText(playerID, x+width/4, y+height/1.2);
-
     }
 
     public Sprite getSprite() { return projectileSprite; }
     public String getName() { return projectileName; }
+    public int getPlayerID(){ return player.getPlayerID(); }
 
     // Methods for position x and y
     public double getX(){ return position.getX(); }
@@ -80,7 +80,16 @@ public class Projectile {
     public void setRotation(double rot) { rotation = rot; }
     public double getRotation(){ return rotation; }
 
+    public PlugInWeapon getWeapon(){ return pw; }
 
     public void collidedWith(Projectile projectile) {
     }
+
+    public void setPlayerImpact(Player player) {
+        pw.setPlayerImpact(player);
+        hasEnded = true;
+    }
+    public boolean hasEnded(){ return hasEnded; }
+
+    public void endProjectile(){ hasEnded = true; }
 }

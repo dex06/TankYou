@@ -1,6 +1,7 @@
 package fr.unice.miage.plugins.uncompiled;
 
 import fr.unice.miage.common.Config;
+import fr.unice.miage.common.game_objects.Obstacle;
 import fr.unice.miage.common.game_objects.Player;
 import fr.unice.miage.common.game_objects.Projectile;
 import fr.unice.miage.common.plugins.PlugInCollision;
@@ -11,22 +12,23 @@ import java.util.List;
 
 public class CollisionOne implements PlugInCollision {
 
-
-
-
-    public void checkAllCollisions(List<Player> players){
+    public void checkAllCollisions(List<Player> players, List<Obstacle> obstacles){
         for(int i = 0; i < players.size()-1; i++){
             for(int j = i+1; j < players.size(); j++){
                 checkPlayersCollision(players.get(i), players.get(j));
             }
         }
-        for(Player player : players) checkPlayerToBorderCollision(player);
+        for(Player player : players) {
+            checkPlayerToBorderCollision(player);
+            checkPlayerToObstacleCollision(player, obstacles);
+            checkWeaponToBorderCollision(player);
+        }
     }
 
     private void checkPlayersCollision(Player player1, Player player2){
         checkPlayerToPlayerCollision(player1, player2);
-        //checkPlayerToWeaponCollision(player1, player2);
-        //checkPlayerToWeaponCollision(player2, player1);
+        checkPlayerToWeaponCollision(player1, player2);
+        checkPlayerToWeaponCollision(player2, player1);
         //checkWeaponToWeaponCollision(player1, player2);
     }
 
@@ -37,10 +39,20 @@ public class CollisionOne implements PlugInCollision {
             double w = player.getSprite().getWidth();
             double h = player.getSprite().getHeight();
             if ((x + w) > Config.getWorldWidth() || x < 0) {
-                player.setSpeedX(-player.getSpeedX());
+                player.setSpeedX(-player.getSpeedX()*2);
             }
             if ((y + h) > Config.getWorldHeight() || y < 0) {
-                player.setSpeedY(-player.getSpeedY());
+                player.setSpeedY(-player.getSpeedY()*2);
+            }
+        }
+    }
+
+    public void checkPlayerToObstacleCollision(Player player, List<Obstacle> obstacles){
+        for(Obstacle obstacle : obstacles){
+            Sprite playerSprite = player.getSprite();
+            Sprite obstacleSprite = obstacle.getSprite();
+            if(playerSprite.getBoundingShape().getBoundsInParent().intersects(obstacleSprite.getBoundingShape().getBoundsInParent())){
+                obstacle.setPlayerCollision(player);
             }
         }
     }
@@ -66,14 +78,13 @@ public class CollisionOne implements PlugInCollision {
 
     private void checkPlayerToWeaponCollision(Player playerA, Player playerB) {
         if(playerA.hasGraphic()) {
-            Sprite playerSpriteA = playerA.getSprite();
             Iterator<Projectile> it = playerB.getProjectiles().iterator();
             while (it.hasNext()) {
                 Projectile projectile = it.next();
-                Sprite projectileSprite = projectile.getSprite();
-                if (playerSpriteA.getBoundingShape().getBoundsInParent().intersects(projectileSprite.getBoundingShape().getBoundsInParent())) {
-                    System.out.println(playerA.getName() + " in collision with projectile " + projectile.getName());
+                if (checkProjectileHitsPlayer(projectile, playerA)) {
                     playerA.getHitByProjectile(projectile);
+                    projectile.endProjectile();
+                    //playerB.removeProjectile(projectile);
                 }
             }
         }
@@ -84,10 +95,11 @@ public class CollisionOne implements PlugInCollision {
             Sprite playerSprite1 = player1.getSprite();
             Sprite playerSprite2 = player2.getSprite();
             if (playerSprite1.getBoundingShape().getBoundsInParent().intersects(playerSprite2.getBoundingShape().getBoundsInParent())) {
-                System.out.println(player1.getName() + " in collision with " + player2.getName());
                 player1.reverseSpeed();
+                player1.getVelocity().mult2(2);
                 player1.getSprite().setRandomColor();
                 player2.reverseSpeed();
+                player2.getVelocity().mult2(2);
                 player2.getSprite().setRandomColor();
                 playerToPlayerCollisionDamage(player1, player2);
             }
@@ -116,5 +128,24 @@ public class CollisionOne implements PlugInCollision {
                 }
             }
         }
+    }
+
+    private boolean checkProjectileHitsPlayer(Projectile projectile,Player player){
+
+        double pjxMin = projectile.getX();
+        double pjxMax = pjxMin + projectile.getSprite().getWidth();
+        double pjyMin = projectile.getY();
+        double pjyMax = pjyMin + projectile.getSprite().getHeight();
+        double plxMin = player.getX();
+        double plxMax = plxMin + player.getSprite().getWidth();
+        double plyMin = player.getY();
+        double plyMax = plyMin + player.getSprite().getHeight();
+
+        if(pjxMax >= plxMin & pjyMax >= plyMin & pjxMax <= plxMax & pjyMax <= plyMax) return true;
+        if(pjxMin >= plxMin & pjyMin >= plyMin & pjxMin <= plxMax & pjyMin <= plyMax) return true;
+        if(pjxMax >= plxMin & pjyMin >= plyMin & pjxMax <= plxMax & pjyMin <= plyMax) return true;
+        if(pjxMin >= plxMin & pjyMax >= plyMin & pjxMin <= plxMax & pjyMax <= plyMax) return true;
+
+        return false;
     }
 }

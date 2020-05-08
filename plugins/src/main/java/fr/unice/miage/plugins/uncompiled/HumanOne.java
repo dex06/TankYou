@@ -31,5 +31,6 @@ public class HumanOne implements PlugInRealPlayer {
         if(btnState.shot == true) System.out.println("Shooting");
 
         player.addPosition(new Vector2(dx,dy));
+        if(player.isOutOfBorders()) player.addPosition(new Vector2(-dx,-dy));
     }
 }

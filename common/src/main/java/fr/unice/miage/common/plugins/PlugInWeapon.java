@@ -4,8 +4,6 @@ import fr.unice.miage.common.CanvasGUI;
 import fr.unice.miage.common.game_objects.Player;
 import fr.unice.miage.common.game_objects.Projectile;
 
-import java.util.List;
-
 public interface PlugInWeapon extends PlugIn {
 
     //public List<Projectile> getWeaponProjectiles();
@@ -14,8 +12,10 @@ public interface PlugInWeapon extends PlugIn {
 
      void shot(Player player, long currentTime);
 
-     void draw(CanvasGUI canvas, List<Projectile> projectile);
+     void draw(CanvasGUI canvas, Projectile projectile);
 
 
     void onProjectileOut(String axis, Projectile projectile);
+
+    void setPlayerImpact(Player player);
 }

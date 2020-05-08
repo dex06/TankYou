@@ -1,38 +1,41 @@
 package fr.unice.miage.common.game_objects;
 
 import fr.unice.miage.common.CanvasGUI;
-import fr.unice.miage.common.Repository;
 import fr.unice.miage.common.geom.Vector2;
-import fr.unice.miage.common.plugins.PlugInGraphic;
-import fr.unice.miage.common.plugins.PlugInMovement;
-import fr.unice.miage.common.plugins.PlugInWeapon;
+import fr.unice.miage.common.plugins.PlugInObstacle;
+import fr.unice.miage.common.sprite.ObstacleSprite;
 import fr.unice.miage.common.sprite.Sprite;
-import fr.unice.miage.common.utils.Finder;
-
-import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.List;
 
 
 public class Obstacle {
-    protected Vector2 position;
-    protected double rotation;
-    private Vector2 size;
 
-    private Repository repository;
-    private CanvasGUI canvas;
-    private PlugInGraphic pg;
+    private PlugInObstacle po;
+    private Vector2 position;
+    private ObstacleSprite sprite;
 
-    public Obstacle(Vector2 position, Vector2 size) throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
+
+
+    public Obstacle(PlugInObstacle po, Vector2 position, ObstacleSprite sprite) {
+        this.po = po;
         this.position = position;
-        this.size = size;
+        this.sprite = sprite;
+    }
+
+    public void draw(CanvasGUI canvas){
+        sprite.draw(canvas);
     }
 
     public Vector2 getPosition() {
         return position;
     }
 
-    public Vector2 getSize() {
-        return size;
+
+    public Sprite getSprite() { return sprite; }
+
+    public void setPlayerCollision(Player player) {
+        po.setPlayerCollision(player);
     }
+
+    public void setWeaponCollision(Projectile projectile){}
+
 }

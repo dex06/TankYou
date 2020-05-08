@@ -1,9 +1,6 @@
 package fr.unice.miage.common;
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -71,6 +68,49 @@ public class MyClassLoader extends SecureClassLoader {
                     }
                 } catch (IOException e1) {
                     e1.printStackTrace();
+                }
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public InputStream getResourceAsStream(String name) {
+        try {
+            InputStream is = loadImage(name);
+            return is;
+        } catch (Exception e) {
+            return this.getParent().getResourceAsStream(name);
+        }
+    }
+
+
+    public InputStream loadImage(String name){
+        for (File f : paths) {
+            if (f.isDirectory()) {
+                Path path = Paths.get(f.getAbsolutePath(), name);
+                try {
+                    File file = path.toFile();
+                    System.out.println(file);
+                    return new FileInputStream(file);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            } else {
+                try {
+                    String localName = name.replaceAll("\\.", "/");
+                    JarFile jarFile = new JarFile(f);
+                    Enumeration<JarEntry> e = jarFile.entries();
+                    while (e.hasMoreElements()) {
+                        JarEntry je = e.nextElement();
+                        String loadName = "/" + je.toString();
+                        if (loadName.endsWith(".png") || loadName.endsWith(".jpg")) {
+                            if(loadName.equals(name))  return jarFile.getInputStream(je);
+                        }
+                    }
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                    System.out.println("loader img failing");
                 }
             }
         }

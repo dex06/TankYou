@@ -78,7 +78,7 @@ public class GameEngine  {
         gameMenu.start();
     }
 
-    public void startGame(List<String> gui1Opts, List<String> gui2Opts, List<String> configOpts, List<List<String>> playersOpts, List<String> realPlayerOpts) throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
+    public void startGame(List<String> gui1Opts, List<String> gui2Opts, List<String> configOpts, List<List<String>> playersOpts, List<String> realPlayerOpts, boolean hasRP) throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
         //loadingGUI1();
         loadingPlayers(playersOpts);
         if(!configOpts.get(0).equals("Aucun")) {
@@ -98,7 +98,8 @@ public class GameEngine  {
 
         createGameBoard();
 
-        if(!realPlayerOpts.get(0).equals("Aucun")){
+        if(hasRP){
+            System.out.println(realPlayerOpts.get(0));
             loadingRealPlayer(realPlayerOpts.get(0));
             hasRealPlayer = true;
         }
@@ -143,8 +144,7 @@ public class GameEngine  {
     public void createGameBoard(){
         gameBoard = new GameBoard(stage, 600,600, canvas, repository);
         gameBoard.init(hasBarMenu);
-        if(hasObstacles)
-            obstaclesList = obstacles.generate();
+        if(hasObstacles) obstaclesList = obstacles.generate();
         gameBoard.start();
         giveRandomPositionAndVelocityToPlayers();
         loop();
@@ -186,17 +186,22 @@ public class GameEngine  {
         new AnimationTimer(){
             public void handle(long currentNanoTime) {
                 if (Config.getGameState() == Config.getPlayState()) {
-                    if(!timer.isRunning()) timer.startChrono();
+                    if (!timer.isRunning()) timer.startChrono();
                     double t = timer.getTime();
 //                System.out.println(t);
                     canvas.clean();
-                    if(hasBackground) background.draw(canvas);
-                    for (Obstacle obs : obstaclesList){
-                        obstacles.draw(canvas, obs);
+                    if (hasBackground) background.draw(canvas);
+                    if (hasObstacles) {
+                        for (Obstacle obs : obstaclesList) {
+                            obs.draw(canvas);
+                        }
                     }
                     for (Player player : players) {
                         if(hasRealPlayer & players.indexOf(player) == 0) {
-                            if(player.isAlive()) realPlayer.handleKeyInput(player, btnState);
+                            if(player.isAlive()) {
+                                realPlayer.handleKeyInput(player, btnState);
+                                //btnState.reset();
+                            }
                         } else if (player.isAlive()) {
                             if(player.hasMove()) player.move();
                         }
@@ -205,9 +210,8 @@ public class GameEngine  {
                         if(hasBarMenu) gameBoard.setTimer(timer);
 
                         if(player.hasWeapon()) {
-
+                            if(player.isAlive()) player.getPluginWeapon().shot(player, currentNanoTime);
                             player.drawProjectiles();
-                            player.getPluginWeapon().shot(player, currentNanoTime);
                             player.moveProjectiles();
                         }
                         // If we have a winner => end of game +- stats
@@ -228,7 +232,7 @@ public class GameEngine  {
                         }
                     }
                     // Checking for all the types of collisions
-                    if(hasCollision) collision.checkAllCollisions(players);
+                    if(hasCollision) collision.checkAllCollisions(players, obstaclesList);
                     lastUpdateNanoTime = currentNanoTime;
                 }
                 // If we pause the game
