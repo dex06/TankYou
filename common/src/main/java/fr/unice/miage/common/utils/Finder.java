@@ -13,7 +13,7 @@ public class Finder {
         Player closestPlayer = player;
         double closestDistance = Double.POSITIVE_INFINITY;
         for(Player p : players){
-            if(p != player){
+            if(p != player & p.isAlive()){
                 Vector2 subVector = p.getPosition().sub2(player.getPosition());
                 double distanceBetweenPlayers = subVector.length();
                 if(distanceBetweenPlayers <= closestDistance) {

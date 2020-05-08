@@ -11,13 +11,21 @@ import fr.unice.miage.common.utils.Finder;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 
-import java.util.List;
-
 public class Standard implements PlugInWeapon {
 
 
     public void moveProjectile(Projectile projectile){
-        projectile.addPosition(projectile.getVelocity());
+        if(!projectile.hasEnded()) projectile.addPosition(projectile.getVelocity());
+    }
+
+    public void draw(CanvasGUI canvas, Projectile projectile) {
+        if(!projectile.hasEnded()) {
+            double x = projectile.getX();
+            double y = projectile.getY();
+            GraphicsContext gc = canvas.getGraphicsContext();
+            gc.setFill(Color.BLACK);
+            gc.fillRect(x, y, 5, 5);
+        }
     }
 
     public void onProjectileOut(String axis, Projectile projectile){
@@ -37,7 +45,7 @@ public class Standard implements PlugInWeapon {
             Vector2 velocity = new Vector2(5 * direction.getX(), 5 * direction.getY());
             double longueur = Math.sqrt(Math.pow(player.getSprite().getWidth()/2, 2) + Math.pow(player.getSprite().getHeight()/2, 2));
             Sprite sprite = createSprite(player);
-            player.addProjectile(new Projectile(player, position, velocity, sprite, "rebondissante"));
+            player.addProjectile(new Projectile(this, player, position, velocity, sprite, "rebondissante"));
 //
             System.out.println(player.getName() + " shot ");
             player.lastShot = currentTime / 1000000000;
@@ -50,17 +58,10 @@ public class Standard implements PlugInWeapon {
         return new RectangleSprite(player,5,5, Color.BLUE, false);
     }
 
-    public void draw(CanvasGUI canvas, List<Projectile> projectile) {
-        for (int counter = 0; counter < projectile.size(); counter++) {
-            double x = projectile.get(counter).getPosition().getX();
-            double y = projectile.get(counter).getPosition().getY();
-            GraphicsContext gc = canvas.getGraphicsContext();
-            gc.setFill(Color.BLACK);
-            gc.fillRect(x, y, 5,5);
-        }
+    public void setPlayerImpact(Player player) {
+        player.setHealth(player.getHealth()-3);
+
     }
-
-
 
     public void createWeapon(){ }
 }

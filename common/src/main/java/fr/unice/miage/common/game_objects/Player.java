@@ -136,17 +136,20 @@ public class Player {
 
     public void setPlayerWeapons(){ }
 
-    public void getHitByProjectile(Projectile projectile){}
+    public void getHitByProjectile(Projectile projectile){
+        projectile.setPlayerImpact(this);
+    }
 
     public void getHitByPlayer(Player player){}
 
     public void addProjectile(Projectile projectile){ projectiles.add(projectile); }
-    public void drawProjectiles(){ pw.draw(canvas, projectiles); }
+    public void removeProjectile(Projectile projectile) { projectiles.remove(projectile); }
+    public void drawProjectiles(){
+        for(Projectile prj : projectiles) pw.draw(canvas, prj); }
     public void onProjectileOut(String axis, Projectile projectile) { pw.onProjectileOut(axis, projectile); }
 
     public void moveProjectiles() {
-        for(Projectile prj : projectiles)
-            pw.moveProjectile(prj);
+        for(Projectile prj : projectiles) pw.moveProjectile(prj);
     }
 
     private void loadPlugins(List<String> plugins) throws  InvocationTargetException, NoSuchMethodException, InstantiationException, IllegalAccessException {
