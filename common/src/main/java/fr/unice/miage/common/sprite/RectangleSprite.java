@@ -26,8 +26,8 @@ public class RectangleSprite extends Sprite {
 		GraphicsContext gc = canvas.getGraphicsContext();
 		gc.setFill(color);
 		gc.fillRect(x, y, width, height);
-		gc.setFill(Color.BLACK);
 		if(displayId) {
+			gc.setFill(Color.BLACK);
 			String playerID = String.valueOf(player.getPlayerID());
 			gc.setFont(Font.font("Arial", 18));
 			gc.fillText(playerID, x + width / 4, y + height / 1.2);

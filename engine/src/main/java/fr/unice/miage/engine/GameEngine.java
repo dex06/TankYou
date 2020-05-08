@@ -148,6 +148,10 @@ public class GameEngine  {
         }
         Finder.setPlayers(players);
     }
+    public void resetListOfPlayers() {
+        players = new ArrayList<>();
+    }
+
 
     public void createGameBoard(){
         gameBoard = new GameBoard(stage, 600,600, canvas, repository);

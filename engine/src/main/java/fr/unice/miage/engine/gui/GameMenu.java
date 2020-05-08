@@ -65,6 +65,7 @@ public class GameMenu  {
     }
 
     public void init(){
+        reinitializeListsOfOptions();
         Label guiLabel = new Label("GUI");
         guiLabel.setFont(labelFont);
         HBox guiHBox = new HBox();
@@ -162,6 +163,18 @@ public class GameMenu  {
         //stage.show();
     }
 
+    private void reinitializeListsOfOptions() {
+        gameEngine.resetListOfPlayers();
+        nbGUI = 0;
+        nbPlayers = 1;
+        hasRealPlayerPlugin = false;
+        hasRealPlayer = false;
+        listOfGUI1Options = new ArrayList<>();
+        listOfGUI2Options = new ArrayList<>();
+        listOfPlayersOptions = new ArrayList<>();
+        listOfConfigOptions = new ArrayList<>();
+        listOfRealPlayerOptions = new ArrayList<>();
+    }
 
 
     private void addPlayerConfig(){
@@ -212,7 +225,7 @@ public class GameMenu  {
         VBox collVBox = new VBox();
         Label collLabel = new Label("Collision");
         ObservableList<String> opts = repository.getCollisionPluginsNames();
-        opts.add("Aucun");
+        if(!opts.contains("Aucun")) opts.add("Aucun");
         ComboBox collCB = new ComboBox(opts);
         System.out.println(opts);
         if(opts.size() > 0) collCB.setValue(opts.get(0));
@@ -224,7 +237,7 @@ public class GameMenu  {
         VBox obsVBox = new VBox();
         Label obsLabel = new Label("Obstacles");
         ObservableList<String> opts = repository.getObstaclePluginsNames();
-        opts.add("Aucun");
+        if(!opts.contains("Aucun")) opts.add("Aucun");
         ComboBox obsCB = new ComboBox(opts);
         System.out.println(opts);
         if(opts.size() > 0) obsCB.setValue(opts.get(0));
@@ -235,7 +248,7 @@ public class GameMenu  {
         VBox bgVBox = new VBox();
         Label bgLabel = new Label("Aire de jeu");
         ObservableList<String> opts = repository.getBackgroundPluginsNames();
-        opts.add("Aucun");
+        if(!opts.contains("Aucun")) opts.add("Aucun");
         ComboBox bgCB = new ComboBox(opts);
         System.out.println(opts);
         if(opts.size() > 0) bgCB.setValue(opts.get(0));
@@ -247,7 +260,7 @@ public class GameMenu  {
         VBox guiVBox = new VBox();
         Label guiLabel = new Label("PlugIn " + ++nbGUI);
         ObservableList<String> opts = FXCollections.observableArrayList(repository.getGui1PluginsNames());
-        opts.add("Aucun");
+        if(!opts.contains("Aucun")) opts.add("Aucun");
         ComboBox guiCB = new ComboBox(opts);
         if(opts.size() > 0) guiCB.setValue(opts.get(0));
         guiVBox.getChildren().addAll(guiLabel, guiCB);
@@ -259,7 +272,7 @@ public class GameMenu  {
         VBox guiVBox = new VBox();
         Label guiLabel = new Label("PlugIn " + ++nbGUI);
         ObservableList<String> opts = FXCollections.observableArrayList(repository.getGui2PluginsNames());
-        opts.add("Aucun");
+        if(!opts.contains("Aucun")) opts.add("Aucun");
         ComboBox guiCB = new ComboBox(opts);
         if(opts.size() > 0) guiCB.setValue(opts.get(0));
         guiVBox.getChildren().addAll(guiLabel, guiCB);
