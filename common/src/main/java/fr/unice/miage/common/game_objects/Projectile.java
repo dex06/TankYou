@@ -97,7 +97,7 @@ public class Projectile {
 
     public double getShotTime(){ return shotTime; }
 
-    public void applyObstacleCollision(Obstacle obs) {
-        pw.applyObstacleCollision(this);
+    public void applyObstacleCollision(Obstacle obs, String inversion) {
+        pw.applyObstacleCollision(this, inversion);
     }
 }

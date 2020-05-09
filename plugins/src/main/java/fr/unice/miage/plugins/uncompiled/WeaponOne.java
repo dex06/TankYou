@@ -31,7 +31,7 @@ public class WeaponOne implements PlugInWeapon {
     }
 
     public void onProjectileOut(String axis, Projectile projectile){
-        projectile.hasEnded();
+        projectile.endProjectile();
     }
 
     public void shoot(Player player) {
@@ -60,7 +60,7 @@ public class WeaponOne implements PlugInWeapon {
         player.setHealth(player.getHealth()-1);
     }
 
-    public void applyObstacleCollision(Projectile projectile){
+    public void applyObstacleCollision(Projectile projectile, String inversion){
         projectile.endProjectile();
     }
 }

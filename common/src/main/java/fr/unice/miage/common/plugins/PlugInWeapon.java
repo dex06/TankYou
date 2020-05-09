@@ -19,5 +19,5 @@ public interface PlugInWeapon extends PlugIn {
 
     void applyPlayerImpact(Player player);
 
-    void applyObstacleCollision(Projectile projectile);
+    void applyObstacleCollision(Projectile projectile, String inversion);
 }

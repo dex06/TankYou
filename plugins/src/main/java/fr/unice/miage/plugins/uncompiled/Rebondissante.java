@@ -32,7 +32,8 @@ public class Rebondissante implements PlugInWeapon {
     }
 
     public void onProjectileOut(String axis, Projectile projectile){
-        projectile.reverseSpeed();
+        if(axis.equals("onX")) projectile.setSpeedX(-projectile.getSpeedX());
+        else projectile.setSpeedY(-projectile.getSpeedY());
     }
 
     public void shoot(Player player) {
@@ -65,7 +66,9 @@ public class Rebondissante implements PlugInWeapon {
         player.setHealth(player.getHealth()-10);
     }
 
-    public void applyObstacleCollision(Projectile projectile){
-        projectile.reverseSpeed();
+    public void applyObstacleCollision(Projectile projectile, String inversion){
+
+        if(inversion.equals("inverseX")) projectile.setSpeedX(-projectile.getSpeedX());
+        else  projectile.setSpeedY(-projectile.getSpeedY());
     }
 }

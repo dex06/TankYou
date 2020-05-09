@@ -38,12 +38,7 @@ public class Mine implements PlugInWeapon {
     }
 
     public void onProjectileOut(String axis, Projectile projectile){
-        if(axis.equals("onX")){
-            projectile.setSpeedX(-projectile.getSpeedX());
-        }
-        if(axis.equals("onY")){
-            projectile.setSpeedY(-projectile.getSpeedY());
-        }
+       projectile.endProjectile();
 
     }
 
@@ -77,7 +72,7 @@ public class Mine implements PlugInWeapon {
         player.setHealth(player.getHealth()-30);
     }
 
-    public void applyObstacleCollision(Projectile projectile){
+    public void applyObstacleCollision(Projectile projectile, String inversion){
         projectile.endProjectile();
     }
 }

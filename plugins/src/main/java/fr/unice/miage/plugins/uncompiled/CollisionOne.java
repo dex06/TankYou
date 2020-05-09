@@ -60,7 +60,22 @@ public class CollisionOne implements PlugInCollision {
         for(Obstacle obs : obstacles){
             for(Projectile prj : player.getProjectiles()){
                 if(checkProjectileHitsObstacle(prj, obs)){
-                    prj.applyObstacleCollision(obs);
+                    double pLeft = prj.getX();
+                    double pRight = pLeft + prj.getSprite().getWidth();
+                    double pTop = prj.getY();
+                    double pBottom = pTop + prj.getSprite().getHeight();
+                    double oLeft = obs.getPosition().getX();
+                    double oRight = oLeft + obs.getSprite().getHeight();
+                    double oTop = obs.getPosition().getY();
+                    double oBottom = oTop + obs.getSprite().getHeight();
+                    double leftX = Math.abs(pLeft - oLeft);
+                    double rightX = Math.abs(pRight - oRight);
+                    double topY = Math.abs(pTop - oTop);
+                    double bottomY = Math.abs(pBottom - oBottom);
+                    if((leftX < topY & leftX < bottomY) | (rightX < topY & rightX < bottomY)){
+                        prj.applyObstacleCollision(obs, "inverseX");
+                    }
+                    else prj.applyObstacleCollision(obs, "inverseY");
                 }
             }
         }
