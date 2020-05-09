@@ -103,13 +103,17 @@ public class CollisionOne implements PlugInCollision {
             Sprite playerSprite1 = player1.getSprite();
             Sprite playerSprite2 = player2.getSprite();
             if (playerSprite1.getBoundingShape().getBoundsInParent().intersects(playerSprite2.getBoundingShape().getBoundsInParent())) {
-                player1.reverseSpeed();
-                player1.getVelocity().mult2(2);
-                player1.getSprite().setRandomColor();
-                player2.reverseSpeed();
-                player2.getVelocity().mult2(2);
-                player2.getSprite().setRandomColor();
-                playerToPlayerCollisionDamage(player1, player2);
+                if(player1.isAlive()) {
+                    player1.reverseSpeed();
+                    player1.getVelocity().mult2(2);
+                    player1.getSprite().setRandomColor();
+                }
+                if (player2.isAlive()){
+                    player2.reverseSpeed();
+                    player2.getVelocity().mult2(2);
+                    player2.getSprite().setRandomColor();
+                }
+                if(player1.isAlive() & player2.isAlive()) playerToPlayerCollisionDamage(player1, player2);
             }
         }
     }

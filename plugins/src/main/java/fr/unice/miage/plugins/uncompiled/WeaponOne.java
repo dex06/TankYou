@@ -47,6 +47,7 @@ public class WeaponOne implements PlugInWeapon {
             Sprite sprite = createSprite(player);
             player.addProjectile(new Projectile(this, player, position, velocity, sprite, Timer.getChrono(), "rebondissante"));
             player.setLastShot(Timer.getChrono());
+            player.incrementNumberOfShots();
         }
     }
 
@@ -62,6 +63,4 @@ public class WeaponOne implements PlugInWeapon {
     public void applyObstacleCollision(Projectile projectile){
         projectile.hasEnded();
     }
-
-    public void createWeapon(){ }
 }

@@ -64,10 +64,9 @@ public class Mine implements PlugInWeapon {
             Vector2 velocity = new Vector2(5 * direction.getX(), 5 * direction.getY());
             Sprite sprite = createSprite(player);
             player.addProjectile(new Projectile(this, player, position, velocity, sprite, Timer.getChrono(), "rebondissante"));
+            player.setLastShot(Timer.getChrono());
             player.incrementNumberOfShots();
 
-            player.setLastShot(Timer.getChrono());
-            System.out.println(player.getName() + " près de " + Finder.findClosestPlayer(player).getName());
 
         }
     }

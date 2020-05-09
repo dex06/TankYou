@@ -30,8 +30,10 @@ public class Player {
     private boolean hasGraphic = false;
 
     private List<Projectile> projectiles = new ArrayList<>();
+    // Statistiques //
     private int numberOfShots = 0;
     private double lastShot = 0;
+    private double movingDistance;
 
     private Repository repository;
     private CanvasGUI canvas;
@@ -53,10 +55,10 @@ public class Player {
         this.setPlayerWeapons();
     }
 
-
     public String getName(){ return playerName; }
     public int getPlayerID() { return playerID; }
     public double getLastShot(){ return lastShot; }
+
     // Methods for health
     public double getHealth(){ return health; }
     public void setHealth(double value){
@@ -137,9 +139,10 @@ public class Player {
 
     public void setPlayerWeapons(){ }
 
-    public void shoot() {
-        pw.shoot(this);
-    }
+    public void shoot() { pw.shoot(this); }
+
+    public void setMovingDistance(double distance){ movingDistance += distance; }
+    public double getMovingDistance(){ return movingDistance; }
 
     public void incrementNumberOfShots() { numberOfShots++; }
     public void setLastShot(double chrono) { lastShot = chrono; }

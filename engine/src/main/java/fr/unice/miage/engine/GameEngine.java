@@ -248,22 +248,25 @@ public class GameEngine  {
                         if(hasRealPlayer & players.indexOf(player) == 0) {
                             if(player.isAlive()) {
                                 realPlayer.handleKeyInput(player, btnState);
-                                //btnState.reset();
+                                if(Math.round(Timer.getChrono()) % 2 == 0) btnState.reset();
                             }
                         } else if (player.isAlive()) {
                             if(player.hasMove()) player.move();
                         }
 
                         if(hasBarMenu) gameBoard.setTimer();
-
+                        /**  Weapon part **/
                         if(player.hasWeapon()) {
                             if(player.isAlive()) {
-                                if (hasRealPlayer & !player.equals(players.get(0))) player.shoot();
+                                if (hasRealPlayer) {
+                                    if(players.indexOf(player) != 0) player.shoot();
+                                }
                                 else player.shoot();
                             }
                             player.drawProjectiles();
                             player.moveProjectiles();
                         }
+                        /** Player draw sprite **/
                         if(player.hasGraphic()) player.draw();
                         // If we have a winner => end of game +- stats
                         if (numberOfPlayersAlive() <= 1) {
@@ -277,7 +280,10 @@ public class GameEngine  {
                                 } else createGameStats();
                                 gameBoard.stop();
                                 this.stop();
-                                if(hasStats) gameStats.start();
+                                if(hasStats) {
+                                    gameStats.start();
+                                    gameStats.setStats(players);
+                                }
 
                             }
                         }
@@ -296,12 +302,18 @@ public class GameEngine  {
                         gameBoard.stop();
                         this.stop();
                         createGameStats();
-                        if(hasStats) gameStats.start();
+                        if(hasStats) {
+                            gameStats.start();
+                            gameStats.setStats(players);
+                        }
                     }
                     this.stop();
                     gameBoard.stop();
                     createGameStats();
-                    if(hasStats) gameStats.start();
+                    if(hasStats) {
+                        gameStats.start();
+                        gameStats.setStats(players);
+                    }
                 //if we restart the game
                 } else if(Config.getGameState() == Config.getRestartState()){
                     if(Timer.isRunning()) {

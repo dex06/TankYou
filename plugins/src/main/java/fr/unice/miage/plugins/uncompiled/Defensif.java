@@ -41,6 +41,7 @@ public class Defensif implements PlugInMovement {
         player.addVelocity(Randomizer.getRandomVector(-0.2,0.2));
         // Limiting the velocity
         player.getVelocity().limit(2);
+        setMovingDistance(player, player.getVelocity());
         player.addPosition(player.getVelocity());
     }
 
@@ -50,6 +51,7 @@ public class Defensif implements PlugInMovement {
         Vector2 steering = desired_velocity.sub2(player.getVelocity());
         steering = steering.limit2(player.getMaxForce()).mult2(1/player.getMass());
         Vector2 velocity = player.getVelocity().add2(steering).limit2(player.getMaxSpeed());
+        setMovingDistance(player, velocity);
         player.setPosition(player.getPosition().add2(velocity));
     }
 
@@ -59,7 +61,13 @@ public class Defensif implements PlugInMovement {
         Vector2 steering = desired_velocity.sub2(player.getVelocity()).reverse2();
         steering = steering.limit2(player.getMaxForce()).mult2(1/player.getMass());
         Vector2 velocity = player.getVelocity().add2(steering).limit2(player.getMaxSpeed());
+        setMovingDistance(player, velocity);
         player.setPosition(player.getPosition().add2(velocity));
+    }
+
+    private void setMovingDistance(Player player, Vector2 v){
+        double distance = v.length();
+        player.setMovingDistance(distance);
     }
 
 

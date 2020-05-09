@@ -53,6 +53,7 @@ public class Rebondissante implements PlugInWeapon {
             Sprite sprite = createSprite(player);
             player.addProjectile(new Projectile(this, player, position, velocity, sprite, Timer.getChrono(), "rebondissante"));
             player.setLastShot(Timer.getChrono());
+            player.incrementNumberOfShots();
         }
     }
 

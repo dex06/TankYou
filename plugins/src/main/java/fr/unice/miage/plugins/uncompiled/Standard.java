@@ -35,7 +35,6 @@ public class Standard implements PlugInWeapon {
         projectile.hasEnded();
     }
 
-
     public void shoot(Player player) {
         if(Timer.getChrono() - player.getLastShot() > 0.3){
 
@@ -53,6 +52,7 @@ public class Standard implements PlugInWeapon {
             Sprite sprite = createSprite(player);
             player.addProjectile(new Projectile(this, player, position, velocity, sprite, Timer.getChrono(), "rebondissante"));
             player.setLastShot(Timer.getChrono());
+            player.incrementNumberOfShots();
         }
     }
 
