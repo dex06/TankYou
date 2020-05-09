@@ -21,18 +21,18 @@ import java.util.Iterator;
 
 public class GameBoard {
 
-	private Stage stage;
+	private final Stage stage;
 	private Scene theScene;
 	private Group root;
 	private HBox canvasBox;
 	private PlugInGUI1 bar;
 	private HBox barMenu;
-	private int width;
-	private int height;
+	private final int width;
+	private final int height;
 	private CanvasGUI canvas;
-	private Repository repository;
+	private final Repository repository;
 
-	private ArrayList<Sprite> list = new ArrayList<>();
+	private final ArrayList<Sprite> list = new ArrayList<>();
 	
 	public GameBoard(Stage stage, int width, int height, CanvasGUI canvas, Repository repository) {
 		super();

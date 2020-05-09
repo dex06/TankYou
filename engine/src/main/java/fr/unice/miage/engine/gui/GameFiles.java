@@ -23,12 +23,12 @@ import java.util.jar.JarFile;
 public class GameFiles extends Application {
 
     private VBox selectorVBox;
-    private List<Repository> repoList = new ArrayList<>();
+    private final List<Repository> repoList = new ArrayList<>();
     private Repository repository;
-    private List<String> listOfGUI1Options = new ArrayList<>();
-    private List<String> listOfGUI2Options = new ArrayList<>();
-    private List<List<String>> listOfPlayersOptions = new ArrayList<>();
-    private List<String> listOfConfigOptions = new ArrayList<>();
+    private final List<String> listOfGUI1Options = new ArrayList<>();
+    private final List<String> listOfGUI2Options = new ArrayList<>();
+    private final List<List<String>> listOfPlayersOptions = new ArrayList<>();
+    private final List<String> listOfConfigOptions = new ArrayList<>();
 
 
     public static void main(String[] args) {
@@ -92,7 +92,7 @@ public class GameFiles extends Application {
                 if (selectedFile.getName().endsWith(".jar")) {
                     try {
                         JarFile jar = new JarFile(selectedFile);
-                        repository.copyJarFile(jar, new File("plugins"));
+                        Repository.copyJarFile(jar, new File("plugins"));
                         repository.loadLibraries(selectedFile.getCanonicalPath());
                         displayRepos();
                     } catch (Exception exception) {

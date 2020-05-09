@@ -33,9 +33,9 @@ public class Timer {
         int minutes = chrono / 60;
         int hours = minutes / 60;
         int seconds = chrono % 60;
-        String sec = seconds < 10 ? "0" + String.valueOf(seconds) : String.valueOf(seconds);
-        String min = minutes < 10 ? "0" + String.valueOf(minutes) : String.valueOf(minutes);
-        String hr = hours < 10 ? "0" + String.valueOf(hours) : String.valueOf(hours);
+        String sec = seconds < 10 ? "0" + seconds : String.valueOf(seconds);
+        String min = minutes < 10 ? "0" + minutes : String.valueOf(minutes);
+        String hr = hours < 10 ? "0" + hours : String.valueOf(hours);
         return hr + "." + min + ":" + sec;
     }
 }

@@ -80,6 +80,6 @@ public class Mine implements PlugInWeapon {
     }
 
     public void applyObstacleCollision(Projectile projectile){
-        projectile.reverseSpeed();
+        projectile.endProjectile();
     }
 }

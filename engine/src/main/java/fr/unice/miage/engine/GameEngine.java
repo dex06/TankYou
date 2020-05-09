@@ -34,7 +34,7 @@ public class GameEngine  {
     private GameStats gameStats;
     private Repository repository;
     private CanvasGUI canvas;
-    private ButtonState btnState;
+    private final ButtonState btnState;
     private PlugInCollision collision;
     private PlugInObstacle obstacles;
     private PlugInBackground background;
@@ -52,10 +52,10 @@ public class GameEngine  {
     private boolean hasRealPlayer = false;
 
 
-    private Stage stage;
-    private double stageWidth;
-    private double stageHeight;
-    private String path;
+    private final Stage stage;
+    private final double stageWidth;
+    private final double stageHeight;
+    private final String path;
 
     public GameEngine(Stage stage, double width, double height, String path) {
         this.stage = stage;

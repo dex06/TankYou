@@ -7,7 +7,8 @@ public class Config {
     private static boolean testing = false;
 
 
-    private enum States {PLAY, PAUSE, STOP, RESTART};
+    private enum States {PLAY, PAUSE, STOP, RESTART}
+
     private static States gameState = States.PLAY;
 
     public static void setWorldWidth(double width){ worldWidth = width; }

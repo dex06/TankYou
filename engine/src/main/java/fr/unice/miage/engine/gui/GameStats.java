@@ -45,8 +45,8 @@ public class GameStats {
 
     public void setWinner(Player player){
         HBox winnerHB = new HBox();
-        Text txt = new Text("The winner is " + player.getPlayerName());
-        txt.setFont(Font.font(40));
+        Text txt = new Text("Winner : " + player.getPlayerName());
+        txt.setFont(Font.font(30));
         winnerHB.getChildren().add(txt);
         winnerHB.setAlignment(Pos.CENTER);
         root.setTop(winnerHB);

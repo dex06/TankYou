@@ -12,12 +12,12 @@ import javafx.scene.paint.Paint;
 public class GraphicOne implements PlugInGraphic {
     //private CanvasGUI canvas;
     private Player player;
-    private String name = "rectangle";
+    private final String name = "rectangle";
     private RectangleSprite playerSprite;
     private HealthBar healthBar;
-    private double width = 20;
-    private double height = 20;
-    private Color color = Color.RED;
+    private final double width = 20;
+    private final double height = 20;
+    private final Color color = Color.RED;
 
     public void init(Player player){
         this.player = player;

@@ -15,15 +15,15 @@ import java.util.List;
 
 public class Player {
 
-    private String playerName;
-    private int playerID;
+    private final String playerName;
+    private final int playerID;
     private Vector2 position = new Vector2();
     private Vector2 velocity = new Vector2();
     private Vector2 acceleration = new Vector2();
     private double rotation = 0;
-    private double maxSpeed = 3;
-    private double maxVelocity = 1;
-    private double maxForce = 2;
+    private final double maxSpeed = 3;
+    private final double maxVelocity = 1;
+    private final double maxForce = 2;
     private double mass = 3;
     private boolean hasMove = false;
     private boolean hasWeapon = false;
@@ -35,8 +35,8 @@ public class Player {
     private double lastShot = 0;
     private double movingDistance;
 
-    private Repository repository;
-    private CanvasGUI canvas;
+    private final Repository repository;
+    private final CanvasGUI canvas;
     private PlugInMovement pm;
     private PlugInWeapon pw;
     private PlugInGraphic pg;
@@ -186,11 +186,10 @@ public class Player {
             double w = this.getSprite().getWidth();
             double h = this.getSprite().getHeight();
             if (position.getX() + w > Config.getWorldWidth() || position.getX() < 0) { return true; }
-            if (position.getY() + h  > Config.getWorldHeight() || position.getY() < 0) { return true; }
+            return position.getY() + h > Config.getWorldHeight() || position.getY() < 0;
         } else {
             if (position.getX() > Config.getWorldWidth() || position.getX() < 0) { return true; }
-            if (position.getY() > Config.getWorldHeight() || position.getY() < 0) { return true; }
+            return position.getY() > Config.getWorldHeight() || position.getY() < 0;
         }
-        return false;
     }
 }

@@ -1,7 +1,6 @@
 package fr.unice.miage.common.input;
 
 import fr.unice.miage.common.CanvasGUI;
-import fr.unice.miage.common.game_objects.Player;
 import fr.unice.miage.common.geom.Vector2;
 import javafx.event.EventHandler;
 import javafx.scene.Cursor;
@@ -13,7 +12,7 @@ public class Mouse {
     private static boolean mouseOn = false;
     private static Vector2 lastShootingPosition = new Vector2();
 
-    public static void handleMouseEvent(Player player, CanvasGUI canvas, ButtonState btnState){
+    public static void handleMouseEvent(CanvasGUI canvas, ButtonState btnState){
         Canvas c = canvas.getCanvas();
         c.setFocusTraversable(true);
         c.setOnMousePressed(new EventHandler<MouseEvent>() {

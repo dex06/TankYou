@@ -1,14 +1,13 @@
 package fr.unice.miage.common.input;
 
 import fr.unice.miage.common.CanvasGUI;
-import fr.unice.miage.common.game_objects.Player;
 import javafx.event.EventHandler;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.input.KeyEvent;
 
 public class Keyboard {
 
-    public void handleKeyboardEvent(Player player, CanvasGUI canvas, ButtonState btnState){
+    public void handleKeyboardEvent(CanvasGUI canvas, ButtonState btnState){
         Canvas c = canvas.getCanvas();
         c.setFocusTraversable(true);
         c.setOnKeyPressed(new EventHandler<KeyEvent>() {

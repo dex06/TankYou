@@ -12,12 +12,12 @@ import javafx.scene.paint.Paint;
 public class GraphicTwo implements PlugInGraphic {
     //private CanvasGUI canvas;
     private Player player;
-    private String name = "cercle";
+    private final String name = "cercle";
     private RoundSprite playerSprite;
     private HealthBar healthBar;
-    private double width = 20;
-    private double height = 20;
-    private Color color = Color.OLIVE;
+    private final double width = 20;
+    private final double height = 20;
+    private final Color color = Color.OLIVE;
 
     public void init(Player player){
         this.player = player;

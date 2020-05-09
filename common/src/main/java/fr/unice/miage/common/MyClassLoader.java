@@ -12,7 +12,7 @@ import java.util.jar.JarFile;
 
 
 public class MyClassLoader extends SecureClassLoader {
-    private List<File> paths;
+    private final List<File> paths;
 
 
     public MyClassLoader(List<File> p) {

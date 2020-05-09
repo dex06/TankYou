@@ -12,11 +12,11 @@ public class HumanOne implements PlugInRealPlayer {
 
     public void handleKeyboard(Player player, CanvasGUI canvas, ButtonState btnState){
         Keyboard keyboard = new Keyboard();
-        keyboard.handleKeyboardEvent(player, canvas, btnState);
+        keyboard.handleKeyboardEvent(canvas, btnState);
     }
 
     public void handleMouse(Player player, CanvasGUI canvas, ButtonState btnState){
-        Mouse.handleMouseEvent(player, canvas, btnState);
+        Mouse.handleMouseEvent(canvas, btnState);
     }
 
     public void handleKeyInput(Player player, ButtonState btnState) {

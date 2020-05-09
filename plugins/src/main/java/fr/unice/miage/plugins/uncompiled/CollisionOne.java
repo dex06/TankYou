@@ -158,9 +158,7 @@ public class CollisionOne implements PlugInCollision {
         if(pjxMax >= plxMin & pjyMax >= plyMin & pjxMax <= plxMax & pjyMax <= plyMax) return true;
         if(pjxMin >= plxMin & pjyMin >= plyMin & pjxMin <= plxMax & pjyMin <= plyMax) return true;
         if(pjxMax >= plxMin & pjyMin >= plyMin & pjxMax <= plxMax & pjyMin <= plyMax) return true;
-        if(pjxMin >= plxMin & pjyMax >= plyMin & pjxMin <= plxMax & pjyMax <= plyMax) return true;
-
-        return false;
+        return pjxMin >= plxMin & pjyMax >= plyMin & pjxMin <= plxMax & pjyMax <= plyMax;
     }
 
     private boolean checkPlayerHitsObstacle(Obstacle obs,Player player){
@@ -177,9 +175,7 @@ public class CollisionOne implements PlugInCollision {
         if(pjxMax >= plxMin & pjyMax >= plyMin & pjxMax <= plxMax & pjyMax <= plyMax) return true;
         if(pjxMin >= plxMin & pjyMin >= plyMin & pjxMin <= plxMax & pjyMin <= plyMax) return true;
         if(pjxMax >= plxMin & pjyMin >= plyMin & pjxMax <= plxMax & pjyMin <= plyMax) return true;
-        if(pjxMin >= plxMin & pjyMax >= plyMin & pjxMin <= plxMax & pjyMax <= plyMax) return true;
-
-        return false;
+        return pjxMin >= plxMin & pjyMax >= plyMin & pjxMin <= plxMax & pjyMax <= plyMax;
     }
 
     private boolean checkProjectileHitsObstacle(Projectile prj, Obstacle obs){
@@ -196,8 +192,6 @@ public class CollisionOne implements PlugInCollision {
         if(pjxMax >= plxMin & pjyMax >= plyMin & pjxMax <= plxMax & pjyMax <= plyMax) return true;
         if(pjxMin >= plxMin & pjyMin >= plyMin & pjxMin <= plxMax & pjyMin <= plyMax) return true;
         if(pjxMax >= plxMin & pjyMin >= plyMin & pjxMax <= plxMax & pjyMin <= plyMax) return true;
-        if(pjxMin >= plxMin & pjyMax >= plyMin & pjxMin <= plxMax & pjyMax <= plyMax) return true;
-
-        return false;
+        return pjxMin >= plxMin & pjyMax >= plyMin & pjxMin <= plxMax & pjyMax <= plyMax;
     }
 }

@@ -7,7 +7,7 @@ public class HealthBar {
 
     private int width = 30;
     private int height = 5;
-    private Paint color;
+    private final Paint color;
 
     public HealthBar(int width, int height, Paint color){
         this.width = width;

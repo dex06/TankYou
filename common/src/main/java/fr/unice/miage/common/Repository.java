@@ -18,30 +18,30 @@ import java.util.jar.JarOutputStream;
 
 public class Repository {
 
-    private List<File> jarFiles = new ArrayList<>();
-    private ObservableList<String> movePluginsNames = FXCollections.observableArrayList();
-    private ObservableList<String> weaponPluginsNames = FXCollections.observableArrayList();
-    private ObservableList<String> graphicPluginsNames = FXCollections.observableArrayList();
-    private ObservableList<String> collisionPluginsNames = FXCollections.observableArrayList();
-    private ObservableList<String> obstaclePluginsNames = FXCollections.observableArrayList();
-    private ObservableList<String> backgroundPluginsNames = FXCollections.observableArrayList();
-    private ObservableList<String> gui1PluginsNames = FXCollections.observableArrayList();
-    private ObservableList<String> gui2PluginsNames = FXCollections.observableArrayList();
-    private ObservableList<String> realPlayerPluginsNames = FXCollections.observableArrayList();
-    private List<Class> movePlugins = new ArrayList<>();
-    private List<Class> weaponPlugins = new ArrayList<>();
-    private List<Class> graphicPlugins = new ArrayList<>();
-    private List<Class> collisionPlugins = new ArrayList<>();
-    private List<Class> obstaclePlugins = new ArrayList<>();
-    private List<Class> backgroundPlugins = new ArrayList<>();
-    private List<Class> gui1Plugins = new ArrayList<>();
-    private List<Class> gui2Plugins = new ArrayList<>();
-    private List<Class> realPlayerPlugins = new ArrayList<>();
+    private final List<File> jarFiles = new ArrayList<>();
+    private final ObservableList<String> movePluginsNames = FXCollections.observableArrayList();
+    private final ObservableList<String> weaponPluginsNames = FXCollections.observableArrayList();
+    private final ObservableList<String> graphicPluginsNames = FXCollections.observableArrayList();
+    private final ObservableList<String> collisionPluginsNames = FXCollections.observableArrayList();
+    private final ObservableList<String> obstaclePluginsNames = FXCollections.observableArrayList();
+    private final ObservableList<String> backgroundPluginsNames = FXCollections.observableArrayList();
+    private final ObservableList<String> gui1PluginsNames = FXCollections.observableArrayList();
+    private final ObservableList<String> gui2PluginsNames = FXCollections.observableArrayList();
+    private final ObservableList<String> realPlayerPluginsNames = FXCollections.observableArrayList();
+    private final List<Class> movePlugins = new ArrayList<>();
+    private final List<Class> weaponPlugins = new ArrayList<>();
+    private final List<Class> graphicPlugins = new ArrayList<>();
+    private final List<Class> collisionPlugins = new ArrayList<>();
+    private final List<Class> obstaclePlugins = new ArrayList<>();
+    private final List<Class> backgroundPlugins = new ArrayList<>();
+    private final List<Class> gui1Plugins = new ArrayList<>();
+    private final List<Class> gui2Plugins = new ArrayList<>();
+    private final List<Class> realPlayerPlugins = new ArrayList<>();
 
-    private String s = File.separator;
-    private String destinationDir = "plugins"+s+"src"+s+"main"+s+"java"+s+"fr"+"unice"+s+"miage"+s+"classes";
+    private final String s = File.separator;
+    private final String destinationDir = "plugins"+s+"src"+s+"main"+s+"java"+s+"fr"+"unice"+s+"miage"+s+"classes";
 
-    private boolean testing = Config.getTesting();
+    private final boolean testing = Config.getTesting();
 
     public Repository() throws Exception { this.loadLibraries("plugins repository"); }
 

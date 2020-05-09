@@ -10,10 +10,10 @@ import javafx.scene.text.Font;
 
 public class RoundSprite extends Sprite {
 
-	private Player player;
-	private double diameter;
+	private final Player player;
+	private final double diameter;
 
-	private boolean displayId;
+	private final boolean displayId;
 
 	public RoundSprite(Player player, double diameter, Color color, boolean displayId) {
 		super(diameter, diameter, color);

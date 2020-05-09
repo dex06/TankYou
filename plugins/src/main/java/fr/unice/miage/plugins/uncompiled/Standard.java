@@ -65,6 +65,6 @@ public class Standard implements PlugInWeapon {
     }
 
     public void applyObstacleCollision(Projectile projectile){
-        projectile.hasEnded();
+        projectile.endProjectile();
     }
 }

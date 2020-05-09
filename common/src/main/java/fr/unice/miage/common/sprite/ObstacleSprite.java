@@ -9,7 +9,7 @@ import javafx.scene.shape.Shape;
 
 public class ObstacleSprite extends Sprite {
 
-    private Vector2 position;
+    private final Vector2 position;
 
     public ObstacleSprite(Vector2 position, double width, double height, Paint color) {
         super(width, height, color);

@@ -9,9 +9,9 @@ import fr.unice.miage.common.sprite.Sprite;
 
 public class Obstacle {
 
-    private PlugInObstacle po;
-    private Vector2 position;
-    private ObstacleSprite sprite;
+    private final PlugInObstacle po;
+    private final Vector2 position;
+    private final ObstacleSprite sprite;
 
 
 

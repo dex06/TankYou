@@ -61,6 +61,6 @@ public class WeaponOne implements PlugInWeapon {
     }
 
     public void applyObstacleCollision(Projectile projectile){
-        projectile.hasEnded();
+        projectile.endProjectile();
     }
 }

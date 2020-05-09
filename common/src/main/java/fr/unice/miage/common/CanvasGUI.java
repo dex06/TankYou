@@ -7,8 +7,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 
 public class CanvasGUI {
-   private Canvas canvas;
-   private GraphicsContext gc;
+   private final Canvas canvas;
+   private final GraphicsContext gc;
 
     public CanvasGUI(double width, double height){
         this.canvas = new Canvas(width, height);
