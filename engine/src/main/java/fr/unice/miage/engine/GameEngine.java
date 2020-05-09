@@ -170,15 +170,18 @@ public class GameEngine  {
     }
     public void giveRandomPositionAndVelocityToPlayers(){
         for(Player player : players){
-            Vector2 randVector = createRandPosition(player);
+            createRandPosition(player);
+        }
+    }
+    public void createRandPosition(Player player){
+        double lesser = Math.min(Config.getWorldWidth(), Config.getWorldHeight());
+        double min = player.getSprite().getWidth();
+        Vector2 randVector = Randomizer.getRandomVector(min, lesser/1.5);
+        if(!outOfObstacles(player, randVector)) createRandPosition(player);
+        else {
             player.addPosition(randVector);
             player.addVelocity(Randomizer.getRandomVector(-0.3, 0.3));
         }
-    }
-    public Vector2 createRandPosition(Player player){
-        Vector2 randVector = Randomizer.getRandomVector(10, 400);
-        if(!outOfObstacles(player, randVector)) createRandPosition(player);
-        return randVector;
     }
 
     public boolean outOfObstacles(Player player, Vector2 v){
@@ -194,7 +197,7 @@ public class GameEngine  {
             double pyMax = pyMin + player.getSprite().getHeight();
             if(pxMin >= xMin & pyMin >= yMin & pxMin <= xMax & pyMin <= yMax) return false;
             if(pxMax >= xMin & pyMax >= yMin & pxMax <= xMax & pyMax <= yMax) return false;
-            if(pxMax >= xMin & pyMin >= yMin & pxMax <= xMax & pyMin <= yMax) return  false;
+            if(pxMax >= xMin & pyMin >= yMin & pxMax <= xMax & pyMin <= yMax) return false;
             if(pxMin >= xMin & pyMax >= yMin & pxMin <= xMax & pyMax <= yMax) return false;
         }
         return true;
