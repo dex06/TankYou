@@ -23,13 +23,14 @@ public class HumanOne implements PlugInRealPlayer {
         int dx = 0;
         int dy = 0;
 
-        if(btnState.up == true) dy -= 1;
-        if(btnState.down == true) dy += 1;
-        if(btnState.left == true) dx -= 1;
-        if(btnState.right == true) dx += 1;
-        if(btnState.shot == true) { player.shoot(); }
+        if(btnState.up) dy -= 1;
+        if(btnState.down) dy += 1;
+        if(btnState.left) dx -= 1;
+        if(btnState.right) dx += 1;
+        if(btnState.shot) { player.shoot(); }
 
         player.addPosition(new Vector2(dx,dy));
         if(player.isOutOfBorders()) player.addPosition(new Vector2(-dx,-dy));
+        else player.setMovingDistance(new Vector2(dx, dy).length());
     }
 }

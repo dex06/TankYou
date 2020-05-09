@@ -55,7 +55,7 @@ public class Player {
         this.setPlayerWeapons();
     }
 
-    public String getName(){ return playerName; }
+    public String getPlayerName(){ return playerName; }
     public int getPlayerID() { return playerID; }
     public double getLastShot(){ return lastShot; }
 

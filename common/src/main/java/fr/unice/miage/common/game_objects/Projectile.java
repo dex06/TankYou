@@ -46,7 +46,7 @@ public class Projectile {
     }
 
     public Sprite getSprite() { return projectileSprite; }
-    public String getName() { return projectileName; }
+    public String getProjectileName() { return projectileName; }
     public int getPlayerID(){ return player.getPlayerID(); }
 
     // Methods for position x and y

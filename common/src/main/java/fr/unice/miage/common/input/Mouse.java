@@ -4,6 +4,7 @@ import fr.unice.miage.common.CanvasGUI;
 import fr.unice.miage.common.game_objects.Player;
 import fr.unice.miage.common.geom.Vector2;
 import javafx.event.EventHandler;
+import javafx.scene.Cursor;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.input.MouseEvent;
 
@@ -28,6 +29,13 @@ public class Mouse {
             @Override
             public void handle(MouseEvent mouseEvent) {
                 btnState.shot = false;
+            }
+        });
+
+        c.setOnMouseEntered(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                c.setCursor(Cursor.CROSSHAIR);
             }
         });
     }
