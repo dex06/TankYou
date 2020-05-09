@@ -4,7 +4,6 @@ import fr.unice.miage.common.CanvasGUI;
 import fr.unice.miage.common.game_objects.Player;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import javafx.scene.text.Font;
@@ -13,16 +12,13 @@ public class RoundSprite extends Sprite {
 
 	private Player player;
 	private double diameter;
-	private double width;
-	private double height;
-	private Color color;
+
 	private boolean displayId;
 
 	public RoundSprite(Player player, double diameter, Color color, boolean displayId) {
 		super(diameter, diameter, color);
 		this.player = player;
 		this.diameter = this.width = this.height = diameter;
-		this.color = color;
 		this.displayId = displayId;
 	}
 
@@ -30,7 +26,6 @@ public class RoundSprite extends Sprite {
 		double x = player.getPosition().getX();
 		double y = player.getPosition().getY();
 		GraphicsContext gc = canvas.getGraphicsContext();
-		Paint save = gc.getFill();
 		gc.setFill(color);
 		gc.strokeOval(x, y, diameter, diameter);
 		gc.fillOval(x, y, diameter, diameter);

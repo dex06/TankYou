@@ -17,21 +17,22 @@ public class Player {
 
     private String playerName;
     private int playerID;
-    protected Vector2 position = new Vector2();
-    protected Vector2 velocity = new Vector2();
-    protected Vector2 acceleration = new Vector2();
-    protected double rotation = 0;
-    protected double maxSpeed = 3;
-    protected double maxVelocity = 1;
-    protected double maxForce = 2;
-    protected double mass = 3;
-    protected boolean hasMove = false;
-    protected boolean hasWeapon = false;
-    protected boolean hasGraphic = false;
+    private Vector2 position = new Vector2();
+    private Vector2 velocity = new Vector2();
+    private Vector2 acceleration = new Vector2();
+    private double rotation = 0;
+    private double maxSpeed = 3;
+    private double maxVelocity = 1;
+    private double maxForce = 2;
+    private double mass = 3;
+    private boolean hasMove = false;
+    private boolean hasWeapon = false;
+    private boolean hasGraphic = false;
 
-    public List<Projectile> projectiles = new ArrayList<>();
+    private List<Projectile> projectiles = new ArrayList<>();
+    private int numberOfShots = 0;
+    private double lastShot = 0;
 
-    public double lastShot = 0;
     private Repository repository;
     private CanvasGUI canvas;
     private PlugInMovement pm;
@@ -55,7 +56,7 @@ public class Player {
 
     public String getName(){ return playerName; }
     public int getPlayerID() { return playerID; }
-
+    public double getLastShot(){ return lastShot; }
     // Methods for health
     public double getHealth(){ return health; }
     public void setHealth(double value){
@@ -136,9 +137,15 @@ public class Player {
 
     public void setPlayerWeapons(){ }
 
-    public void getHitByProjectile(Projectile projectile){
-        projectile.applyPlayerImpact(this);
+    public void shoot() {
+        pw.shoot(this);
     }
+
+    public void incrementNumberOfShots() { numberOfShots++; }
+    public void setLastShot(double chrono) { lastShot = chrono; }
+    public int getNumberOfShots(){ return numberOfShots; }
+
+    public void getHitByProjectile(Projectile projectile){ projectile.applyPlayerImpact(this); }
 
     public void getHitByPlayer(Player player){}
 
@@ -182,9 +189,5 @@ public class Player {
             if (position.getY() > Config.getWorldHeight() || position.getY() < 0) { return true; }
         }
         return false;
-    }
-
-    public void shoot() {
-        pw.shoot(this);
     }
 }

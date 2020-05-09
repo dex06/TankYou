@@ -19,14 +19,16 @@ public class Projectile {
     protected double width;
     protected double height;
     protected boolean hasEnded = false;
+    protected double shotTime;
 
 
-    public Projectile(PlugInWeapon pw, Player player, Vector2 position, Vector2 velocity, Sprite projectileSprite, String projectileName){
+    public Projectile(PlugInWeapon pw, Player player, Vector2 position, Vector2 velocity, Sprite projectileSprite, double shotTime, String projectileName){
         this.pw = pw;
         this.player = player;
         this.position = position;
         this.velocity = velocity;
         this.projectileSprite = projectileSprite;
+        this.shotTime = shotTime;
         this.projectileName = projectileName;
     }
 
@@ -92,6 +94,8 @@ public class Projectile {
     public boolean hasEnded(){ return hasEnded; }
 
     public void endProjectile(){ hasEnded = true; }
+
+    public double getShotTime(){ return shotTime; }
 
     public void applyObstacleCollision(Obstacle obs) {
         pw.applyObstacleCollision(this);

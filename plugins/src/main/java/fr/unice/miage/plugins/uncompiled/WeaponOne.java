@@ -16,6 +16,7 @@ public class WeaponOne implements PlugInWeapon {
 
 
     public void moveProjectile(Projectile projectile){
+        if(Timer.getChrono() - projectile.getShotTime() >= 5) projectile.endProjectile();
         if(!projectile.hasEnded()) projectile.addPosition(projectile.getVelocity());
     }
 
@@ -34,7 +35,7 @@ public class WeaponOne implements PlugInWeapon {
     }
 
     public void shoot(Player player) {
-        if(Timer.getChrono() - player.lastShot > 1){
+        if(Timer.getChrono() - player.getLastShot() > 1){
             Player p = Finder.findClosestPlayer(player);
             //double direction = Math.atan2(p.getPosition().getY() - player.getPosition().getY(), p.getPosition().getX() - player.getPosition().getX());
             Vector2 direction = p.getPosition().sub2(player.getPosition()).norm2();  //Vecteur normalisé
@@ -44,11 +45,8 @@ public class WeaponOne implements PlugInWeapon {
             Vector2 velocity = new Vector2(5 * direction.getX(), 5 * direction.getY());
             double longueur = Math.sqrt(Math.pow(player.getSprite().getWidth()/2, 2) + Math.pow(player.getSprite().getHeight()/2, 2));
             Sprite sprite = createSprite(player);
-            player.addProjectile(new Projectile(this, player, position, velocity, sprite, "rebondissante"));
-
-            player.lastShot = Timer.getChrono();
-            System.out.println(player.getName() + " près de " + Finder.findClosestPlayer(player).getName());
-
+            player.addProjectile(new Projectile(this, player, position, velocity, sprite, Timer.getChrono(), "rebondissante"));
+            player.setLastShot(Timer.getChrono());
         }
     }
 

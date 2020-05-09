@@ -253,15 +253,18 @@ public class GameEngine  {
                         } else if (player.isAlive()) {
                             if(player.hasMove()) player.move();
                         }
-                        if(player.hasGraphic()) player.draw();
 
                         if(hasBarMenu) gameBoard.setTimer();
 
                         if(player.hasWeapon()) {
-                            if(player.isAlive() & !hasRealPlayer) player.shoot();
+                            if(player.isAlive()) {
+                                if (hasRealPlayer & !player.equals(players.get(0))) player.shoot();
+                                else player.shoot();
+                            }
                             player.drawProjectiles();
                             player.moveProjectiles();
                         }
+                        if(player.hasGraphic()) player.draw();
                         // If we have a winner => end of game +- stats
                         if (numberOfPlayersAlive() <= 1) {
                             if(Timer.isRunning()) {
