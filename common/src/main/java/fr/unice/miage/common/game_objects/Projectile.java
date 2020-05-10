@@ -1,11 +1,8 @@
 package fr.unice.miage.common.game_objects;
 
-import fr.unice.miage.common.CanvasGUI;
 import fr.unice.miage.common.geom.Vector2;
 import fr.unice.miage.common.plugins.PlugInWeapon;
 import fr.unice.miage.common.sprite.Sprite;
-import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.paint.Color;
 
 public class Projectile {
     Sprite projectileSprite;
@@ -19,7 +16,9 @@ public class Projectile {
     protected double width;
     protected double height;
     protected boolean hasEnded = false;
+    protected boolean hasHit = false;
     protected double shotTime;
+    protected double hitTime;
 
 
     public Projectile(PlugInWeapon pw, Player player, Vector2 position, Vector2 velocity, Sprite projectileSprite, double shotTime, String projectileName){
@@ -32,18 +31,11 @@ public class Projectile {
         this.projectileName = projectileName;
     }
 
+
     public void move(){
         position.add(velocity);
     }
 
-    public void draw(CanvasGUI canvas){
-
-        double x = this.position.getX();
-        double y = this.position.getY();
-        GraphicsContext gc = canvas.getGraphicsContext();
-        gc.setFill(Color.BLACK);
-        gc.fillRect(x, y, width, height);
-    }
 
     public Sprite getSprite() { return projectileSprite; }
     public String getProjectileName() { return projectileName; }
@@ -93,9 +85,16 @@ public class Projectile {
     }
     public boolean hasEnded(){ return hasEnded; }
 
+
+
     public void endProjectile(){ hasEnded = true; }
 
     public double getShotTime(){ return shotTime; }
+
+    public boolean hasHit(){ return hasHit; }
+    public void setHit(){ hasHit = true; }
+    public void setHitTime(double chrono){ hitTime = chrono; }
+    public double getHitTime(){ return hitTime; }
 
     public void applyObstacleCollision(Obstacle obs, String inversion) {
         pw.applyObstacleCollision(this, inversion);
