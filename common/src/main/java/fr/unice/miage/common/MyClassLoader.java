@@ -9,6 +9,7 @@ import java.util.Enumeration;
 import java.util.List;
 import java.util.jar.JarEntry;
 import java.util.jar.JarFile;
+import java.util.zip.ZipFile;
 
 
 public class MyClassLoader extends SecureClassLoader {
@@ -50,22 +51,43 @@ public class MyClassLoader extends SecureClassLoader {
                 try {
                     String localName = name.replaceAll("\\.", "/");
                     localName += ".class";
-                    JarFile jarFile = new JarFile(f);
-                    Enumeration<JarEntry> e = jarFile.entries();
-                    while (e.hasMoreElements()) {
-                        JarEntry je = e.nextElement();
-                        String loadName = je.toString();
-                        if (loadName.equals(localName)) {
-                            InputStream is = jarFile.getInputStream(je);
-                            ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
-                            int nextValue = is.read();
-                            while (-1 != nextValue) {
-                                byteStream.write(nextValue);
-                                nextValue = is.read();
+                    if(f.getName().endsWith(".jar")){
+                        JarFile jarFile = new JarFile(f);
+                        Enumeration<JarEntry> e = jarFile.entries();
+                        while (e.hasMoreElements()) {
+                            JarEntry je = e.nextElement();
+                            String loadName = je.toString();
+                            if (loadName.equals(localName)) {
+                                InputStream is = jarFile.getInputStream(je);
+                                ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
+                                int nextValue = is.read();
+                                while (-1 != nextValue) {
+                                    byteStream.write(nextValue);
+                                    nextValue = is.read();
+                                }
+                                return byteStream.toByteArray();
                             }
-                            return byteStream.toByteArray();
                         }
                     }
+                    if(f.getName().endsWith(".zip")){
+                        ZipFile zipFile = new JarFile(f);
+                        Enumeration<JarEntry> e = (Enumeration<JarEntry>) zipFile.entries();
+                        while (e.hasMoreElements()) {
+                            JarEntry je = e.nextElement();
+                            String loadName = je.toString();
+                            if (loadName.equals(localName)) {
+                                InputStream is = zipFile.getInputStream(je);
+                                ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
+                                int nextValue = is.read();
+                                while (-1 != nextValue) {
+                                    byteStream.write(nextValue);
+                                    nextValue = is.read();
+                                }
+                                return byteStream.toByteArray();
+                            }
+                        }
+                    }
+
                 } catch (IOException e1) {
                     e1.printStackTrace();
                 }
