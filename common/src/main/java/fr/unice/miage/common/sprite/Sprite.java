@@ -1,7 +1,7 @@
 package fr.unice.miage.common.sprite;
 
 
-import fr.unice.miage.common.utils.Randomizer;
+import fr.unice.miage.common.CanvasGUI;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Shape;
@@ -30,14 +30,16 @@ public abstract class Sprite {
 	public void setColor(Paint new_color){ color = new_color; }
 
 	public void setRandomColor(){
-		color = colors[Randomizer.getRandomIntInRange(0,colors.length)];
+
 	}
 
 	public Paint[] getColors(){
 		return colors;
 	}
 
+	public void draw(CanvasGUI canvas){
 
+	}
 
 
 }

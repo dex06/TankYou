@@ -2,6 +2,7 @@ package fr.unice.miage.common.sprite;
 
 import fr.unice.miage.common.CanvasGUI;
 import fr.unice.miage.common.game_objects.Player;
+import fr.unice.miage.common.utils.Randomizer;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
@@ -19,7 +20,7 @@ public class RectangleSprite extends Sprite {
 		this.player = player;
 		this.displayId = displayId;
 	}
-
+	@Override
 	public void draw(CanvasGUI canvas){
 		double x = player.getX();
 		double y = player.getY();
@@ -39,5 +40,10 @@ public class RectangleSprite extends Sprite {
 		double x = player.getX();
 		double y = player.getY();
 		return new Rectangle(x,y,width, height);
+	}
+
+	@Override
+	public void setRandomColor(){
+		color = colors[Randomizer.getRandomIntInRange(0,colors.length)];
 	}
 }

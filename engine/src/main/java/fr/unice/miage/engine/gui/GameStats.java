@@ -1,14 +1,19 @@
 package fr.unice.miage.engine.gui;
 
+import fr.unice.miage.common.Config;
 import fr.unice.miage.common.game_objects.Player;
+import fr.unice.miage.engine.GameEngine;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Font;
@@ -53,8 +58,6 @@ public class GameStats {
     }
 
     public void setStats(List<Player> players){
-
-
         TableView<Player> table = new TableView<>();
 
         //Names
@@ -86,6 +89,24 @@ public class GameStats {
         root.setPadding(new Insets(5));
         root.setCenter(table);
         //root.setAlignment(table, Pos.CENTER);
+    }
+    public void setRestartBtn(GameEngine engine){
+
+        Button restartBtn = new Button();
+        Image restartImg = new Image("/barMenuIcons/skipPreviousBtn.png");
+        ImageView restartImgView = new ImageView(restartImg);
+        restartImgView.setFitWidth(30);
+        restartImgView.setFitHeight(30);
+        restartBtn.setGraphic(restartImgView);
+        restartBtn.setOnAction(e -> {
+            Config.setRestart();
+            engine.initMenu();
+            engine.startMenu();
+        });
+        HBox restartHBox = new HBox();
+        restartHBox.getChildren().add(restartBtn);
+        restartHBox.setAlignment(Pos.CENTER);
+        root.setBottom(restartHBox);
     }
 
     public void start(){

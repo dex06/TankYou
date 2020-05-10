@@ -8,6 +8,7 @@ import fr.unice.miage.common.plugins.PlugInGraphic;
 import fr.unice.miage.common.plugins.PlugInMovement;
 import fr.unice.miage.common.plugins.PlugInWeapon;
 import fr.unice.miage.common.sprite.Sprite;
+import javafx.scene.paint.Paint;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
@@ -33,16 +34,19 @@ public class Player {
     // Statistiques //
     private int numberOfShots = 0;
     private double lastShot = 0;
-    private double movingDistance;
+    private double movingDistance = 0;
 
     private final Repository repository;
     private final CanvasGUI canvas;
     private PlugInMovement pm;
     private PlugInWeapon pw;
     private PlugInGraphic pg;
+    private HealthBar healthBar;
     private double health = 100;
     private List<PlugInWeapon> weapons;
     private boolean alive;
+
+    private Sprite playerSprite;
 
     public Player(List<String> plugins, Repository repository, CanvasGUI canvas, int playerID) throws NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
 
@@ -60,12 +64,16 @@ public class Player {
     public double getLastShot(){ return lastShot; }
 
     // Methods for health
+    public void setHealthBar(int width, int height, Paint color){
+        healthBar = new HealthBar(width, height, color);
+    }
+    public HealthBar getHealthBar(){ return healthBar; }
     public double getHealth(){ return health; }
     public void setHealth(double value){
         if(value <= 0) {
             health = 0;
             alive = false;
-            pg.setToDead();
+            pg.setToDead(this);
         }
         else health = value;
     }
@@ -115,11 +123,14 @@ public class Player {
     public double getMaxSpeed() { return maxSpeed; }
 
     /** Graphic methods **/
-    public void draw(){ pg.draw(canvas); }
+    public void draw(){
+        pg.draw(this, canvas);
+    }
     // Methods for player sprite
-    public Sprite getSprite(){ if(hasGraphic) return pg.getPlayerSprite();
+    public Sprite getSprite(){ if(hasGraphic) return playerSprite;
         return null;
     }
+    public void setSprite(Sprite sprite){ playerSprite = sprite;}
 
     /** Other methods **/
     public boolean isAlive(){ return alive; }
@@ -140,6 +151,7 @@ public class Player {
     public void setPlayerWeapons(){ }
 
     public void shoot() { pw.shoot(this); }
+
 
     public void setMovingDistance(double distance){ movingDistance += distance; }
     public double getMovingDistance(){ return movingDistance; }
@@ -191,5 +203,11 @@ public class Player {
             if (position.getX() > Config.getWorldWidth() || position.getX() < 0) { return true; }
             return position.getY() > Config.getWorldHeight() || position.getY() < 0;
         }
+    }
+
+    public void resetStat() {
+        numberOfShots = 0;
+        lastShot = 0;
+        movingDistance = 0;
     }
 }

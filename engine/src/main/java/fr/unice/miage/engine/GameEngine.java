@@ -51,13 +51,14 @@ public class GameEngine  {
     private boolean hasWinner = false;
     private boolean hasRealPlayer = false;
 
-
+    private final GameEngine engine;
     private final Stage stage;
     private final double stageWidth;
     private final double stageHeight;
     private final String path;
 
     public GameEngine(Stage stage, double width, double height, String path) {
+        this.engine = this;
         this.stage = stage;
         this.stageWidth = width;
         this.stageHeight = height;
@@ -82,7 +83,7 @@ public class GameEngine  {
     }
 
     public void startGame(List<String> gui1Opts, List<String> gui2Opts, List<String> configOpts, List<List<String>> playersOpts, List<String> realPlayerOpts, boolean hasRP) throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
-        //loadingGUI1();
+
         if(!configOpts.get(1).equals("Aucun")) {
             loadingObstacle(configOpts.get(1));
             hasObstacles = true;
@@ -230,6 +231,11 @@ public class GameEngine  {
             player.setProjectiles(prjList);
         }
     }
+    protected  void resetPlayersStats(){
+        for(Player player : players){
+            player.resetStat();
+        }
+    }
 
     public void loop(){
         Config.setPlay();
@@ -251,7 +257,6 @@ public class GameEngine  {
                         if(hasRealPlayer & players.indexOf(player) == 0) {
                             if(player.isAlive()) {
                                 realPlayer.handleKeyInput(player, btnState);
-                                if(Math.round(Timer.getChrono()) % 2 == 0) btnState.reset();
                             }
                         } else if (player.isAlive()) {
                             if(player.hasMove()) player.move();
@@ -286,6 +291,7 @@ public class GameEngine  {
                                 if(hasStats) {
                                     gameStats.start();
                                     gameStats.setStats(players);
+                                    gameStats.setRestartBtn(engine);
                                 }
 
                             }
@@ -308,6 +314,7 @@ public class GameEngine  {
                         if(hasStats) {
                             gameStats.start();
                             gameStats.setStats(players);
+                            gameStats.setRestartBtn(engine);
                         }
                     }
                     this.stop();
@@ -316,6 +323,7 @@ public class GameEngine  {
                     if(hasStats) {
                         gameStats.start();
                         gameStats.setStats(players);
+                        gameStats.setRestartBtn(engine);
                     }
                 //if we restart the game
                 } else if(Config.getGameState() == Config.getRestartState()){
@@ -323,6 +331,7 @@ public class GameEngine  {
                         Timer.stopChrono();
                         gameBoard.stop();
                         this.stop();
+                        resetPlayersStats();
                         Mouse.setMouseOff();
                         initMenu();
                         startMenu();
