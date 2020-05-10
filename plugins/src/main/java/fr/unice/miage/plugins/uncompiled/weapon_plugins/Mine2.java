@@ -11,14 +11,13 @@ import fr.unice.miage.common.sprite.Sprite;
 import fr.unice.miage.common.utils.Finder;
 import fr.unice.miage.common.utils.Timer;
 import javafx.scene.image.Image;
-import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 
 public class Mine2 implements PlugInWeapon {
 
     public void moveProjectile(Projectile projectile){
         if(Timer.getChrono() - projectile.getShotTime() >= 10) projectile.setHit();
-        //if(!projectile.hasEnded()) projectile.addPosition(projectile.getVelocity());
+
     }
 
     public void draw(CanvasGUI canvas, Projectile projectile) {
@@ -54,7 +53,7 @@ public class Mine2 implements PlugInWeapon {
     }
 
     public Sprite createSprite(Player player){
-        return new RectangleSprite(player,60,60, Color.FLORALWHITE, false);
+        return new RectangleSprite(player,30,30, Color.FLORALWHITE, false);
     }
 
     public void applyPlayerImpact(Player player){
@@ -69,7 +68,6 @@ public class Mine2 implements PlugInWeapon {
     private Image getSprite(Projectile projectile, double chrono){
         double currentTime = chrono;
         Image explosionImg= new Image(Mine2.class.getClassLoader().getResourceAsStream("/mineExplosions/Bomb_Explosion_A_000.png"));
-        StackPane img = new StackPane();
         if(!projectile.hasEnded() & !projectile.hasHit()) {
             explosionImg= new Image(Mine2.class.getClassLoader().getResourceAsStream("/mineExplosions/Bomb_Explosion_A_000.png"));
             if(Math.round(Timer.getChrono()) % 2 == 0){

@@ -34,7 +34,7 @@ public class Player {
     // Statistiques //
     private int numberOfShots = 0;
     private double lastShot = 0;
-    private double movingDistance = 0;
+    private int movingDistance = 0;
 
     private final Repository repository;
     private final CanvasGUI canvas;
@@ -115,7 +115,14 @@ public class Player {
 
     // Methods for rotation value
     public void setRotation(double rot) { rotation = rot; }
-    public double getRotation(){ return rotation; }
+    public double getRotation(){
+        Vector2 v1 = position.norm2();
+        Vector2 v2 = velocity.norm2();
+        return Math.toDegrees(1 - v1.dot(v2));
+        //return Math.atan2(v2.getY(),v2.getX()) - Math.atan2(v1.getY(), v1.getX());
+        //return (Math.atan2(position.getY(), position.getX()) / (2 * Math.PI));
+        //return Math.acos(position.norm2().dot(velocity.norm2()));
+    }
 
     // Getters for max values
     public double getMaxVelocity() { return maxVelocity; }
@@ -153,7 +160,7 @@ public class Player {
     public void shoot() { pw.shoot(this); }
 
 
-    public void setMovingDistance(double distance){ movingDistance += distance; }
+    public void setMovingDistance(double distance){ movingDistance += (int) distance; }
     public double getMovingDistance(){ return movingDistance; }
 
     public void incrementNumberOfShots() { numberOfShots++; }

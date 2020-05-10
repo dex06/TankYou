@@ -6,13 +6,6 @@
   <artifactId>projet</artifactId>
   <packaging>pom</packaging>
   <build>
-    <!-- <resources>
-      <resource>
-        <directory>${basedir}/src/main/resources/</directory>
-        <targetPath>${basedir}/target/classes</targetPath>
-        <filtering>false</filtering>
-      </resource>
-    </resources> -->
 
       <pluginManagement><!-- lock down plugins versions to avoid using Maven defaults (may be moved to parent pom) -->
         <plugins>

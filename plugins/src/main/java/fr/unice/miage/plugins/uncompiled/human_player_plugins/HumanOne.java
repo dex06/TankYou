@@ -28,8 +28,8 @@ public class HumanOne implements PlugInRealPlayer {
         if(btnState.left) dx -= 1;
         if(btnState.right) dx += 1;
         if(btnState.shot) { player.shoot(); }
-
-        player.addPosition(new Vector2(dx,dy));
+        player.setVelocity(new Vector2(dx, dy));
+        player.addPosition(player.getVelocity());
         if(player.isOutOfBorders()) player.addPosition(new Vector2(-dx,-dy));
         else player.setMovingDistance(new Vector2(dx, dy).length());
     }
