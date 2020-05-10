@@ -155,7 +155,6 @@ public class GameEngine  {
         players = new ArrayList<>();
     }
 
-
     public void createGameBoard(){
         gameBoard = new GameBoard(stage, 600,600, canvas, repository);
         gameBoard.init(hasBarMenu);
@@ -203,7 +202,6 @@ public class GameEngine  {
         }
         return true;
     }
-
 
     protected int numberOfPlayersAlive(){
         int nb = 0;
@@ -261,7 +259,6 @@ public class GameEngine  {
                         } else if (player.isAlive()) {
                             if(player.hasMove()) player.move();
                         }
-
                         if(hasBarMenu) gameBoard.setTimer();
                         /**  Weapon part **/
                         if(player.hasWeapon()) {
