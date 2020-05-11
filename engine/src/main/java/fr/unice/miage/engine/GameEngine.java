@@ -300,7 +300,9 @@ public class GameEngine  {
                     lastUpdateNanoTime = currentNanoTime;
                 }
                 // If we pause the game
-                if(Config.getGameState() == Config.getPauseState()) if(Timer.isRunning()) Timer.stopChrono();
+                if(Config.getGameState() == Config.getPauseState()){
+                    if(Timer.isRunning()) Timer.stopChrono();
+                }
                 // If we stop the game
                 if(Config.getGameState() == Config.getStopState()) {
                     if(Timer.isRunning()) {

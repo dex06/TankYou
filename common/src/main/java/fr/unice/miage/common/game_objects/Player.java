@@ -118,10 +118,10 @@ public class Player {
     public double getRotation(){
         Vector2 v1 = position.norm2();
         Vector2 v2 = velocity.norm2();
-        return Math.toDegrees(1 - v1.dot(v2));
-        //return Math.atan2(v2.getY(),v2.getX()) - Math.atan2(v1.getY(), v1.getX());
+        //return Math.toDegrees(1 - v1.dot(v2));
+        //return Math.toDegrees(Math.atan2(v2.getY(),v2.getX()) - Math.atan2(v1.getY(), v1.getX()));
         //return (Math.atan2(position.getY(), position.getX()) / (2 * Math.PI));
-        //return Math.acos(position.norm2().dot(velocity.norm2()));
+        return Math.toDegrees(Math.acos(position.norm2().dot(velocity.norm2())));
     }
 
     // Getters for max values

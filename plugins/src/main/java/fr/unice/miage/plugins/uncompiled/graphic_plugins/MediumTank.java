@@ -5,8 +5,10 @@ import fr.unice.miage.common.game_objects.Player;
 import fr.unice.miage.common.plugins.PlugInGraphic;
 import fr.unice.miage.common.sprite.RectangleSprite;
 import fr.unice.miage.common.utils.Timer;
+import javafx.scene.SnapshotParameters;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 
 public class MediumTank implements PlugInGraphic {
@@ -18,19 +20,24 @@ public class MediumTank implements PlugInGraphic {
 
     public void draw(Player player, CanvasGUI canvas) {
         player.getHealthBar().draw(player, canvas);
+        player.getSprite().draw(canvas);
         Image img = getSprite(Timer.getChrono());
-        double rot = player.getRotation();
-        System.out.println(rot);
+        double rot = -player.getRotation();
+
         double x = player.getX();
         double y = player.getY();
         double w = 40;
         double h = 30;
-
+        ImageView iv = new ImageView(img);
+        iv.setFitWidth(40);
+        iv.setFitHeight(28);
+        iv.setRotate(rot);
+        SnapshotParameters params = new SnapshotParameters();
+        params.setFill(Color.TRANSPARENT);
+        Image rotatedImage = iv.snapshot(params, null);
         GraphicsContext c= canvas.getGraphicsContext();
         c.save();
-        c.translate(x + w/2 - 10,y + h/2);
-        c.rotate(rot);
-        c.drawImage(img, 0, 0, w, h);
+        c.drawImage(rotatedImage, x - 10, y - 10);
         c.restore();
 
     }
