@@ -56,7 +56,9 @@ public class Mine2 implements PlugInWeapon {
         return new RectangleSprite(player,30,30, Color.FLORALWHITE, false);
     }
 
-    public void applyPlayerImpact(Player player){
+    public void applyPlayerImpact(Projectile projectile, Player player){
+        projectile.setHitTime(Timer.getChrono());
+        projectile.setHit();
         player.setHealth(player.getHealth()-30);
     }
 
@@ -77,31 +79,31 @@ public class Mine2 implements PlugInWeapon {
         if(!projectile.hasEnded() & projectile.hasHit()) {
             double hitTime = projectile.getHitTime();
             double difTime = currentTime - hitTime;
-            if (difTime <= 0.4) {
+            if (difTime <= 0.25) {
                 explosionImg = new Image(Mine2.class.getClassLoader().getResourceAsStream("/mineExplosions/Bomb_Explosion_A_001.png"));
             }
-            if (difTime > 0.4 & difTime <= 0.8) {
+            if (difTime > 0.25 & difTime <= 0.5) {
                 explosionImg = new Image(Mine2.class.getClassLoader().getResourceAsStream("/mineExplosions/Bomb_Explosion_A_002.png"));
             }
-            if (difTime > 0.8 & difTime <= 1.2) {
+            if (difTime > 0.5 & difTime <= 0.75) {
                 explosionImg = new Image(Mine2.class.getClassLoader().getResourceAsStream("/mineExplosions/Bomb_Explosion_A_003.png"));
             }
-            if (difTime > 1.2 & difTime <= 1.6) {
+            if (difTime > 0.75 & difTime <= 1) {
                 explosionImg = new Image(Mine2.class.getClassLoader().getResourceAsStream("/mineExplosions/Bomb_Explosion_A_004.png"));
             }
-            if (difTime > 2 & difTime <= 2.4) {
+            if (difTime > 1 & difTime <= 1.25) {
                 explosionImg = new Image(Mine2.class.getClassLoader().getResourceAsStream("/mineExplosions/Bomb_Explosion_A_005.png"));
             }
-            if (difTime > 2.4 & difTime <= 2.8) {
+            if (difTime > 1.25 & difTime <= 1.5) {
                 explosionImg = new Image(Mine2.class.getClassLoader().getResourceAsStream("/mineExplosions/Bomb_Explosion_A_006.png"));
             }
-            if (difTime > 3.2 & difTime <= 3.6) {
+            if (difTime > 1.5 & difTime <= 1.75) {
                 explosionImg = new Image(Mine2.class.getClassLoader().getResourceAsStream("/mineExplosions/Bomb_Explosion_A_007.png"));
             }
-            if (difTime > 4) {
+            if (difTime > 2 & difTime <= 2.25) {
                 explosionImg = new Image(Mine2.class.getClassLoader().getResourceAsStream("/mineExplosions/Bomb_Explosion_A_008.png"));
-                projectile.endProjectile();
             }
+            else  projectile.endProjectile();
         }
         return explosionImg;
     }

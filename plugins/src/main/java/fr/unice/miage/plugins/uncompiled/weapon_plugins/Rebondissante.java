@@ -3,6 +3,7 @@ package fr.unice.miage.plugins.uncompiled.weapon_plugins;
 import fr.unice.miage.common.CanvasGUI;
 import fr.unice.miage.common.game_objects.Player;
 import fr.unice.miage.common.game_objects.Projectile;
+import fr.unice.miage.common.geom.Rotation;
 import fr.unice.miage.common.geom.Vector2;
 import fr.unice.miage.common.input.Mouse;
 import fr.unice.miage.common.plugins.PlugInWeapon;
@@ -57,7 +58,9 @@ public class Rebondissante implements PlugInWeapon {
             Vector2 velocity = new Vector2(5 * direction.getX(), 5 * direction.getY());
 
             Sprite sprite = createSprite(player);
-            player.addProjectile(new Projectile(this, player, position, velocity, sprite, Timer.getChrono(), "rebondissante"));
+            Projectile projectile = new Projectile(this, player, position, velocity, sprite, Timer.getChrono(), "obus léger");
+            projectile.setRotation(Rotation.rotation2Vectors(velocity, position));
+            player.addProjectile(projectile);
             player.setLastShot(Timer.getChrono());
             player.incrementNumberOfShots();
         }
@@ -67,7 +70,7 @@ public class Rebondissante implements PlugInWeapon {
         return new RectangleSprite(player,5,5, Color.FLORALWHITE, false);
     }
 
-    public void applyPlayerImpact(Player player){
+    public void applyPlayerImpact(Projectile projectile, Player player){
         player.setHealth(player.getHealth()-10);
     }
 

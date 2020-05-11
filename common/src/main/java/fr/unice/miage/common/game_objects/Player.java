@@ -176,7 +176,9 @@ public class Player {
     public void setLastShot(double chrono) { lastShot = chrono; }
     public int getNumberOfShots(){ return numberOfShots; }
 
-    public void getHitByProjectile(Projectile projectile){ projectile.applyPlayerImpact(this); }
+    public void getHitByProjectile(Projectile projectile){
+        projectile.applyPlayerImpact(this);
+    }
 
     public void getHitByPlayer(Player player){}
 

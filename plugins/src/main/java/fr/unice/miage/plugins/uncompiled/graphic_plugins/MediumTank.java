@@ -27,10 +27,10 @@ public class MediumTank implements PlugInGraphic {
         double x = player.getX();
         double y = player.getY();
         double w = 40;
-        double h = 30;
+        double h = 28;
         ImageView iv = new ImageView(img);
-        iv.setFitWidth(40);
-        iv.setFitHeight(28);
+        iv.setFitWidth(w);
+        iv.setFitHeight(h);
         iv.setRotate(rot);
         SnapshotParameters params = new SnapshotParameters();
         params.setFill(Color.TRANSPARENT);

@@ -68,7 +68,7 @@ public class Mine implements PlugInWeapon {
         return new RectangleSprite(player,15,15, Color.FLORALWHITE, false);
     }
 
-    public void applyPlayerImpact(Player player){
+    public void applyPlayerImpact(Projectile projectile, Player player){
         player.setHealth(player.getHealth()-30);
     }
 

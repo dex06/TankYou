@@ -60,7 +60,7 @@ public class Standard implements PlugInWeapon {
         return new RectangleSprite(player,5,5, Color.BLUE, false);
     }
 
-    public void applyPlayerImpact(Player player) {
+    public void applyPlayerImpact(Projectile projectile, Player player) {
         player.setHealth(player.getHealth()-3);
     }
 

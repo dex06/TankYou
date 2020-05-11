@@ -80,8 +80,7 @@ public class Projectile {
     }
 
     public void applyPlayerImpact(Player player) {
-        pw.applyPlayerImpact(player);
-        hasEnded = true;
+        pw.applyPlayerImpact(this, player);
     }
     public boolean hasEnded(){ return hasEnded; }
 

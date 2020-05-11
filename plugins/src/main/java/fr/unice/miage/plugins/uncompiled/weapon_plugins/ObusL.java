@@ -22,7 +22,7 @@ public class ObusL implements PlugInWeapon {
 
     public void moveProjectile(Projectile projectile){
         if(Timer.getChrono() - projectile.getShotTime() >= 5) projectile.setHit();
-        if(!projectile.hasEnded()) projectile.addPosition(projectile.getVelocity());
+        if(!projectile.hasEnded() & !projectile.hasHit()) projectile.addPosition(projectile.getVelocity());
 
     }
 
@@ -44,7 +44,7 @@ public class ObusL implements PlugInWeapon {
         Image rotatedImage = iv.snapshot(params, null);
         GraphicsContext c= canvas.getGraphicsContext();
         c.save();
-        c.drawImage(rotatedImage, x, y);
+        c.drawImage(rotatedImage, x - w/2, y - h/2);
         c.restore();
     }
 
@@ -54,28 +54,22 @@ public class ObusL implements PlugInWeapon {
     }
 
     public void shoot(Player player) {
-        if(Timer.getChrono() - player.getLastShot() > 1){
+        if(Timer.getChrono() - player.getLastShot() > 1.5){
 
-            double xCenter = player.getX() + player.getSprite().getWidth()/2;
-            double yCenter = player.getY() + player.getSprite().getHeight()/2;
-            Vector2 position = new Vector2(xCenter, yCenter);
 
             Vector2 direction;
             if(Mouse.isMouseOn()){
                 direction = Mouse.getLastShootingPosition().sub2(player.getPosition()).norm2();
             } else {
                 Player p = Finder.findClosestPlayer(player);
-                double xCenterOp = p.getX() + p.getSprite().getWidth()/2;
-                double yCenterOp = p.getY() + p.getSprite().getHeight()/2;
-                Vector2 opposition = new Vector2(xCenterOp, yCenterOp);
-                direction = opposition.sub2(position).norm2();  //Vecteur normalisé
+                direction = p.getPosition().sub2(player.getPosition()).norm2();  //Vecteur normalisé
             }
 
             Vector2 velocity = new Vector2(5 * direction.getX(), 5 * direction.getY());
 
             Sprite sprite = createSprite(player);
-            Projectile projectile = new Projectile(this, player, position, velocity, sprite, Timer.getChrono(), "obus léger");
-            projectile.setRotation(Rotation.rotation2Vectors(velocity, position));
+            Projectile projectile = new Projectile(this, player, player.getPosition(), velocity, sprite, Timer.getChrono(), "obus léger");
+            projectile.setRotation(Rotation.rotation2Vectors(velocity, player.getPosition()));
             player.addProjectile(projectile);
             player.setLastShot(Timer.getChrono());
             player.incrementNumberOfShots();
@@ -86,8 +80,10 @@ public class ObusL implements PlugInWeapon {
         return new RectangleSprite(player,30,30, Color.FLORALWHITE, false);
     }
 
-    public void applyPlayerImpact(Player player){
-        player.setHealth(player.getHealth()-30);
+    public void applyPlayerImpact(Projectile projectile, Player player){
+        player.setHealth(player.getHealth()-10);
+        projectile.setHitTime(Timer.getChrono());
+        projectile.setHit();
     }
 
     public void applyObstacleCollision(Projectile projectile, String inversion){
@@ -105,31 +101,31 @@ public class ObusL implements PlugInWeapon {
         if(!projectile.hasEnded() & projectile.hasHit()) {
             double hitTime = projectile.getHitTime();
             double difTime = currentTime - hitTime;
-            if (difTime <= 0.4) {
+            if (difTime <= 0.25) {
                 explosionImg = new Image(ObusL.class.getClassLoader().getResourceAsStream("/shellExplosions/Explosion_A.png"));
             }
-            if (difTime > 0.4 & difTime <= 0.8) {
+            if (difTime > 0.25 & difTime <= 0.5) {
                 explosionImg = new Image(ObusL.class.getClassLoader().getResourceAsStream("/shellExplosions/Explosion_B.png"));
             }
-            if (difTime > 0.8 & difTime <= 1.2) {
+            if (difTime > 0.5 & difTime <= 0.75) {
                 explosionImg = new Image(ObusL.class.getClassLoader().getResourceAsStream("/shellExplosions/Explosion_C.png"));
             }
-            if (difTime > 1.2 & difTime <= 1.6) {
+            if (difTime > 0.75 & difTime <= 1) {
                 explosionImg = new Image(ObusL.class.getClassLoader().getResourceAsStream("/shellExplosions/Explosion_D.png"));
             }
-            if (difTime > 2 & difTime <= 2.4) {
+            if (difTime > 1 & difTime <= 1.25) {
                 explosionImg = new Image(ObusL.class.getClassLoader().getResourceAsStream("/shellExplosions/Explosion_E.png"));
             }
-            if (difTime > 2.4 & difTime <= 2.8) {
+            if (difTime > 1.25 & difTime <= 1.5) {
                 explosionImg = new Image(ObusL.class.getClassLoader().getResourceAsStream("/shellExplosions/Explosion_F.png"));
             }
-            if (difTime > 3.2 & difTime <= 3.6) {
+            if (difTime > 1.5 & difTime <= 1.75) {
                 explosionImg = new Image(ObusL.class.getClassLoader().getResourceAsStream("/shellExplosions/Explosion_G.png"));
             }
-            if (difTime > 4) {
+            if (difTime > 1.75 & difTime <= 2) {
                 explosionImg = new Image(ObusL.class.getClassLoader().getResourceAsStream("/shellExplosions/Explosion_H.png"));
-                projectile.endProjectile();
-            }
+
+            } else  projectile.endProjectile();
         }
         return explosionImg;
     }
