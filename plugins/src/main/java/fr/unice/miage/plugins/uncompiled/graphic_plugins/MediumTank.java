@@ -22,7 +22,7 @@ public class MediumTank implements PlugInGraphic {
         player.getHealthBar().draw(player, canvas);
         player.getSprite().draw(canvas);
         Image img = getSprite(Timer.getChrono());
-        double rot = -player.getRotation();
+        double rot = player.getRotation();
 
         double x = player.getX();
         double y = player.getY();

@@ -4,6 +4,7 @@ import fr.unice.miage.common.CanvasGUI;
 import fr.unice.miage.common.Config;
 import fr.unice.miage.common.Repository;
 import fr.unice.miage.common.geom.Vector2;
+import fr.unice.miage.common.input.Mouse;
 import fr.unice.miage.common.plugins.PlugInGraphic;
 import fr.unice.miage.common.plugins.PlugInMovement;
 import fr.unice.miage.common.plugins.PlugInWeapon;
@@ -19,6 +20,7 @@ public class Player {
     private final String playerName;
     private final int playerID;
     private Vector2 position = new Vector2();
+    private Vector2 centerPosition = new Vector2();
     private Vector2 velocity = new Vector2();
     private Vector2 acceleration = new Vector2();
     private double rotation = 0;
@@ -102,6 +104,11 @@ public class Player {
     public Vector2 getPosition(){ return position;}
     public void setPosition(Vector2 v){ position = v;}
     public void addPosition(Vector2 v){ position.add(v); }
+    public Vector2 getCenterPosition(){
+        double centerX = position.getX() + playerSprite.getWidth();
+        double centerY = position.getY() + playerSprite.getHeight();
+        return new Vector2(centerX, centerY);
+    }
 
     // Methods for velocity vectors
     public Vector2 getVelocity() { return velocity; }
@@ -116,12 +123,14 @@ public class Player {
     // Methods for rotation value
     public void setRotation(double rot) { rotation = rot; }
     public double getRotation(){
-        Vector2 v1 = position.norm2();
-        Vector2 v2 = velocity.norm2();
-        //return Math.toDegrees(1 - v1.dot(v2));
-        //return Math.toDegrees(Math.atan2(v2.getY(),v2.getX()) - Math.atan2(v1.getY(), v1.getX()));
-        //return (Math.atan2(position.getY(), position.getX()) / (2 * Math.PI));
-        return Math.toDegrees(Math.acos(position.norm2().dot(velocity.norm2())));
+        if(!Mouse.isMouseOn()) {
+            Vector2 v1 = position.norm2();
+            Vector2 v2 = velocity.norm2();
+            //return Math.toDegrees(1 - v1.dot(v2));
+            //return Math.toDegrees(Math.atan2(v2.getY(),v2.getX()) - Math.atan2(v1.getY(), v1.getX()));
+            //return (Math.atan2(position.getY(), position.getX()) / (2 * Math.PI));
+            return Math.toDegrees(Math.acos(position.norm2().dot(velocity.norm2())));
+        } else return rotation;
     }
 
     // Getters for max values

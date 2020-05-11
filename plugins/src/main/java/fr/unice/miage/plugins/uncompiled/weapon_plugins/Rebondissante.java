@@ -27,7 +27,7 @@ public class Rebondissante implements PlugInWeapon {
             double y = projectile.getY();
             GraphicsContext gc = canvas.getGraphicsContext();
             gc.setFill(Color.BLUE);
-            gc.fillRect(x, y, 5, 5);
+            gc.fillOval(x, y, 5, 5);
         }
     }
 
@@ -39,18 +39,23 @@ public class Rebondissante implements PlugInWeapon {
     public void shoot(Player player) {
         if(Timer.getChrono() - player.getLastShot() > 1){
 
+            double xCenter = player.getX() + player.getSprite().getWidth()/2;
+            double yCenter = player.getY() + player.getSprite().getHeight()/2;
+            Vector2 position = new Vector2(xCenter, yCenter);
+
             Vector2 direction;
             if(Mouse.isMouseOn()){
                 direction = Mouse.getLastShootingPosition().sub2(player.getPosition()).norm2();
             } else {
                 Player p = Finder.findClosestPlayer(player);
-                direction = p.getPosition().sub2(player.getPosition()).norm2();  //Vecteur normalisé
+                double xCenterOp = p.getX() + p.getSprite().getWidth()/2;
+                double yCenterOp = p.getY() + p.getSprite().getHeight()/2;
+                Vector2 opposition = new Vector2(xCenterOp, yCenterOp);
+                direction = opposition.sub2(position).norm2();  //Vecteur normalisé
             }
 
-            double xCenter = player.getX() + player.getSprite().getWidth()/2;
-            double yCenter = player.getY() + player.getSprite().getHeight()/2;
-            Vector2 position = new Vector2(xCenter, yCenter);
             Vector2 velocity = new Vector2(5 * direction.getX(), 5 * direction.getY());
+
             Sprite sprite = createSprite(player);
             player.addProjectile(new Projectile(this, player, position, velocity, sprite, Timer.getChrono(), "rebondissante"));
             player.setLastShot(Timer.getChrono());

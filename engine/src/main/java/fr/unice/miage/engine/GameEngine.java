@@ -252,9 +252,15 @@ public class GameEngine  {
                         }
                     }
                     for (Player player : players) {
+                        /** Human player **/
                         if(hasRealPlayer & players.indexOf(player) == 0) {
                             if(player.isAlive()) {
                                 realPlayer.handleKeyInput(player, btnState);
+                                Vector2 difVector = Mouse.getDifVector();
+                                Vector2 lastAxis = Mouse.getLastMousePosition().sub2(player.getCenterPosition()).norm2();
+                                Vector2 previousAxis = lastAxis.sub2(difVector).norm2();
+                                double rot =  Math.toDegrees(Math.acos(previousAxis.dot(lastAxis)));
+                                player.setRotation(rot);
                             }
                         } else if (player.isAlive()) {
                             if(player.hasMove()) player.move();
