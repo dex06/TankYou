@@ -31,7 +31,7 @@ public class ObstacleSprite extends Sprite {
             gc.fillRect(position.getX(), position.getY(), width, height);
         }
         else{
-            gc.drawImage(imgSprite, position.getX(), position.getY(), height, width);
+            gc.drawImage(imgSprite, position.getX(), position.getY(), width, height);
         }
 
     }
