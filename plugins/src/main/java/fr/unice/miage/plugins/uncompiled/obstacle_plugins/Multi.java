@@ -16,19 +16,19 @@ public class Multi implements PlugInObstacle {
 
     private Obstacle generateTree(){
         Image img;
-        int rdmObject = (int)(Math.random()*3);
+        int rdmObject = 1 + (int)(Math.random()*3);
         Obstacle obs = null;
         System.out.println("Object : " + rdmObject);
-        if(rdmObject == 0){
-            int rdm = (int)(Math.random()*4);
+        if(rdmObject == 1){
+            int rdm = 1 + (int)(Math.random()*4);
             switch (rdm){
-                case 0: img = new Image(Multi.class.getClassLoader().getResourceAsStream("/arbre/arbre1.png"));
+                case 1: img = new Image(Multi.class.getClassLoader().getResourceAsStream("/arbre/arbre1.png"));
                     break;
-                case 1: img = new Image(Multi.class.getClassLoader().getResourceAsStream("/arbre/arbre2.png"));
+                case 2: img = new Image(Multi.class.getClassLoader().getResourceAsStream("/arbre/arbre2.png"));
                     break;
-                case 2: img = new Image(Multi.class.getClassLoader().getResourceAsStream("/arbre/arbre3.png"));
+                case 3: img = new Image(Multi.class.getClassLoader().getResourceAsStream("/arbre/arbre3.png"));
                     break;
-                case 3: img = new Image(Multi.class.getClassLoader().getResourceAsStream("/arbre/arbre4.png"));
+                case 4: img = new Image(Multi.class.getClassLoader().getResourceAsStream("/arbre/arbre4.png"));
                     break;
                 default: img = new Image(Multi.class.getClassLoader().getResourceAsStream("/arbre/arbre1.png"));
                     break;
@@ -38,13 +38,13 @@ public class Multi implements PlugInObstacle {
             obs = new Obstacle(this, vctr, sprite);
 
         }
-        else if(rdmObject == 1){
+        else if(rdmObject == 2){
             img = new Image(Multi.class.getClassLoader().getResourceAsStream("/mur/mur1.png"));
             Vector2 vctr = new Vector2(Math.random()*600, Math.random()*600);
             ObstacleSprite sprite = new ObstacleSprite(vctr, 150, 25, Color.BLACK, img);
             obs = new Obstacle(this, vctr, sprite);
         }
-        else if(rdmObject == 2){
+        else if(rdmObject == 3){
             img = new Image(Multi.class.getClassLoader().getResourceAsStream("/mur/mur2.png"));
             Vector2 vctr = new Vector2(Math.random()*600, Math.random()*600);
             ObstacleSprite sprite = new ObstacleSprite(vctr, 36, 150, Color.BLACK, img);
