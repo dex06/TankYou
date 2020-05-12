@@ -16,7 +16,7 @@ public class Multi implements PlugInObstacle {
 
     private Obstacle generateTree(){
         Image img;
-        int rdmObject = 1 + (int)(Math.random()*3);
+        int rdmObject = 1 + (int)(Math.random()*4);
         Obstacle obs = null;
         System.out.println("Object : " + rdmObject);
         if(rdmObject == 1){
@@ -49,6 +49,28 @@ public class Multi implements PlugInObstacle {
             Vector2 vctr = new Vector2(Math.random()*600, Math.random()*600);
             ObstacleSprite sprite = new ObstacleSprite(vctr, 36, 150, Color.BLACK, img);
             obs = new Obstacle(this, vctr, sprite);
+        }
+        else if(rdmObject == 4){
+            int rdm = 1 + (int)(Math.random()*2);
+            Vector2 vctr = null;
+            ObstacleSprite sprite = null;
+            switch (rdm){
+                case 1: img = new Image(Multi.class.getClassLoader().getResourceAsStream("/car/car1.png"));
+                    vctr = new Vector2(Math.random()*600, Math.random()*600);
+                    sprite = new ObstacleSprite(vctr, 30, 50, Color.BLACK, img);
+                    obs = new Obstacle(this, vctr, sprite);
+                    break;
+                case 2: img = new Image(Multi.class.getClassLoader().getResourceAsStream("/car/car2.png"));
+                    vctr = new Vector2(Math.random()*600, Math.random()*600);
+                    sprite = new ObstacleSprite(vctr, 25, 50, Color.BLACK, img);
+                    obs = new Obstacle(this, vctr, sprite);
+                    break;
+                default: img = new Image(Multi.class.getClassLoader().getResourceAsStream("/car/car1.png"));
+                    vctr = new Vector2(Math.random()*600, Math.random()*600);
+                    sprite = new ObstacleSprite(vctr, 30, 50, Color.BLACK, img);
+                    obs = new Obstacle(this, vctr, sprite);
+                    break;
+            }
         }
 
         return obs;
