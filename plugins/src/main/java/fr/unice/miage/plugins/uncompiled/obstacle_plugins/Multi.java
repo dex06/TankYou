@@ -6,7 +6,10 @@ import fr.unice.miage.common.game_objects.Projectile;
 import fr.unice.miage.common.geom.Vector2;
 import fr.unice.miage.common.plugins.PlugInObstacle;
 import fr.unice.miage.common.sprite.ObstacleSprite;
+import fr.unice.miage.common.utils.Randomizer;
+import javafx.scene.SnapshotParameters;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
@@ -56,14 +59,38 @@ public class Multi implements PlugInObstacle {
             ObstacleSprite sprite = null;
             switch (rdm){
                 case 1: img = new Image(Multi.class.getClassLoader().getResourceAsStream("/car/car1.png"));
-                    vctr = new Vector2(Math.random()*600, Math.random()*600);
-                    sprite = new ObstacleSprite(vctr, 30, 50, Color.BLACK, img);
-                    obs = new Obstacle(this, vctr, sprite);
+                    if(Randomizer.getRandomIntInRange(1,3) % 2 == 0){
+                        vctr = new Vector2(Math.random()*600, Math.random()*600);
+                        Vector2 newPos = new Vector2(vctr.getX()-20, vctr.getY()+20);
+                        ImageView iv = new ImageView(img);
+                        iv.setRotate(90);
+                        SnapshotParameters params = new SnapshotParameters();
+                        params.setFill(Color.TRANSPARENT);
+                        Image rotatedImage = iv.snapshot(params, null);
+                        sprite = new ObstacleSprite(newPos, 50, 30, Color.TRANSPARENT, rotatedImage);
+                        obs = new Obstacle(this, newPos, sprite);
+                    } else {
+                        vctr = new Vector2(Math.random() * 600, Math.random() * 600);
+                        sprite = new ObstacleSprite(vctr, 30, 50, Color.BLACK, img);
+                        obs = new Obstacle(this, vctr, sprite);
+                    }
                     break;
                 case 2: img = new Image(Multi.class.getClassLoader().getResourceAsStream("/car/car2.png"));
-                    vctr = new Vector2(Math.random()*600, Math.random()*600);
-                    sprite = new ObstacleSprite(vctr, 25, 50, Color.BLACK, img);
-                    obs = new Obstacle(this, vctr, sprite);
+                    if(Randomizer.getRandomIntInRange(1,3) % 2 == 0){
+                        vctr = new Vector2(Math.random()*600, Math.random()*600);
+                        Vector2 newPos = new Vector2(vctr.getX()-25, vctr.getY()+25);
+                        ImageView iv = new ImageView(img);
+                        iv.setRotate(90);
+                        SnapshotParameters params = new SnapshotParameters();
+                        params.setFill(Color.TRANSPARENT);
+                        Image rotatedImage = iv.snapshot(params, null);
+                        sprite = new ObstacleSprite(newPos, 50, 25, Color.TRANSPARENT, rotatedImage);
+                        obs = new Obstacle(this, newPos, sprite);
+                    } else {
+                        vctr = new Vector2(Math.random() * 600, Math.random() * 600);
+                        sprite = new ObstacleSprite(vctr, 25, 50, Color.BLACK, img);
+                        obs = new Obstacle(this, vctr, sprite);
+                    }
                     break;
                 default: img = new Image(Multi.class.getClassLoader().getResourceAsStream("/car/car1.png"));
                     vctr = new Vector2(Math.random()*600, Math.random()*600);
