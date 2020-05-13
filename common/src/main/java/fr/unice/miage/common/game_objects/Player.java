@@ -3,6 +3,7 @@ package fr.unice.miage.common.game_objects;
 import fr.unice.miage.common.CanvasGUI;
 import fr.unice.miage.common.Config;
 import fr.unice.miage.common.Repository;
+import fr.unice.miage.common.geom.Rotation;
 import fr.unice.miage.common.geom.Vector2;
 import fr.unice.miage.common.input.Mouse;
 import fr.unice.miage.common.plugins.PlugInGraphic;
@@ -23,6 +24,7 @@ public class Player {
     private Vector2 centerPosition = new Vector2();
     private Vector2 velocity = new Vector2();
     private Vector2 acceleration = new Vector2();
+    private Vector2 imgDirection = new Vector2(0,-1);
     private double rotation = 0;
     private final double maxSpeed = 3;
     private final double maxVelocity = 1;
@@ -45,8 +47,8 @@ public class Player {
     private PlugInGraphic pg;
     private HealthBar healthBar;
     private double health = 100;
-    private List<PlugInWeapon> weapons;
     private boolean alive;
+    private List<PlugInWeapon> weapons;
 
     private Sprite playerSprite;
 
@@ -121,15 +123,11 @@ public class Player {
     public void addAcceleration(Vector2 v){ acceleration.add(v); }
 
     // Methods for rotation value
-    public void setRotation(double rot) { rotation = rot; }
+    public void setImgDirection(Vector2 v){ imgDirection = v; }
+    public void setRotation(double rot) { rotation += rot; }
     public double getRotation(){
         if(!Mouse.isMouseOn()) {
-            Vector2 v1 = position.norm2();
-            Vector2 v2 = velocity.norm2();
-            //return Math.toDegrees(1 - v1.dot(v2));
-            //return Math.toDegrees(Math.atan2(v2.getY(),v2.getX()) - Math.atan2(v1.getY(), v1.getX()));
-            //return (Math.atan2(position.getY(), position.getX()) / (2 * Math.PI));
-            return Math.toDegrees(Math.acos(position.norm2().dot(velocity.norm2())));
+            return Rotation.rotation2Vectors(imgDirection, velocity);
         } else return rotation;
     }
 

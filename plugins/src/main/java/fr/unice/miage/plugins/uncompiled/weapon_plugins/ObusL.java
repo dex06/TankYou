@@ -69,7 +69,7 @@ public class ObusL implements PlugInWeapon {
 
             Sprite sprite = createSprite(player);
             Projectile projectile = new Projectile(this, player, player.getPosition(), velocity, sprite, Timer.getChrono(), "obus léger");
-            projectile.setRotation(Rotation.rotation2Vectors(velocity, player.getPosition()));
+            projectile.setRotation(Rotation.rotation2Vectors(new Vector2(0,-1), direction));
             player.addProjectile(projectile);
             player.setLastShot(Timer.getChrono());
             player.incrementNumberOfShots();
@@ -81,7 +81,7 @@ public class ObusL implements PlugInWeapon {
     }
 
     public void applyPlayerImpact(Projectile projectile, Player player){
-        player.setHealth(player.getHealth()-10);
+        player.setHealth(player.getHealth()-5);
         projectile.setHitTime(Timer.getChrono());
         projectile.setHit();
     }

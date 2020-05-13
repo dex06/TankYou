@@ -2,6 +2,7 @@ package fr.unice.miage.plugins.uncompiled.graphic_plugins;
 
 import fr.unice.miage.common.CanvasGUI;
 import fr.unice.miage.common.game_objects.Player;
+import fr.unice.miage.common.geom.Vector2;
 import fr.unice.miage.common.plugins.PlugInGraphic;
 import fr.unice.miage.common.sprite.RectangleSprite;
 import fr.unice.miage.common.utils.Timer;
@@ -16,6 +17,7 @@ public class MediumTank implements PlugInGraphic {
     public void init(Player player){
         player.setSprite(new RectangleSprite(player, 30, 30, Color.RED, true));
         player.setHealthBar(30, 5, Color.GREEN);
+        player.setImgDirection(new Vector2(-1,0));
     }
 
     public void draw(Player player, CanvasGUI canvas) {
