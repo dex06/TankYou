@@ -3,6 +3,7 @@ package fr.unice.miage.plugins.uncompiled.weapon_plugins;
 import fr.unice.miage.common.CanvasGUI;
 import fr.unice.miage.common.game_objects.Player;
 import fr.unice.miage.common.game_objects.Projectile;
+import fr.unice.miage.common.geom.Rotation;
 import fr.unice.miage.common.geom.Vector2;
 import fr.unice.miage.common.input.Mouse;
 import fr.unice.miage.common.plugins.PlugInWeapon;
@@ -50,7 +51,11 @@ public class Standard implements PlugInWeapon {
             Vector2 position = new Vector2(xCenter, yCenter);
             Vector2 velocity = new Vector2(5 * direction.getX(), 5 * direction.getY());
             Sprite sprite = createSprite(player);
-            player.addProjectile(new Projectile(this, player, position, velocity, sprite, Timer.getChrono(), "rebondissante"));
+            Projectile newPrj = new Projectile(this, player, position, velocity, sprite, Timer.getChrono(), "rebondissante");
+            double wRot = Rotation.rotation2Vectors(player.getWeaponDirection(), direction);
+            newPrj.setRotation(wRot);
+            player.setWeaponRotation(wRot);
+            player.addProjectile(newPrj);
             player.setLastShot(Timer.getChrono());
             player.incrementNumberOfShots();
         }

@@ -58,9 +58,11 @@ public class Rebondissante implements PlugInWeapon {
             Vector2 velocity = new Vector2(5 * direction.getX(), 5 * direction.getY());
 
             Sprite sprite = createSprite(player);
-            Projectile projectile = new Projectile(this, player, position, velocity, sprite, Timer.getChrono(), "obus léger");
-            projectile.setRotation(Rotation.rotation2Vectors(velocity, position));
-            player.addProjectile(projectile);
+            Projectile newPrj = new Projectile(this, player, position, velocity, sprite, Timer.getChrono(), "rebondissante");
+            double wRot = Rotation.rotation2Vectors(player.getWeaponDirection(), direction);
+            newPrj.setRotation(wRot);
+            player.setWeaponRotation(wRot);
+            player.addProjectile(newPrj);
             player.setLastShot(Timer.getChrono());
             player.incrementNumberOfShots();
         }

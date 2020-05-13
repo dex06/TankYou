@@ -24,6 +24,7 @@ public class TankA implements PlugInGraphic {
         player.getSprite().draw(canvas);
 
         double rot = player.getRotation();
+        double wRot = player.getWeaponRotation();
 
         double x = player.getX();
         double y = player.getY();
@@ -46,7 +47,7 @@ public class TankA implements PlugInGraphic {
         ivGun.setX(x + w);
         ivGun.setY(y + h * 0.5);
 
-        //ivGun.setRotate(rot);
+        ivGun.setRotate(wRot - rot);
 
 
         Image rotatedGun = ivGun.snapshot(params, null);
@@ -70,7 +71,7 @@ public class TankA implements PlugInGraphic {
 
         GridPane gp = new GridPane();
         gp.getChildren().addAll(ivTrackL, ivTrackR, ivHull);
-        //gp.setRotate(rot);
+        gp.setRotate(rot);
         gp.getChildren().add(ivGun);
         Image rotated = gp.snapshot(params, null);
 

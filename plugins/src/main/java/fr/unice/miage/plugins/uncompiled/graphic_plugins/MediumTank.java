@@ -11,6 +11,7 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.paint.Color;
+import javafx.scene.transform.Rotate;
 
 public class MediumTank implements PlugInGraphic {
 
@@ -25,6 +26,7 @@ public class MediumTank implements PlugInGraphic {
         player.getSprite().draw(canvas);
         Image img = getSprite(Timer.getChrono());
         double rot = player.getRotation();
+        double wRot = player.getWeaponRotation();
 
         double x = player.getX();
         double y = player.getY();
@@ -33,7 +35,8 @@ public class MediumTank implements PlugInGraphic {
         ImageView iv = new ImageView(img);
         iv.setFitWidth(w);
         iv.setFitHeight(h);
-        iv.setRotate(rot);
+        iv.getTransforms().add(new Rotate(rot,w/2, h/2));
+        iv.setRotate(wRot);
         SnapshotParameters params = new SnapshotParameters();
         params.setFill(Color.TRANSPARENT);
         Image rotatedImage = iv.snapshot(params, null);

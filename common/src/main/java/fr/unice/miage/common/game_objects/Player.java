@@ -25,7 +25,9 @@ public class Player {
     private Vector2 velocity = new Vector2();
     private Vector2 acceleration = new Vector2();
     private Vector2 imgDirection = new Vector2(0,-1);
+    private Vector2 weaponDirection = new Vector2(0,-1);
     private double rotation = 0;
+    private double weaponRotation = 0;
     private final double maxSpeed = 3;
     private final double maxVelocity = 1;
     private final double maxForce = 2;
@@ -130,6 +132,10 @@ public class Player {
             return Rotation.rotation2Vectors(imgDirection, velocity);
         } else return rotation;
     }
+    public void setWeaponDirection(Vector2 v){ weaponDirection = v; }
+    public Vector2 getWeaponDirection(){ return weaponDirection; }
+    public void setWeaponRotation(double rot){ weaponRotation = rot; }
+    public double getWeaponRotation(){ return weaponRotation; }
 
     // Getters for max values
     public double getMaxVelocity() { return maxVelocity; }

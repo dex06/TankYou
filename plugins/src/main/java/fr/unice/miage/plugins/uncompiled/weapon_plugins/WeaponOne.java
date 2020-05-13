@@ -3,6 +3,7 @@ package fr.unice.miage.plugins.uncompiled.weapon_plugins;
 import fr.unice.miage.common.CanvasGUI;
 import fr.unice.miage.common.game_objects.Player;
 import fr.unice.miage.common.game_objects.Projectile;
+import fr.unice.miage.common.geom.Rotation;
 import fr.unice.miage.common.geom.Vector2;
 import fr.unice.miage.common.plugins.PlugInWeapon;
 import fr.unice.miage.common.sprite.RectangleSprite;
@@ -37,15 +38,17 @@ public class WeaponOne implements PlugInWeapon {
     public void shoot(Player player) {
         if(Timer.getChrono() - player.getLastShot() > 1){
             Player p = Finder.findClosestPlayer(player);
-            //double direction = Math.atan2(p.getPosition().getY() - player.getPosition().getY(), p.getPosition().getX() - player.getPosition().getX());
             Vector2 direction = p.getPosition().sub2(player.getPosition()).norm2();  //Vecteur normalisé
             double xCenter = player.getX() + player.getSprite().getWidth()/2;
             double yCenter = player.getY() + player.getSprite().getHeight()/2;
             Vector2 position = new Vector2(xCenter, yCenter);
             Vector2 velocity = new Vector2(5 * direction.getX(), 5 * direction.getY());
-            double longueur = Math.sqrt(Math.pow(player.getSprite().getWidth()/2, 2) + Math.pow(player.getSprite().getHeight()/2, 2));
             Sprite sprite = createSprite(player);
-            player.addProjectile(new Projectile(this, player, position, velocity, sprite, Timer.getChrono(), "rebondissante"));
+            Projectile newPrj = new Projectile(this, player, position, velocity, sprite, Timer.getChrono(), "rebondissante");
+            double wRot = Rotation.rotation2Vectors(player.getWeaponDirection(), direction);
+            newPrj.setRotation(wRot);
+            player.setWeaponRotation(wRot);
+            player.addProjectile(newPrj);
             player.setLastShot(Timer.getChrono());
             player.incrementNumberOfShots();
         }
