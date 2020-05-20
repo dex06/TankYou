@@ -14,7 +14,6 @@ public class Obstacle {
     private final ObstacleSprite sprite;
 
 
-
     public Obstacle(PlugInObstacle po, Vector2 position, ObstacleSprite sprite) {
         this.po = po;
         this.position = position;

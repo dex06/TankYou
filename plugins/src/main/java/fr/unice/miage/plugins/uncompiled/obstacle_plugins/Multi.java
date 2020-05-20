@@ -19,9 +19,10 @@ public class Multi implements PlugInObstacle {
 
     private Obstacle generateTree(){
         Image img;
+        int rota = 1 + (int)(Math.random() * 360);
         int rdmObject = 1 + (int)(Math.random()*4);
         Obstacle obs = null;
-        System.out.println("Object : " + rdmObject);
+        System.out.println("Object : " + rdmObject + ", rota : " + rota);
         if(rdmObject == 1){
             int rdm = 1 + (int)(Math.random()*4);
             switch (rdm){
@@ -37,20 +38,20 @@ public class Multi implements PlugInObstacle {
                     break;
             }
             Vector2 vctr = new Vector2(Math.random()*600, Math.random()*600);
-            ObstacleSprite sprite = new ObstacleSprite(vctr, 50, 50, Color.BLACK, img);
+            ObstacleSprite sprite = new ObstacleSprite(vctr, 50, 50, Color.BLACK, img, rota);
             obs = new Obstacle(this, vctr, sprite);
 
         }
         else if(rdmObject == 2){
             img = new Image(Multi.class.getClassLoader().getResourceAsStream("/mur/mur1.png"));
             Vector2 vctr = new Vector2(Math.random()*600, Math.random()*600);
-            ObstacleSprite sprite = new ObstacleSprite(vctr, 150, 25, Color.BLACK, img);
+            ObstacleSprite sprite = new ObstacleSprite(vctr, 150, 25, Color.BLACK, img, rota);
             obs = new Obstacle(this, vctr, sprite);
         }
         else if(rdmObject == 3){
             img = new Image(Multi.class.getClassLoader().getResourceAsStream("/mur/mur2.png"));
             Vector2 vctr = new Vector2(Math.random()*600, Math.random()*600);
-            ObstacleSprite sprite = new ObstacleSprite(vctr, 36, 150, Color.BLACK, img);
+            ObstacleSprite sprite = new ObstacleSprite(vctr, 36, 150, Color.BLACK, img, rota);
             obs = new Obstacle(this, vctr, sprite);
         }
         else if(rdmObject == 4){
@@ -67,7 +68,7 @@ public class Multi implements PlugInObstacle {
                         SnapshotParameters params = new SnapshotParameters();
                         params.setFill(Color.TRANSPARENT);
                         Image rotatedImage = iv.snapshot(params, null);
-                        sprite = new ObstacleSprite(newPos, 50, 30, Color.TRANSPARENT, rotatedImage);
+                        sprite = new ObstacleSprite(newPos, 50, 30, Color.TRANSPARENT, rotatedImage, rota);
                         obs = new Obstacle(this, newPos, sprite);
                     } else {
                         vctr = new Vector2(Math.random() * 600, Math.random() * 600);
@@ -84,17 +85,17 @@ public class Multi implements PlugInObstacle {
                         SnapshotParameters params = new SnapshotParameters();
                         params.setFill(Color.TRANSPARENT);
                         Image rotatedImage = iv.snapshot(params, null);
-                        sprite = new ObstacleSprite(newPos, 50, 25, Color.TRANSPARENT, rotatedImage);
+                        sprite = new ObstacleSprite(newPos, 50, 25, Color.TRANSPARENT, rotatedImage, rota);
                         obs = new Obstacle(this, newPos, sprite);
                     } else {
                         vctr = new Vector2(Math.random() * 600, Math.random() * 600);
-                        sprite = new ObstacleSprite(vctr, 25, 50, Color.BLACK, img);
+                        sprite = new ObstacleSprite(vctr, 25, 50, Color.BLACK, img, rota);
                         obs = new Obstacle(this, vctr, sprite);
                     }
                     break;
                 default: img = new Image(Multi.class.getClassLoader().getResourceAsStream("/car/car1.png"));
                     vctr = new Vector2(Math.random()*600, Math.random()*600);
-                    sprite = new ObstacleSprite(vctr, 30, 50, Color.BLACK, img);
+                    sprite = new ObstacleSprite(vctr, 30, 50, Color.BLACK, img, rota);
                     obs = new Obstacle(this, vctr, sprite);
                     break;
             }
