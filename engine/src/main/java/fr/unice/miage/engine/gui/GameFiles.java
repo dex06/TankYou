@@ -1,6 +1,8 @@
 package fr.unice.miage.engine.gui;
 
+import fr.unice.miage.common.Config;
 import fr.unice.miage.common.Repository;
+import fr.unice.miage.engine.GameEngine;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -9,9 +11,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -110,7 +110,10 @@ public class GameFiles extends Application {
         selectHBox.setPadding(new Insets(10,10,10,10));
         selectHBox.setSpacing(10);
         selectHBox.setAlignment(Pos.TOP_CENTER);
+
         selectorVBox = new VBox();
+
+
         displayRepos();
         VBox mainVBox = new VBox();
 
@@ -119,7 +122,11 @@ public class GameFiles extends Application {
         root.getChildren().addAll(mainVBox);
         Button gotoMenuBtn = new Button("Configuration Menu");
         gotoMenuBtn.setOnAction(e -> {
+
+            GameEngine gameEngine = new GameEngine(primaryStage, Config.getWorldWidth(),Config.getWorldHeight(), repository);
             primaryStage.close();
+            gameEngine.initMenu();
+            gameEngine.startMenu();
         });
         mainVBox.getChildren().addAll(selectHBox, selectorVBox, gotoMenuBtn);
         Scene scene = new Scene(root, 960, 600);
@@ -130,12 +137,14 @@ public class GameFiles extends Application {
 
     }
 
-    public void displayRepos(){
+    public void displayRepos() {
         List<File> jarFiles = repository.getJarFiles();
-        for(File jar : jarFiles) {
+        for (File jar : jarFiles) {
             CheckBox checkBox = new CheckBox(jar.getName());
             selectorVBox.getChildren().add(checkBox);
         }
+
+        //selectorVBox.setStyle("-fx-background-color: #336699;");
     }
 }
 

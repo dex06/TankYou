@@ -4,6 +4,7 @@ import fr.unice.miage.common.CanvasGUI;
 import fr.unice.miage.common.game_objects.Player;
 import fr.unice.miage.common.plugins.PlugInGraphic;
 import fr.unice.miage.common.sprite.RectangleSprite;
+import fr.unice.miage.common.utils.ImageLoader;
 import fr.unice.miage.common.utils.Timer;
 import javafx.scene.SnapshotParameters;
 import javafx.scene.canvas.GraphicsContext;
@@ -34,23 +35,13 @@ public class TankA implements PlugInGraphic {
         SnapshotParameters params = new SnapshotParameters();
         params.setFill(Color.TRANSPARENT);
 
-        Image hull;
-        try {
-            hull = new Image(TankA.class.getClassLoader().getResourceAsStream("/tanks2/colorA/hulls/Hull_01.png"));
-        } catch (Exception e) {
-            hull = new Image("/tanks2/colorA/hulls/Hull_01.png");
-        }
+        Image hull = ImageLoader.loadImage("/tanks2/colorA/hulls/Hull_01.png", TankA.class);
         ImageView ivHull = new ImageView(hull);
         ivHull.setFitWidth(w);
         ivHull.setFitHeight(h);
         //Image rotatedHull = ivHull.snapshot(params, null);
 
-        Image gun;
-        try {
-         gun = new Image(TankA.class.getClassLoader().getResourceAsStream("/tanks2/colorA/guns/Gun_01.png"));
-        } catch (Exception e) {
-            gun = new Image("/tanks2/colorA/guns/Gun_01.png");
-        }
+        Image gun = ImageLoader.loadImage("/tanks2/colorA/guns/Gun_01.png", TankA.class);
 
         ImageView ivGun = new ImageView(gun);
         ivGun.setFitWidth(h * 0.38);
@@ -65,18 +56,10 @@ public class TankA implements PlugInGraphic {
 
 
         Image track;
-        if(Timer.getChrono() % 2 == 0){
-            try {
-                track = new Image(TankA.class.getClassLoader().getResourceAsStream("/tanks2/colorA/tracks/Track_1_A.png"));
-            } catch (Exception e){
-                track = new Image("/tanks2/colorA/tracks/Track_1_A.png");
-            }
+        if((int) Timer.getChrono() % 2 == 0){
+            track = ImageLoader.loadImage("/tanks2/colorA/tracks/Track_1_A.png", TankA.class);
         } else {
-            try {
-                track = new Image(TankA.class.getClassLoader().getResourceAsStream("/tanks2/colorA/tracks/Track_1_B.png"));
-            } catch (Exception e){
-                track = new Image("/tanks2/colorA/tracks/Track_1_B.png");
-            }
+            track = ImageLoader.loadImage("/tanks2/colorA/tracks/Track_1_B.png", TankA.class);
         }
 
         ImageView ivTrackL = new ImageView(track);

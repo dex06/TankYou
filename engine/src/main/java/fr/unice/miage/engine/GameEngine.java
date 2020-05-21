@@ -55,17 +55,17 @@ public class GameEngine  {
     private final Stage stage;
     private final double stageWidth;
     private final double stageHeight;
-    private final String path;
+    //private final String path;
 
-    public GameEngine(Stage stage, double width, double height, String path) {
+    public GameEngine(Stage stage, double width, double height, Repository repository) {
         this.engine = this;
         this.stage = stage;
         this.stageWidth = width;
         this.stageHeight = height;
-        this.path = path;
+        //this.path = path;
         this.btnState = new ButtonState();
         try {
-            this.repository = new Repository(path);
+            this.repository = repository;
             this.gui1Opts = repository.getGui1PluginsNames();
             this.canvas = new CanvasGUI(width, height);
         } catch(Exception e){

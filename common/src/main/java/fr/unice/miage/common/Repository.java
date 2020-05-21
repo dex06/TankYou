@@ -43,7 +43,8 @@ public class Repository {
 
     private final boolean testing = Config.getTesting();
 
-    public Repository() throws Exception { this.loadLibraries("plugins repository"); }
+    public Repository() throws Exception { //this.loadLibraries("plugins repository");
+         }
 
     public Repository(String base) throws Exception { this.loadLibraries(base); }
 
@@ -76,15 +77,18 @@ public class Repository {
 
     public void loadLibraries(String path) throws Exception {
         File libDir = new File(path);
-        if (!libDir.exists() || !libDir.isDirectory()) {
+        if(isJarFile(libDir)) jarFiles.add(libDir);
+        else if (!libDir.exists() || !libDir.isDirectory()) {
             throw new RuntimeException("Invalid library directory");
         }
-        for (File file : libDir.listFiles()) {
-            if (!isJarFile(file)) {
-                continue;
+        if(libDir.isDirectory()) {
+            for (File file : libDir.listFiles()) {
+                if (!isJarFile(file)) {
+                    continue;
+                }
+                System.out.println("Found library format : " + file.getName());
+                jarFiles.add(file);
             }
-            System.out.println("Found library format : " + file.getName());
-            jarFiles.add(file);
         }
         loadClassesFromJarFiles();
     }
