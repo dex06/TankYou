@@ -11,11 +11,14 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.*;
+import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import java.io.File;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.jar.JarFile;
@@ -44,8 +47,9 @@ public class GameFiles extends Application {
         primaryStage.setTitle("Plugin selection");
 
         FileChooser fileChooser = new FileChooser();
+        String currentPath = Paths.get(".").toAbsolutePath().normalize().toString();
         String userDirectoryString = System.getProperty("user.home");
-        File userDirectory = new File(userDirectoryString);
+        File userDirectory = new File(currentPath);
         if(!userDirectory.canRead()) {
             userDirectory = new File("c:/");
         }
