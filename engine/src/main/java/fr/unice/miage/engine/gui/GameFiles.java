@@ -66,6 +66,7 @@ public class GameFiles extends Application {
                 if(new File(path).exists()) {
                     //Repository repo = new Repository(path);
                     repository.loadLibraries(path);
+                    displayRepos();
                 }
             } catch(Exception err){
                 System.err.println(err);
@@ -92,7 +93,7 @@ public class GameFiles extends Application {
                 if (selectedFile.getName().endsWith(".jar")) {
                     try {
                         JarFile jar = new JarFile(selectedFile);
-                        Repository.copyJarFile(jar, new File("plugins"));
+                        Repository.copyJarFile(jar, new File("plugins repository"));
                         repository.loadLibraries(selectedFile.getCanonicalPath());
                         displayRepos();
                     } catch (Exception exception) {
