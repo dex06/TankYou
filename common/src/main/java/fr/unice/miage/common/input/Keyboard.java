@@ -13,7 +13,6 @@ public class Keyboard {
         c.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
-                System.out.println(event.getCode());
                 switch (event.getCode()) {
                     case Z:
                         btnState.up = true;

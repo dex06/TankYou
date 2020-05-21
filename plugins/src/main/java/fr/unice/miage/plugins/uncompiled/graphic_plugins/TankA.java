@@ -55,7 +55,7 @@ public class TankA implements PlugInGraphic {
         ImageView ivGun = new ImageView(gun);
         ivGun.setFitWidth(h * 0.38);
         ivGun.setFitHeight(h * 0.85);
-        ivGun.setX(x + w + h);
+        ivGun.setX(x + w * 2);
         ivGun.setY(y + h * 0.5);
         //ivGun.getTransforms().add(new Rotate(wRot - rot,w/2, h/3));
         ivGun.setRotate(wRot - rot);
@@ -106,17 +106,6 @@ public class TankA implements PlugInGraphic {
 
     public void setToDead(Player player){
         player.getSprite().setColor(Color.GRAY);
-    }
-
-    private Image getSprite(double chrono){
-        double currentTime = chrono;
-        Image tankImg;
-        try {
-            tankImg = new Image(TankA.class.getClassLoader().getResourceAsStream("/tanksA/red_medium_tank.png"));
-        } catch (Exception e){
-            tankImg = new Image("/tanksA/red_medium_tank.png");
-        }
-        return tankImg;
     }
 }
 
