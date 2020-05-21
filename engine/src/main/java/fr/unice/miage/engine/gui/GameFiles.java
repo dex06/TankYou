@@ -11,7 +11,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
@@ -89,7 +89,7 @@ public class GameFiles extends Application {
                 System.err.println(err);
             }
         });
-        Button chooserBtn = new Button("Select Jar or Zip File");
+        Button chooserBtn = new Button("Select Archive");
         chooserBtn.setOnAction(e -> {
             File selectedFile = fileChooser.showOpenDialog(primaryStage);
             if(selectedFile != null) {
@@ -107,7 +107,7 @@ public class GameFiles extends Application {
             }
         });
 
-        Button dirChooserBtn = new Button("Select directory");
+        Button dirChooserBtn = new Button("Select Directory");
         dirChooserBtn.setOnAction(e -> {
             File dir = directoryChooser.showDialog(primaryStage);
             if (dir != null) {
@@ -156,9 +156,7 @@ public class GameFiles extends Application {
         displayRepos();
         VBox mainVBox = new VBox();
 
-        FlowPane root = new FlowPane();
-        root.setPadding(new Insets(10,10,10,10));
-        root.getChildren().addAll(mainVBox);
+
         Button gotoMenuBtn = new Button("Configuration Menu");
         gotoMenuBtn.setOnAction(e -> {
 
@@ -169,9 +167,30 @@ public class GameFiles extends Application {
         });
 
 
+        BorderPane pluginsPane = new BorderPane();
+        selectorVBox.setAlignment(Pos.CENTER);
+        selectorVBox.setPadding(new Insets(20));
+        pluginsPane.setTop(selectorVBox);
+        pluginsHBox.setAlignment(Pos.CENTER);
+        pluginsPane.setCenter(pluginsHBox);
 
 
-        mainVBox.getChildren().addAll(selectHBox, selectorVBox, pluginsHBox, gotoMenuBtn);
+
+        BorderPane goToMenuPane = new BorderPane();
+        gotoMenuBtn.setAlignment(Pos.CENTER);
+        goToMenuPane.setCenter(gotoMenuBtn);
+
+
+
+        mainVBox.getChildren().addAll(selectHBox);
+
+        BorderPane root = new BorderPane();
+        root.setPadding(new Insets(10,10,10,10));
+        root.setTop(mainVBox);
+        root.setCenter(pluginsPane);
+        root.setBottom(goToMenuPane);
+
+
         Scene scene = new Scene(root, 960, 600);
 
 
@@ -295,9 +314,8 @@ public class GameFiles extends Application {
         }
 
         pluginsHBox.getChildren().addAll(moveVBox, graphicVBox, weaponVBox, backgroundVBox, obstacleVBox, collisionVBox, gui1VBox, gui2VBox, realPlayerVBox);
-        //pluginsHBox.setSpacing(10);
-        //pluginsHBox.setPadding(new Insets(10,10,10,10));
-        //pluginsHBox.setAlignment(Pos.CENTER);
+        pluginsHBox.setSpacing(10);
+
     }
 }
 
