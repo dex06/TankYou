@@ -209,6 +209,7 @@ public class Repository {
     public static void copyJarFile(JarFile jarFile, File destDir) throws IOException {
         String fileName = jarFile.getName();
         String fileNameLastPart = fileName.substring(fileName.lastIndexOf(File.separator));
+        if(!destDir.exists()) destDir.mkdir();
         File destFile = new File(destDir, fileNameLastPart);
 
         JarOutputStream jos = new JarOutputStream(new FileOutputStream(destFile));
