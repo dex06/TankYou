@@ -53,24 +53,25 @@
               <execution>
                 <configuration>
                   <skip>true</skip>
-                  <mainClass>fr.unice.miage.engine.App</mainClass>
+                  <mainClass>fr.unice.miage.engine.Main</mainClass>
                 </configuration>
               </execution>
             </executions>
           </plugin>
-          <!--<plugin>-->
-            <!--<artifactId>maven-assembly-plugin</artifactId>-->
-            <!--<configuration>-->
-              <!--<archive>-->
-                <!--<manifest>-->
-                  <!--<mainClass>fr.unice.miage.engine.App</mainClass>-->
-                <!--</manifest>-->
-              <!--</archive>-->
-              <!--<descriptorRefs>-->
-                <!--<descriptorRef>jar-with-dependencies</descriptorRef>-->
-              <!--</descriptorRefs>-->
-            <!--</configuration>-->
-          <!--</plugin>-->
+          <plugin>
+            <artifactId>maven-assembly-plugin</artifactId>
+            <configuration>
+              <archive>
+                <manifest>
+                  <addClasspath>true</addClasspath>
+                  <mainClass>fr.unice.miage.engine.Main</mainClass>
+                </manifest>
+              </archive>
+              <descriptorRefs>
+                <descriptorRef>jar-with-dependencies</descriptorRef>
+              </descriptorRefs>
+            </configuration>
+          </plugin>
         </plugins>
       </pluginManagement>
 

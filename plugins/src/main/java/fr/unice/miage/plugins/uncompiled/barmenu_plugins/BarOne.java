@@ -17,12 +17,21 @@ public class BarOne implements PlugInGUI1 {
         HBox barHBox = new HBox();
 
         Button playBtn = new Button();
-
-        Image playImg= new Image(BarOne.class.getClassLoader().getResourceAsStream("/barMenuIcons/playBtn.png"));
+        Image playImg;
+        try {
+            playImg = new Image(BarOne.class.getClassLoader().getResourceAsStream("/barMenuIcons/playBtn.png"));
+        } catch(Exception e){
+            playImg = new Image("/barMenuIcons/playBtn.png");
+        }
         ImageView playImgView = new ImageView(playImg);
         playImgView.setFitWidth(30);
         playImgView.setFitHeight(30);
-        Image pauseImg = new Image(BarOne.class.getClassLoader().getResourceAsStream("/barMenuIcons/pauseBtn.png"));
+        Image pauseImg;
+        try {
+            pauseImg = new Image(BarOne.class.getClassLoader().getResourceAsStream("/barMenuIcons/pauseBtn.png"));
+        } catch(Exception e){
+            pauseImg = new Image("/barMenuIcons/pauseBtn.png");
+        }
         ImageView pauseImgView = new ImageView(pauseImg);
         pauseImgView.setFitWidth(30);
         pauseImgView.setFitHeight(30);
@@ -43,7 +52,13 @@ public class BarOne implements PlugInGUI1 {
             }
         });
         Button stopBtn = new Button();
-        Image stopImg = new Image(BarOne.class.getClassLoader().getResourceAsStream("/barMenuIcons/stopBtn.png"));
+        Image stopImg;
+        try {
+            stopImg = new Image(BarOne.class.getClassLoader().getResourceAsStream("/barMenuIcons/stopBtn.png"));
+        } catch(Exception e){
+            stopImg = new Image("/barMenuIcons/stopBtn.png");
+
+        }
         ImageView stopImgView = new ImageView(stopImg);
         stopImgView.setFitWidth(30);
         stopImgView.setFitHeight(30);
@@ -52,7 +67,12 @@ public class BarOne implements PlugInGUI1 {
             Config.setStop();
         });
         Button restartBtn = new Button();
-        Image restartImg = new Image(BarOne.class.getClassLoader().getResourceAsStream("/barMenuIcons/skipPreviousBtn.png"));
+        Image restartImg;
+        try {
+            restartImg = new Image(BarOne.class.getClassLoader().getResourceAsStream("/barMenuIcons/skipPreviousBtn.png"));
+        } catch(Exception e){
+            restartImg = new Image("/barMenuIcons/skipPreviousBtn.png");
+        }
         ImageView restartImgView = new ImageView(restartImg);
         restartImgView.setFitWidth(30);
         restartImgView.setFitHeight(30);

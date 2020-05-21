@@ -26,16 +26,37 @@ public class Multi implements PlugInObstacle {
         if(rdmObject == 1){
             int rdm = 1 + (int)(Math.random()*4);
             switch (rdm){
-                case 1: img = new Image(Multi.class.getClassLoader().getResourceAsStream("/arbre/arbre1.png"));
+                case 0:
+                    try {
+                        img = new Image(Arbre.class.getClassLoader().getResourceAsStream("/arbre/arbre1.png"));
+                    } catch(Exception e){
+                        img = new Image("/arbre/arbre1.png");
+                    }
                     break;
-                case 2: img = new Image(Multi.class.getClassLoader().getResourceAsStream("/arbre/arbre2.png"));
-                    break;
-                case 3: img = new Image(Multi.class.getClassLoader().getResourceAsStream("/arbre/arbre3.png"));
-                    break;
-                case 4: img = new Image(Multi.class.getClassLoader().getResourceAsStream("/arbre/arbre4.png"));
-                    break;
-                default: img = new Image(Multi.class.getClassLoader().getResourceAsStream("/arbre/arbre1.png"));
-                    break;
+                case 1:
+                    try {
+                        img = new Image(Arbre.class.getClassLoader().getResourceAsStream("/arbre/arbre2.png"));
+                    } catch(Exception e){
+                        img = new Image("/arbre/arbre2.png");
+                    }            break;
+                case 3:
+                    try {
+                        img = new Image(Arbre.class.getClassLoader().getResourceAsStream("/arbre/arbre3.png"));
+                    } catch(Exception e){
+                        img = new Image("/arbre/arbre3.png");
+                    }            break;
+                case 4:
+                    try {
+                        img = new Image(Arbre.class.getClassLoader().getResourceAsStream("/arbre/arbre4.png"));
+                    } catch(Exception e){
+                        img = new Image("/arbre/arbre4.png");
+                    }            break;
+                default:
+                    try {
+                        img = new Image(Arbre.class.getClassLoader().getResourceAsStream("/arbre/arbre1.png"));
+                    } catch(Exception e){
+                        img = new Image("/arbre/arbre1.png");
+                    }            break;
             }
             Vector2 vctr = new Vector2(Math.random()*600, Math.random()*600);
             ObstacleSprite sprite = new ObstacleSprite(vctr, 50, 50, Color.BLACK, img, rota);
@@ -43,13 +64,21 @@ public class Multi implements PlugInObstacle {
 
         }
         else if(rdmObject == 2){
-            img = new Image(Multi.class.getClassLoader().getResourceAsStream("/mur/mur1.png"));
+            try {
+                img = new Image(Multi.class.getClassLoader().getResourceAsStream("/mur/mur1.png"));
+            } catch (Exception e){
+                img = new Image("/mur/mur1.png");
+            }
             Vector2 vctr = new Vector2(Math.random()*600, Math.random()*600);
             ObstacleSprite sprite = new ObstacleSprite(vctr, 150, 25, Color.BLACK, img, rota);
             obs = new Obstacle(this, vctr, sprite);
         }
         else if(rdmObject == 3){
-            img = new Image(Multi.class.getClassLoader().getResourceAsStream("/mur/mur2.png"));
+            try {
+                img = new Image(Multi.class.getClassLoader().getResourceAsStream("/mur/mur2.png"));
+            } catch (Exception e){
+                img = new Image("/mur/mur2.png");
+            }
             Vector2 vctr = new Vector2(Math.random()*600, Math.random()*600);
             ObstacleSprite sprite = new ObstacleSprite(vctr, 36, 150, Color.BLACK, img, rota);
             obs = new Obstacle(this, vctr, sprite);
@@ -59,7 +88,12 @@ public class Multi implements PlugInObstacle {
             Vector2 vctr = null;
             ObstacleSprite sprite = null;
             switch (rdm){
-                case 1: img = new Image(Multi.class.getClassLoader().getResourceAsStream("/car/car1.png"));
+                case 1:
+                    try {
+                        img = new Image(Multi.class.getClassLoader().getResourceAsStream("/car/car1.png"));
+                    } catch (Exception e){
+                        img = new Image("/car/car1.png");
+                    }
                     if(Randomizer.getRandomIntInRange(1,3) % 2 == 0){
                         vctr = new Vector2(Math.random()*600, Math.random()*600);
                         Vector2 newPos = new Vector2(vctr.getX()-20, vctr.getY()+20);
@@ -76,7 +110,12 @@ public class Multi implements PlugInObstacle {
                         obs = new Obstacle(this, vctr, sprite);
                     }
                     break;
-                case 2: img = new Image(Multi.class.getClassLoader().getResourceAsStream("/car/car2.png"));
+                case 2:
+                    try {
+                        img = new Image(Multi.class.getClassLoader().getResourceAsStream("/car/car2.png"));
+                    } catch (Exception e){
+                        img = new Image("/car/car2.png");
+                    }
                     if(Randomizer.getRandomIntInRange(1,3) % 2 == 0){
                         vctr = new Vector2(Math.random()*600, Math.random()*600);
                         Vector2 newPos = new Vector2(vctr.getX()-25, vctr.getY()+25);
@@ -93,7 +132,12 @@ public class Multi implements PlugInObstacle {
                         obs = new Obstacle(this, vctr, sprite);
                     }
                     break;
-                default: img = new Image(Multi.class.getClassLoader().getResourceAsStream("/car/car1.png"));
+                default:
+                    try {
+                        img = new Image(Multi.class.getClassLoader().getResourceAsStream("/car/car1.png"));
+                    } catch (Exception e){
+                        img = new Image("/car/car1.png");
+                    }
                     vctr = new Vector2(Math.random()*600, Math.random()*600);
                     sprite = new ObstacleSprite(vctr, 30, 50, Color.BLACK, img, rota);
                     obs = new Obstacle(this, vctr, sprite);

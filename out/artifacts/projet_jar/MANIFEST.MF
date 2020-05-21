@@ -1,0 +1,15 @@
+Manifest-Version: 1.0
+Created-By: 10.0.1 (Oracle Corporation 10.0.1+10)
+Built-By: JUnit Team
+Build-Date: 2018-09-11
+Build-Time: 06:47:21.371+0200
+Build-Revision: dba2872dd8a2575722c08d87932999f9c8ef9e0d
+Specification-Title: junit-platform-commons
+Specification-Version: 1.3.1
+Specification-Vendor: junit.org
+Implementation-Title: junit-platform-commons
+Implementation-Version: 1.3.1
+Implementation-Vendor: junit.org
+Automatic-Module-Name: org.junit.platform.commons
+Multi-Release: true
+Main-Class: fr.unice.miage.engine.Main

@@ -12,7 +12,7 @@ public class App extends Application
         if(Config.getTesting()) System.out.println("Testing mode");
         Config.setWorldWidth(600);
         Config.setWorldHeight(600);
-        GameEngine gameEngine = new GameEngine(stage, Config.getWorldWidth(),Config.getWorldHeight(), "plugins repository");
+        GameEngine gameEngine = new GameEngine(stage, Config.getWorldWidth(),Config.getWorldHeight(), "C:\\Users\\marqu\\IdeaProjects\\pa-huet\\plugins repository");
         gameEngine.initMenu();
         gameEngine.startMenu();
     }

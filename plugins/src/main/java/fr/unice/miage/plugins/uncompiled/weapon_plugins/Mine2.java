@@ -69,39 +69,84 @@ public class Mine2 implements PlugInWeapon {
 
     private Image getSprite(Projectile projectile, double chrono){
         double currentTime = chrono;
-        Image explosionImg= new Image(Mine2.class.getClassLoader().getResourceAsStream("/mineExplosions/Bomb_Explosion_A_000.png"));
+        Image explosionImg;
+        try {
+            explosionImg = new Image(Mine2.class.getClassLoader().getResourceAsStream("/mineExplosions/Bomb_Explosion_A_000.png"));
+        } catch (Exception e){
+            explosionImg = new Image("/mineExplosions/Bomb_Explosion_A_000.png");
+        }
         if(!projectile.hasEnded() & !projectile.hasHit()) {
-            explosionImg= new Image(Mine2.class.getClassLoader().getResourceAsStream("/mineExplosions/Bomb_Explosion_A_000.png"));
+            try {
+                explosionImg = new Image(Mine2.class.getClassLoader().getResourceAsStream("/mineExplosions/Bomb_Explosion_A_000.png"));
+            } catch (Exception e){
+                explosionImg = new Image("/mineExplosions/Bomb_Explosion_A_000.png");
+            }
             if(Math.round(Timer.getChrono()) % 2 == 0){
-                explosionImg = new Image(Mine2.class.getClassLoader().getResourceAsStream("/mineExplosions/Bomb_Explosion_A_001.png"));
+                try {
+                    explosionImg = new Image(Mine2.class.getClassLoader().getResourceAsStream("/mineExplosions/Bomb_Explosion_A_001.png"));
+                } catch (Exception e){
+                    explosionImg = new Image("/mineExplosions/Bomb_Explosion_A_001.png");
+                }
             }
         }
         if(!projectile.hasEnded() & projectile.hasHit()) {
             double hitTime = projectile.getHitTime();
             double difTime = currentTime - hitTime;
             if (difTime <= 0.25) {
-                explosionImg = new Image(Mine2.class.getClassLoader().getResourceAsStream("/mineExplosions/Bomb_Explosion_A_001.png"));
+                try {
+                    explosionImg = new Image(Mine2.class.getClassLoader().getResourceAsStream("/mineExplosions/Bomb_Explosion_A_001.png"));
+                } catch (Exception e){
+                    explosionImg = new Image("/mineExplosions/Bomb_Explosion_A_001.png");
+                }
             }
             if (difTime > 0.25 & difTime <= 0.5) {
-                explosionImg = new Image(Mine2.class.getClassLoader().getResourceAsStream("/mineExplosions/Bomb_Explosion_A_002.png"));
+                try {
+                    explosionImg = new Image(Mine2.class.getClassLoader().getResourceAsStream("/mineExplosions/Bomb_Explosion_A_002.png"));
+                } catch (Exception e){
+                    explosionImg = new Image("/mineExplosions/Bomb_Explosion_A_002.png");
+                }
             }
             if (difTime > 0.5 & difTime <= 0.75) {
-                explosionImg = new Image(Mine2.class.getClassLoader().getResourceAsStream("/mineExplosions/Bomb_Explosion_A_003.png"));
+                try {
+                    explosionImg = new Image(Mine2.class.getClassLoader().getResourceAsStream("/mineExplosions/Bomb_Explosion_A_003.png"));
+                } catch (Exception e){
+                    explosionImg = new Image("/mineExplosions/Bomb_Explosion_A_003.png");
+                }
             }
             if (difTime > 0.75 & difTime <= 1) {
-                explosionImg = new Image(Mine2.class.getClassLoader().getResourceAsStream("/mineExplosions/Bomb_Explosion_A_004.png"));
+                try {
+                    explosionImg = new Image(Mine2.class.getClassLoader().getResourceAsStream("/mineExplosions/Bomb_Explosion_A_004.png"));
+                } catch (Exception e){
+                    explosionImg = new Image("/mineExplosions/Bomb_Explosion_A_004.png");
+                }
             }
             if (difTime > 1 & difTime <= 1.25) {
-                explosionImg = new Image(Mine2.class.getClassLoader().getResourceAsStream("/mineExplosions/Bomb_Explosion_A_005.png"));
+                try {
+                    explosionImg = new Image(Mine2.class.getClassLoader().getResourceAsStream("/mineExplosions/Bomb_Explosion_A_005.png"));
+                } catch (Exception e){
+                    explosionImg = new Image("/mineExplosions/Bomb_Explosion_A_005.png");
+                }
             }
             if (difTime > 1.25 & difTime <= 1.5) {
-                explosionImg = new Image(Mine2.class.getClassLoader().getResourceAsStream("/mineExplosions/Bomb_Explosion_A_006.png"));
+                try {
+                    explosionImg = new Image(Mine2.class.getClassLoader().getResourceAsStream("/mineExplosions/Bomb_Explosion_A_006.png"));
+                } catch (Exception e){
+                    explosionImg = new Image("/mineExplosions/Bomb_Explosion_A_006.png");
+                }
             }
             if (difTime > 1.5 & difTime <= 1.75) {
-                explosionImg = new Image(Mine2.class.getClassLoader().getResourceAsStream("/mineExplosions/Bomb_Explosion_A_007.png"));
+                try {
+                    explosionImg = new Image(Mine2.class.getClassLoader().getResourceAsStream("/mineExplosions/Bomb_Explosion_A_007.png"));
+                } catch (Exception e){
+                    explosionImg = new Image("/mineExplosions/Bomb_Explosion_A_007.png");
+                }
             }
             if (difTime > 2 & difTime <= 2.25) {
-                explosionImg = new Image(Mine2.class.getClassLoader().getResourceAsStream("/mineExplosions/Bomb_Explosion_A_008.png"));
+                try {
+                    explosionImg = new Image(Mine2.class.getClassLoader().getResourceAsStream("/mineExplosions/Bomb_Explosion_A_008.png"));
+                } catch (Exception e){
+                    explosionImg = new Image("/mineExplosions/Bomb_Explosion_A_008.png");
+                }
             }
             else  projectile.endProjectile();
         }

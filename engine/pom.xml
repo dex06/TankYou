@@ -69,7 +69,7 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <mainClass>fr.unice.miage.engine.App</mainClass>
+                    <mainClass>fr.unice.miage.engine.Main</mainClass>
                 </configuration>
             </plugin>
         </plugins>

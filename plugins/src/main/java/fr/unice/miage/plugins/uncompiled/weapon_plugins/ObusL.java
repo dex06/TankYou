@@ -68,9 +68,11 @@ public class ObusL implements PlugInWeapon {
             Vector2 velocity = new Vector2(5 * direction.getX(), 5 * direction.getY());
 
             Sprite sprite = createSprite(player);
-            Projectile projectile = new Projectile(this, player, player.getPosition(), velocity, sprite, Timer.getChrono(), "obus léger");
-            projectile.setRotation(Rotation.rotation2Vectors(new Vector2(0,-1), direction));
-            player.addProjectile(projectile);
+            Projectile newPrj = new Projectile(this, player, player.getPosition(), velocity, sprite, Timer.getChrono(), "rebondissante");
+            double wRot = Rotation.rotation2Vectors(new Vector2(0,-1), direction);
+            newPrj.setRotation(wRot);
+            player.setWeaponRotation(wRot);
+            player.addProjectile(newPrj);
             player.setLastShot(Timer.getChrono());
             player.incrementNumberOfShots();
         }
@@ -93,38 +95,71 @@ public class ObusL implements PlugInWeapon {
 
     private Image getSprite(Projectile projectile, double chrono){
         double currentTime = chrono;
-        Image explosionImg= new Image(ObusL.class.getClassLoader().getResourceAsStream("/shells/Light_Shell.png"));
+        Image explosionImg;
+        try {
+            explosionImg = new Image(ObusL.class.getClassLoader().getResourceAsStream("/shells/Light_Shell.png"));
+        } catch (Exception e){
+            explosionImg = new Image("/shells/Light_Shell.png");
+        }
         if(!projectile.hasEnded() & !projectile.hasHit()) {
-            explosionImg= new Image(ObusL.class.getClassLoader().getResourceAsStream("/shells/Light_Shell.png"));
-
+            try {
+                explosionImg = new Image(ObusL.class.getClassLoader().getResourceAsStream("/shells/Light_Shell.png"));
+            } catch (Exception e){
+                explosionImg = new Image("/shells/Light_Shell.png");
+            }
         }
         if(!projectile.hasEnded() & projectile.hasHit()) {
             double hitTime = projectile.getHitTime();
             double difTime = currentTime - hitTime;
             if (difTime <= 0.25) {
-                explosionImg = new Image(ObusL.class.getClassLoader().getResourceAsStream("/shellExplosions/Explosion_A.png"));
+                try {
+                    explosionImg = new Image(ObusL.class.getClassLoader().getResourceAsStream("/shellExplosions/Explosion_A.png"));
+                } catch(Exception e){
+                    explosionImg = new Image("/shellExplosions/Explosion_A.png");
+                }
             }
             if (difTime > 0.25 & difTime <= 0.5) {
-                explosionImg = new Image(ObusL.class.getClassLoader().getResourceAsStream("/shellExplosions/Explosion_B.png"));
-            }
+                try {
+                    explosionImg = new Image(ObusL.class.getClassLoader().getResourceAsStream("/shellExplosions/Explosion_B.png"));
+                } catch(Exception e){
+                    explosionImg = new Image("/shellExplosions/Explosion_B.png");
+                }            }
             if (difTime > 0.5 & difTime <= 0.75) {
-                explosionImg = new Image(ObusL.class.getClassLoader().getResourceAsStream("/shellExplosions/Explosion_C.png"));
-            }
+                try {
+                    explosionImg = new Image(ObusL.class.getClassLoader().getResourceAsStream("/shellExplosions/Explosion_C.png"));
+                } catch(Exception e){
+                    explosionImg = new Image("/shellExplosions/Explosion_C.png");
+                }            }
             if (difTime > 0.75 & difTime <= 1) {
-                explosionImg = new Image(ObusL.class.getClassLoader().getResourceAsStream("/shellExplosions/Explosion_D.png"));
-            }
+                try {
+                    explosionImg = new Image(ObusL.class.getClassLoader().getResourceAsStream("/shellExplosions/Explosion_D.png"));
+                } catch(Exception e){
+                    explosionImg = new Image("/shellExplosions/Explosion_D.png");
+                }            }
             if (difTime > 1 & difTime <= 1.25) {
-                explosionImg = new Image(ObusL.class.getClassLoader().getResourceAsStream("/shellExplosions/Explosion_E.png"));
-            }
+                try {
+                    explosionImg = new Image(ObusL.class.getClassLoader().getResourceAsStream("/shellExplosions/Explosion_E.png"));
+                } catch(Exception e){
+                    explosionImg = new Image("/shellExplosions/Explosion_E.png");
+                }            }
             if (difTime > 1.25 & difTime <= 1.5) {
-                explosionImg = new Image(ObusL.class.getClassLoader().getResourceAsStream("/shellExplosions/Explosion_F.png"));
-            }
+                try {
+                    explosionImg = new Image(ObusL.class.getClassLoader().getResourceAsStream("/shellExplosions/Explosion_F.png"));
+                } catch(Exception e){
+                    explosionImg = new Image("/shellExplosions/Explosion_F.png");
+                }            }
             if (difTime > 1.5 & difTime <= 1.75) {
-                explosionImg = new Image(ObusL.class.getClassLoader().getResourceAsStream("/shellExplosions/Explosion_G.png"));
-            }
+                try {
+                    explosionImg = new Image(ObusL.class.getClassLoader().getResourceAsStream("/shellExplosions/Explosion_G.png"));
+                } catch(Exception e){
+                    explosionImg = new Image("/shellExplosions/Explosion_G.png");
+                }            }
             if (difTime > 1.75 & difTime <= 2) {
-                explosionImg = new Image(ObusL.class.getClassLoader().getResourceAsStream("/shellExplosions/Explosion_H.png"));
-
+                try {
+                    explosionImg = new Image(ObusL.class.getClassLoader().getResourceAsStream("/shellExplosions/Explosion_H.png"));
+                } catch(Exception e){
+                    explosionImg = new Image("/shellExplosions/Explosion_H.png");
+                }
             } else  projectile.endProjectile();
         }
         return explosionImg;

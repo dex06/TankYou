@@ -34,19 +34,30 @@ public class TankA implements PlugInGraphic {
         SnapshotParameters params = new SnapshotParameters();
         params.setFill(Color.TRANSPARENT);
 
-        Image hull = new Image(TankA.class.getClassLoader().getResourceAsStream("/tanks2/colorA/hulls/Hull_01.png"));
+        Image hull;
+        try {
+            hull = new Image(TankA.class.getClassLoader().getResourceAsStream("/tanks2/colorA/hulls/Hull_01.png"));
+        } catch (Exception e) {
+            hull = new Image("/tanks2/colorA/hulls/Hull_01.png");
+        }
         ImageView ivHull = new ImageView(hull);
         ivHull.setFitWidth(w);
         ivHull.setFitHeight(h);
         //Image rotatedHull = ivHull.snapshot(params, null);
 
-        Image gun = new Image(TankA.class.getClassLoader().getResourceAsStream("/tanks2/colorA/guns/Gun_01.png"));
+        Image gun;
+        try {
+         gun = new Image(TankA.class.getClassLoader().getResourceAsStream("/tanks2/colorA/guns/Gun_01.png"));
+        } catch (Exception e) {
+            gun = new Image("/tanks2/colorA/guns/Gun_01.png");
+        }
+
         ImageView ivGun = new ImageView(gun);
         ivGun.setFitWidth(h * 0.38);
         ivGun.setFitHeight(h * 0.85);
-        ivGun.setX(x + w);
+        ivGun.setX(x + w + h);
         ivGun.setY(y + h * 0.5);
-
+        //ivGun.getTransforms().add(new Rotate(wRot - rot,w/2, h/3));
         ivGun.setRotate(wRot - rot);
 
 
@@ -55,8 +66,18 @@ public class TankA implements PlugInGraphic {
 
         Image track;
         if(Timer.getChrono() % 2 == 0){
-            track = new Image(TankA.class.getClassLoader().getResourceAsStream("/tanks2/colorA/tracks/Track_1_A.png"));
-        } else track = new Image(TankA.class.getClassLoader().getResourceAsStream("/tanks2/colorA/tracks/Track_1_B.png"));
+            try {
+                track = new Image(TankA.class.getClassLoader().getResourceAsStream("/tanks2/colorA/tracks/Track_1_A.png"));
+            } catch (Exception e){
+                track = new Image("/tanks2/colorA/tracks/Track_1_A.png");
+            }
+        } else {
+            try {
+                track = new Image(TankA.class.getClassLoader().getResourceAsStream("/tanks2/colorA/tracks/Track_1_B.png"));
+            } catch (Exception e){
+                track = new Image("/tanks2/colorA/tracks/Track_1_B.png");
+            }
+        }
 
         ImageView ivTrackL = new ImageView(track);
         ivTrackL.setFitWidth(w);
@@ -89,7 +110,13 @@ public class TankA implements PlugInGraphic {
 
     private Image getSprite(double chrono){
         double currentTime = chrono;
-        return new Image(TankA.class.getClassLoader().getResourceAsStream("/tanksA/red_medium_tank.png"));
+        Image tankImg;
+        try {
+            tankImg = new Image(TankA.class.getClassLoader().getResourceAsStream("/tanksA/red_medium_tank.png"));
+        } catch (Exception e){
+            tankImg = new Image("/tanksA/red_medium_tank.png");
+        }
+        return tankImg;
     }
 }
 

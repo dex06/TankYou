@@ -8,7 +8,6 @@ import fr.unice.miage.common.plugins.PlugInObstacle;
 import fr.unice.miage.common.sprite.ObstacleSprite;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,18 +18,37 @@ public class Arbre implements PlugInObstacle {
         int rdm = (int)(Math.random()*4);
         Image img;
         switch (rdm){
-            case 0: img = new Image(Arbre.class.getClassLoader().getResourceAsStream("/arbre/arbre1.png"));
+            case 0:
+                try {
+                    img = new Image(Arbre.class.getClassLoader().getResourceAsStream("/arbre/arbre1.png"));
+                } catch(Exception e){
+                    img = new Image("/arbre/arbre1.png");
+                }
             break;
-            case 1: img = new Image(Arbre.class.getClassLoader().getResourceAsStream("/arbre/arbre2.png"));
-            break;
-            case 3: img = new Image(Arbre.class.getClassLoader().getResourceAsStream("/arbre/arbre3.png"));
-            break;
-            case 4: img = new Image(Arbre.class.getClassLoader().getResourceAsStream("/arbre/arbre4.png"));
-            break;
-            default: img = new Image(Arbre.class.getClassLoader().getResourceAsStream("/arbre/arbre1.png"));
-            break;
-
-
+            case 1:
+                try {
+                    img = new Image(Arbre.class.getClassLoader().getResourceAsStream("/arbre/arbre2.png"));
+                } catch(Exception e){
+                    img = new Image("/arbre/arbre2.png");
+                }            break;
+            case 3:
+                try {
+                    img = new Image(Arbre.class.getClassLoader().getResourceAsStream("/arbre/arbre3.png"));
+                } catch(Exception e){
+                    img = new Image("/arbre/arbre3.png");
+                }            break;
+            case 4:
+                try {
+                    img = new Image(Arbre.class.getClassLoader().getResourceAsStream("/arbre/arbre4.png"));
+                } catch(Exception e){
+                    img = new Image("/arbre/arbre4.png");
+                }            break;
+            default:
+                try {
+                    img = new Image(Arbre.class.getClassLoader().getResourceAsStream("/arbre/arbre1.png"));
+                } catch(Exception e){
+                    img = new Image("/arbre/arbre1.png");
+                }            break;
         }
         Vector2 vctr = new Vector2(Math.random()*600, Math.random()*600);
         ObstacleSprite sprite = new ObstacleSprite(vctr, 50, 50, Color.BLACK, img);

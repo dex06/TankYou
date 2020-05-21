@@ -36,7 +36,7 @@ public class MediumTank implements PlugInGraphic {
         iv.setFitWidth(w);
         iv.setFitHeight(h);
         iv.getTransforms().add(new Rotate(rot,w/2, h/2));
-        iv.setRotate(wRot);
+        //iv.setRotate(wRot);
         SnapshotParameters params = new SnapshotParameters();
         params.setFill(Color.TRANSPARENT);
         Image rotatedImage = iv.snapshot(params, null);
@@ -53,7 +53,13 @@ public class MediumTank implements PlugInGraphic {
 
     private Image getSprite(double chrono){
         double currentTime = chrono;
-        return new Image(MediumTank.class.getClassLoader().getResourceAsStream("/tanks/red_medium_tank.png"));
+        Image tankImg;
+        try {
+            tankImg = new Image(MediumTank.class.getClassLoader().getResourceAsStream("/tanks/red_medium_tank.png"));
+        } catch (Exception e) {
+            tankImg = new Image("/tanks/red_medium_tank.png");
+        }
+        return tankImg;
     }
 }
 
