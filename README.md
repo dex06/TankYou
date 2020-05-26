@@ -29,74 +29,33 @@ Une partie du jeu se déroule de la façon suivante :
    * Le gagnant est le dernier à avoir encore de la vie
 De base tous les joueurs sont controlés par l'ordinateur, sans intervention humaine
 
-### Principe des plugins    
-Le point important du projet est d'avoir une architecture à plugins. La majorité de l'application devra être configurée grâce à des classes qui seront chargées dynamiquement à l'exécution.
-Par exemple, on peut imaginer spécifier un comportement différent pour le déplacement avec la classe suivante
 
-```java
-public class NimporteComment implements PluginMouvement {
+Voici la liste exhaustive des plugins présent dans le projet : 
 
-	public void move() {
-	    
-	}
-}
-```
-Concrètement, le jeu devra
-1. Charger la classe à l'exécution en la trouvant sur le disque
-1. Appeler la méthode move(...) (venant de l'interface PluginMouvement) quand ça sera nécessaire
+* Background : 
+    * Ajout d'une image en fond dans le jeu. Il y a la possibilité de choisir entre 6 bakcground différents.
 
-### Liste non exhaustive de plugins
-Une fois l'architecture pour plugins mise en place, il devrait être très facile d'en ajouter. Mais il faut avoir bien prévu ce qu'on voulait faire dès le début. Voici une petite liste de plugins qui devront être implémentés. Cette liste devrait permettre de décider quand un plugin est appelé et comment il est appelé (i.e. avec quels paramètres).
+* Collision :   
+    * Plugin qui ajoute les collisions entre les joueurs et avec les potentiels obstacles. 
+    
+* Obstacle : 
+    * Plugin que ajoute des obstacles au début de la partie. Les obstacles sont placés aléatoirement, il y plusieurs design disponibles pour ces derniers. 
+    
+* Statistiques : 
+    * Permet d'afficher à la fin de la partie les statistiques de cette dernière. Comme le nombre de tirs éffectué par joueur ainsi que la distance parcourue. 
+    
+* Graphique :
+    * Dessine et affiche les joueurs dans le jeu. Il y a 6 skin de personnages disponibles. 
 
-*  Mouvement de joueur :
-    * déplacement aléatoire
-    * suivi, fuite
-* Formes/Graphismes joueurs
-    * Affichage de figures géométriques, images
-    * Affichage barre de vie, perte de vie...
-* Aire de jeu
-    * Charger une image pour mettre en aire de jeu (fond d'écran)
-    * Générer aléatoirement des obstacles sur l'aire de jeu
-    * Charger un fichier décrivant les obstacles     
-* Comportement si collisions
-    * Changement d’image en cas de collision
-    * Création de nouveaux sprites lors d’une collision
-* Armes
-	* Mine, missile à trajectoire variable...
-* GUI
-    * Ajout d’une barre de menu pour faire pause, redémarrer la partie...
-    * Ajout d'informations tel que durée de partie, longueur des déplacements...
-* Autre
-    * Avoir un comportement pour les joueurs morts (par exemple ralentir les autres joueurs en cas de contact)
-    * Avoir un joueur humain (pilotage au clavier)
+* Menu : 
+    * Ajoute une barre de menu au jeu. Cela permet de soit mettre en pause la partie, soit finir la partie et afficher les statistiques si le plugin est présent ou alours annuler al partie et revenir au paramètres de la partie. 
+    
+* Mouvement : 
+    * Permet aux joueurs de se déplacer, il y a 5 types de mouvments différents qui vont influer sur le déplacement des joeuurs. 
+    
+* Arme : 
+    * Ajout aux joueurs des armes permettant de tirer et ainsi faire perdre des points de vie aux adversaires. Il y a 5 armes différentes disponibles.
+    
+* Joueur humain :
+    * Ajout la possibilité de contrôler un joueur. 
 
-
- ### Code démo
- Le code fournit dans ce dépot est destiné à vous montrer le fonctionnement de JavaFX et vous fournir la boucle de jeu (classe GameGUI). Il ne contient aucun code lié aux plugins.
-
-
- ### Fonctionnalités de l'application
- L'application finale devra permettre de choisir, au lancement, le nombre de joueurs, ainsi que les plugins du jeu, grâce à une fenêtre. Le mockup suivant est juste un exemple.
-
- ![mokup de fenêtre](./doc/mockup.png "Mockup réalisé avec http://framebox.org")
-
- Elle devra aussi afficher le gagnant lors de la fin de partie.
-
-
-### Évaluation et rendu  
- Le travail se fait en groupe de 3 étudiants en moyenne, choisis aléatoirement. Tout le projet devra être fait dans un dépôt [GitHub classroom](https://classroom.github.com/g/t-04as7P) *privé*. Ce depot doit
- être créé par le chef de projet. Le projet doit être multimodule de sorte à pouvoir compiler les plugins séparément. L'application principale doit être un jar exécutable.
- La date de rendu est le *7 mai 2020 à 18.00*. Tout commit fait après ne sera pas considéré.
- La note finale tiendra compte des critères suivants
-  * Qualité de l'architecture
-  * Plugins (nombre, originalité, intégration dans le jeu...)
-  * Travail en équipe (répartition des taches, travail régulier...)
-  * Qualité globale du jeu
-  * Démonstration ou rendu vidéo (10 min par groupe
-
-### Gestion de groupe
- Chaque projet devra désigner un chef de projet. Son rôle sera d'assurer
- un suivi régulier (au moins bi-hebdomadaire) du travail. Le suivi des taches devra être effectué avec le Kanban intégré à GitHub.
- La note des membres du groupe pourra être différente suivant le travail accompli par chacun. C'est pour ça que le suivi régulier des taches est très important.
- En cas de problèmes dans le groupe. Il faut essayer de le traiter en interne. Par exemple assigner les taches en fonction de la disponibilité et les compétences techniques. Si le problème persiste, me contacter pour que j'intervienne.  
-"# projet-tp1-charlet-samson-panzera" 
