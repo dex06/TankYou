@@ -12,7 +12,8 @@ On se place dans le dossier contenant les fichiers à compiler
 
 ```jar  -cvf MyJarFile.jar *.class```
 
-
+#Le dossier pour les plugins 
+Les plugins se trouvent dans le dossier "plugins repository"
 
 # Projet Programmation avancée 2019-2020
 
