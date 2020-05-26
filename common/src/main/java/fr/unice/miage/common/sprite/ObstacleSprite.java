@@ -45,12 +45,12 @@ public class ObstacleSprite extends Sprite {
         if(imgSprite == null){
             gc.setFill(color);
             gc.translate(this.position.getX(), this.position.getY());
-            gc.transform(new Affine(new Rotate(rotation, this.getWidth()/2, this.getHeight()/2)));
+//            gc.transform(new Affine(new Rotate(rotation, this.getWidth()/2, this.getHeight()/2)));
             gc.fillRect(0, 0, width, height);
         }
         else{
             gc.translate(this.position.getX(), this.position.getY());
-            gc.transform(new Affine(new Rotate(rotation, this.getWidth()/2, this.getHeight()/2)));
+//            gc.transform(new Affine(new Rotate(rotation, this.getWidth()/2, this.getHeight()/2)));
             gc.drawImage(imgSprite, 0, 0, width, height);
         }
         gc.restore();

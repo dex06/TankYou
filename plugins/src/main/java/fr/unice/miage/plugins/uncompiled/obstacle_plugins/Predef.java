@@ -120,32 +120,32 @@ public class Predef implements PlugInObstacle {
 //        obs = new Obstacle(this, vctr, sprite);
 //        listReturn.add(obs);
 
-        img = makeImg("/mur/mur2.png");
+        img = makeImg("/mur/mur1.png");
         vctr = new Vector2(50, 130);
-        sprite = new ObstacleSprite(vctr, 20, 100, Color.BLACK, img, "rectangle", 50);
+        sprite = new ObstacleSprite(vctr, 100, 20, Color.BLACK, img, "rectangle", 50);
         obs = new Obstacle(this, vctr, sprite);
         listReturn.add(obs);
 
 
 
         //MUR
-        img = makeImg("/mur/mur2.png");
-        vctr = new Vector2(100, 350);
-        sprite = new ObstacleSprite(vctr, 20, 100, Color.BLACK, img, "rectangle", 90);
+        img = makeImg("/mur/mur1.png");
+        vctr = new Vector2(70, 390);
+        sprite = new ObstacleSprite(vctr, 100, 20, Color.BLACK, img, "rectangle", 90);
         obs = new Obstacle(this, vctr, sprite);
         listReturn.add(obs);
-        vctr = new Vector2(205, 350);
-        sprite = new ObstacleSprite(vctr, 20, 100, Color.BLACK, img, "rectangle", 90);
+        vctr = new Vector2(175, 390);
+        sprite = new ObstacleSprite(vctr, 100, 20, Color.BLACK, img, "rectangle", 90);
         obs = new Obstacle(this, vctr, sprite);
         listReturn.add(obs);
 
 
-        vctr = new Vector2(400, 350);
-        sprite = new ObstacleSprite(vctr, 20, 100, Color.BLACK, img, "rectangle", 90);
+        vctr = new Vector2(370, 390);
+        sprite = new ObstacleSprite(vctr, 100, 20, Color.BLACK, img, "rectangle", 90);
         obs = new Obstacle(this, vctr, sprite);
         listReturn.add(obs);
-        vctr = new Vector2(505, 350);
-        sprite = new ObstacleSprite(vctr, 20, 100, Color.BLACK, img, "rectangle", 90);
+        vctr = new Vector2(475, 390);
+        sprite = new ObstacleSprite(vctr, 100, 20, Color.BLACK, img, "rectangle", 90);
         obs = new Obstacle(this, vctr, sprite);
         listReturn.add(obs);
 
