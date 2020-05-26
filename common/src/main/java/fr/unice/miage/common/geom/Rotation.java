@@ -14,4 +14,13 @@ public class Rotation {
         double rotY = y * Math.cos(rad) + x * Math.sin(rad);
         return new Vector2(rotX-x, -rotY-y);
     }
+
+    public static Vector2 getTransformVector(Vector2 v, double rot){
+        double x = v.getX();
+        double y = v.getY();
+        double rad = Math.toRadians(rot);
+        double rotX = -y * Math.sin(rad) + x * Math.cos(rad);
+        double rotY = y * Math.cos(rad) + x * Math.sin(rad);
+        return new Vector2(rotX, -rotY);
+    }
 }

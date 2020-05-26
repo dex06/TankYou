@@ -43,4 +43,6 @@ public abstract class Sprite {
 
 
     public void setRotation(double rot) { rotation = rot; };
+
+	public double getRotation(){ return rotation; }
 }

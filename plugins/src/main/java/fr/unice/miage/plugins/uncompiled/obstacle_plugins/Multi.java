@@ -50,13 +50,13 @@ public class Multi implements PlugInObstacle {
         else if(rdmObject == 2){
             img = ImageLoader.loadImage("/mur/mur1.png", Multi.class);
             Vector2 vctr = new Vector2(Math.random()*600, Math.random()*600);
-            ObstacleSprite sprite = new ObstacleSprite(vctr, 150, 25, Color.TRANSPARENT, img, "rectangle", rota);
+            ObstacleSprite sprite = new ObstacleSprite(vctr, 100, 20, Color.TRANSPARENT, img, "rectangle", rota);
             obs = new Obstacle(this, vctr, sprite);
         }
         else if(rdmObject == 3){
             img = ImageLoader.loadImage("/mur/mur2.png", Multi.class);
             Vector2 vctr = new Vector2(Math.random()*600, Math.random()*600);
-            ObstacleSprite sprite = new ObstacleSprite(vctr, 36, 150, Color.TRANSPARENT, img, "rectangle", rota);
+            ObstacleSprite sprite = new ObstacleSprite(vctr, 20, 100, Color.TRANSPARENT, img, "rectangle", rota);
             obs = new Obstacle(this, vctr, sprite);
         }
         else if(rdmObject == 4){
