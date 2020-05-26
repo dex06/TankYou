@@ -21,7 +21,7 @@ public class ObstacleSprite extends Sprite {
     public ObstacleSprite(Vector2 position, double width, double height, Paint color, String shapeType) {
         super(width, height, color);
         this.position = position;
-        this.rotation = rotation;
+        this.rotation = 0;
         this.shapeType = shapeType;
     }
 
@@ -29,7 +29,7 @@ public class ObstacleSprite extends Sprite {
         super(width, height, color);
         this.position = position;
         this.imgSprite = img;
-        this.rotation = rotation;
+        this.rotation = 0;
     }
 
     public ObstacleSprite(Vector2 position, double width, double height, Paint color, Image img, String shapeType, double rotation) {
