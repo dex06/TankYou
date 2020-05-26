@@ -169,7 +169,7 @@ public class Predef implements PlugInObstacle {
         obs = new Obstacle(this, vctr, sprite);
         listReturn.add(obs);
 
-        img = makeImg("/arbre/arbre" + (int)(Math.random()*4)+ ".png");
+        img = makeImg("/arbre/arbre" + ((int)(Math.random()*3) + 1 )+ ".png");
 
         vctr = new Vector2(25, 375);
         sprite = new ObstacleSprite(vctr, 50, 50, Color.BLACK, img, "circle", 0);
