@@ -2,8 +2,6 @@ package fr.unice.miage.common.sprite;
 
 import fr.unice.miage.common.CanvasGUI;
 import fr.unice.miage.common.game_objects.Player;
-import fr.unice.miage.common.geom.Rotation;
-import fr.unice.miage.common.geom.Vector2;
 import fr.unice.miage.common.utils.Randomizer;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
@@ -29,9 +27,6 @@ public class RectangleSprite extends Sprite {
 	public void draw(CanvasGUI canvas){
 		double x = player.getX();
 		double y = player.getY();
-		double centerX = x + this.getWidth()/2;
-		double centerY = y + this.getHeight()/2;
-		Vector2 transV = Rotation.getTransVecAfterRot(new Vector2(this.getWidth()/2,this.getHeight()/2), rotation);
 		GraphicsContext gc = canvas.getGraphicsContext();
 		gc.save();
 		gc.translate(x,y);

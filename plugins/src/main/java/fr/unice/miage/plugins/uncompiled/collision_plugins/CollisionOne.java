@@ -4,8 +4,10 @@ import fr.unice.miage.common.Config;
 import fr.unice.miage.common.game_objects.Obstacle;
 import fr.unice.miage.common.game_objects.Player;
 import fr.unice.miage.common.game_objects.Projectile;
+import fr.unice.miage.common.geom.Vector2;
 import fr.unice.miage.common.plugins.PlugInCollision;
 import fr.unice.miage.common.sprite.Sprite;
+import fr.unice.miage.common.utils.Randomizer;
 
 import java.util.Iterator;
 import java.util.List;
@@ -52,6 +54,9 @@ public class CollisionOne implements PlugInCollision {
         for(Obstacle obstacle : obstacles){
             if(checkPlayerHitsObstacle(obstacle, player)){
                 obstacle.setPlayerCollision(player);
+                if(!player.getBlocked()){
+                    player.setBlocked(true);
+                }
             }
         }
     }
@@ -119,16 +124,36 @@ public class CollisionOne implements PlugInCollision {
             Sprite playerSprite2 = player2.getSprite();
             if (playerSprite1.getBoundingShape().getBoundsInParent().intersects(playerSprite2.getBoundingShape().getBoundsInParent())) {
                 if(player1.isAlive()) {
-                    player1.reverseSpeed();
-                    player1.getVelocity().mult2(2);
-                    player1.getSprite().setRandomColor();
+                    if(player1.getBlocked()){
+                        double x = player1.getPosition().getX();
+                        double y = player1.getPosition().getY();
+                        Vector2 newPosition = new Vector2(x + Randomizer.getRandomIntInRange(-10,10), y + Randomizer.getRandomIntInRange(-10,10));
+                        player1.setPosition(newPosition);
+                        player1.setBlocked(false);
+                    } else {
+                        player1.reverseSpeed();
+                        player1.getVelocity().mult2(2);
+                        player1.getSprite().setRandomColor();
+                    }
                 }
                 if (player2.isAlive()){
-                    player2.reverseSpeed();
-                    player2.getVelocity().mult2(2);
-                    player2.getSprite().setRandomColor();
+                    if(player2.getBlocked()){
+                        double x = player2.getPosition().getX();
+                        double y = player2.getPosition().getY();
+                        Vector2 newPosition = new Vector2(x + Randomizer.getRandomIntInRange(-10,10), y + Randomizer.getRandomIntInRange(-10,10));
+                        player2.setPosition(newPosition);
+                        player2.setBlocked(false);
+                    } else {
+                        player2.reverseSpeed();
+                        player2.getVelocity().mult2(2);
+                        player2.getSprite().setRandomColor();
+                    }
                 }
-                if(player1.isAlive() & player2.isAlive()) playerToPlayerCollisionDamage(player1, player2);
+                if(player1.isAlive() & player2.isAlive()) {
+                    playerToPlayerCollisionDamage(player1, player2);
+                    player1.setBlocked(true);
+                    player2.setBlocked(true);
+                }
             }
         }
     }

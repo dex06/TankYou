@@ -5,6 +5,7 @@ import fr.unice.miage.common.geom.Vector2;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Paint;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import javafx.scene.transform.Affine;
@@ -15,19 +16,23 @@ public class ObstacleSprite extends Sprite {
     private final Vector2 position;
     private Image imgSprite = null;
     private double rotation = 0;
+    private String shapeType;
 
-    public ObstacleSprite(Vector2 position, double width, double height, Paint color) {
+    public ObstacleSprite(Vector2 position, double width, double height, Paint color, String shapeType) {
         super(width, height, color);
         this.position = position;
+        this.rotation = rotation;
+        this.shapeType = shapeType;
     }
 
-    public ObstacleSprite(Vector2 position, double width, double height, Paint color, Image img) {
+    public ObstacleSprite(Vector2 position, double width, double height, Paint color, Image img, String shapeType) {
         super(width, height, color);
         this.position = position;
         this.imgSprite = img;
+        this.rotation = rotation;
     }
 
-    public ObstacleSprite(Vector2 position, double width, double height, Paint color, Image img, int rotation) {
+    public ObstacleSprite(Vector2 position, double width, double height, Paint color, Image img, String shapeType, double rotation) {
         super(width, height, color);
         this.position = position;
         this.imgSprite = img;
@@ -49,11 +54,6 @@ public class ObstacleSprite extends Sprite {
             gc.drawImage(imgSprite, 0, 0, width, height);
         }
         gc.restore();
-
-        if(this.rotation >= 360)
-            this.rotation = 0;
-        else
-            this.rotation ++;
     }
 
     @Override
@@ -63,6 +63,8 @@ public class ObstacleSprite extends Sprite {
 
     @Override
     public Shape getBoundingShape() {
-        return new Rectangle(position.getX(), position.getY(), width, height);
+        if(shapeType == "rectangle") return new Rectangle(position.getX(), position.getY(), width, height);
+        return new Circle(position.getX(), position.getY(), width);
+
     }
 }

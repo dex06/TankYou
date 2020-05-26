@@ -6,6 +6,7 @@ import fr.unice.miage.common.game_objects.Projectile;
 import fr.unice.miage.common.geom.Vector2;
 import fr.unice.miage.common.plugins.PlugInObstacle;
 import fr.unice.miage.common.sprite.ObstacleSprite;
+import fr.unice.miage.common.utils.Randomizer;
 import javafx.scene.image.Image;
 import javafx.scene.paint.Color;
 
@@ -51,7 +52,7 @@ public class Arbre implements PlugInObstacle {
                 }            break;
         }
         Vector2 vctr = new Vector2(Math.random()*600, Math.random()*600);
-        ObstacleSprite sprite = new ObstacleSprite(vctr, 50, 50, Color.BLACK, img);
+        ObstacleSprite sprite = new ObstacleSprite(vctr, 50, 50, Color.BLACK, img, "circle");
         Obstacle obs = new Obstacle(this, vctr, sprite);
         return obs;
 
@@ -80,8 +81,16 @@ public class Arbre implements PlugInObstacle {
     }
 
     public void setPlayerCollision(Player player){
-        player.reverseSpeed();
-        player.getVelocity().mult2(2);
+        if(player.getBlocked()){
+            double x = player.getPosition().getX();
+            double y = player.getPosition().getY();
+            Vector2 newPosition = new Vector2(x + Randomizer.getRandomIntInRange(-10,10), y + Randomizer.getRandomIntInRange(-10,10));
+            player.setPosition(newPosition);
+            player.setBlocked(false);
+        } else {
+            player.reverseSpeed();
+            player.getVelocity().mult2(2);
+        }
     }
 
     public void setWeaponCollision(Projectile projectile){}

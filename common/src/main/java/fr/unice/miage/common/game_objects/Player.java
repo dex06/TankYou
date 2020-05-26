@@ -35,12 +35,14 @@ public class Player {
     private boolean hasMove = false;
     private boolean hasWeapon = false;
     private boolean hasGraphic = false;
+    private boolean isBlocked = false;
 
     private List<Projectile> projectiles = new ArrayList<>();
     // Statistiques //
     private int numberOfShots = 0;
     private double lastShot = 0;
     private int movingDistance = 0;
+    private int numberOfMoves = 0;
 
     private final Repository repository;
     private final CanvasGUI canvas;
@@ -88,7 +90,9 @@ public class Player {
     public void setMass(double m){ mass = m; }
 
     /** Move methods **/
-    public void move(){ pm.move(this); }
+    public void move(){
+        pm.move(this);
+    }
 
     // Methods for position x and y
     public double getX(){ return position.getX(); }
@@ -172,7 +176,15 @@ public class Player {
 
     public void shoot() { pw.shoot(this); }
 
-    public void setMovingDistance(double distance){ movingDistance += (int) distance; }
+    public void setMovingDistance(double distance){
+        movingDistance += (int) distance;
+        numberOfMoves++;
+        if(numberOfMoves % 5 == 0) {
+            if (isBlocked) {
+                isBlocked = false;
+            }
+        }
+    }
     public double getMovingDistance(){ return movingDistance; }
 
     public void incrementNumberOfShots() { numberOfShots++; }
@@ -231,4 +243,8 @@ public class Player {
         lastShot = 0;
         movingDistance = 0;
     }
+
+    public void setBlocked(boolean bool){ isBlocked = bool; }
+
+    public boolean getBlocked() { return isBlocked; }
 }

@@ -6,6 +6,7 @@ import fr.unice.miage.common.game_objects.Projectile;
 import fr.unice.miage.common.geom.Vector2;
 import fr.unice.miage.common.plugins.PlugInObstacle;
 import fr.unice.miage.common.sprite.ObstacleSprite;
+import fr.unice.miage.common.utils.Randomizer;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 
@@ -26,13 +27,13 @@ public class ObstacleCustom2 implements PlugInObstacle {
         double width = 100;
         double height = 40;
         Paint color = Color.BLACK;
-        ObstacleSprite sprite = new ObstacleSprite(position, width, height, color);
+        ObstacleSprite sprite = new ObstacleSprite(position, width, height, color, "rectangle");
         Obstacle barre = new Obstacle(this, position, sprite);
 
         Vector2 position2 = new Vector2(position.getX() + width/3, position.getY() + height);
         double width2 = width/3;
         double height2 = 60;
-        ObstacleSprite sprite2 = new ObstacleSprite(position2, width2, height2, color);
+        ObstacleSprite sprite2 = new ObstacleSprite(position2, width2, height2, color, "rectangle");
         Obstacle barre2 = new Obstacle(this, position2, sprite2);
 
         listReturnT.add(barre);
@@ -70,8 +71,16 @@ public class ObstacleCustom2 implements PlugInObstacle {
     }
 
     public void setPlayerCollision(Player player){
-        player.reverseSpeed();
-        player.getVelocity().mult2(2);
+        if(player.getBlocked()){
+            double x = player.getPosition().getX();
+            double y = player.getPosition().getY();
+            Vector2 newPosition = new Vector2(x + Randomizer.getRandomIntInRange(-10,10), y + Randomizer.getRandomIntInRange(-10,10));
+            player.setPosition(newPosition);
+            player.setBlocked(false);
+        } else {
+            player.reverseSpeed();
+            player.getVelocity().mult2(2);
+        }
     }
 
     public void setWeaponCollision(Projectile projectile){}

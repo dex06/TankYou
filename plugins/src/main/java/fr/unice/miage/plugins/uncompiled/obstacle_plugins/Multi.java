@@ -59,7 +59,7 @@ public class Multi implements PlugInObstacle {
                     }            break;
             }
             Vector2 vctr = new Vector2(Math.random()*600, Math.random()*600);
-            ObstacleSprite sprite = new ObstacleSprite(vctr, 50, 50, Color.BLACK, img, rota);
+            ObstacleSprite sprite = new ObstacleSprite(vctr, 50, 50, Color.BLACK, img, "circle", rota);
             obs = new Obstacle(this, vctr, sprite);
 
         }
@@ -70,7 +70,7 @@ public class Multi implements PlugInObstacle {
                 img = new Image("/mur/mur1.png");
             }
             Vector2 vctr = new Vector2(Math.random()*600, Math.random()*600);
-            ObstacleSprite sprite = new ObstacleSprite(vctr, 150, 25, Color.BLACK, img, rota);
+            ObstacleSprite sprite = new ObstacleSprite(vctr, 150, 25, Color.BLACK, img, "rectangle", rota);
             obs = new Obstacle(this, vctr, sprite);
         }
         else if(rdmObject == 3){
@@ -80,7 +80,7 @@ public class Multi implements PlugInObstacle {
                 img = new Image("/mur/mur2.png");
             }
             Vector2 vctr = new Vector2(Math.random()*600, Math.random()*600);
-            ObstacleSprite sprite = new ObstacleSprite(vctr, 36, 150, Color.BLACK, img, rota);
+            ObstacleSprite sprite = new ObstacleSprite(vctr, 36, 150, Color.BLACK, img, "rectangle", rota);
             obs = new Obstacle(this, vctr, sprite);
         }
         else if(rdmObject == 4){
@@ -102,11 +102,11 @@ public class Multi implements PlugInObstacle {
                         SnapshotParameters params = new SnapshotParameters();
                         params.setFill(Color.TRANSPARENT);
                         Image rotatedImage = iv.snapshot(params, null);
-                        sprite = new ObstacleSprite(newPos, 50, 30, Color.TRANSPARENT, rotatedImage, rota);
+                        sprite = new ObstacleSprite(newPos, 50, 30, Color.TRANSPARENT, rotatedImage, "rectangle", rota);
                         obs = new Obstacle(this, newPos, sprite);
                     } else {
                         vctr = new Vector2(Math.random() * 600, Math.random() * 600);
-                        sprite = new ObstacleSprite(vctr, 30, 50, Color.BLACK, img);
+                        sprite = new ObstacleSprite(vctr, 30, 50, Color.BLACK, img, "rectangle");
                         obs = new Obstacle(this, vctr, sprite);
                     }
                     break;
@@ -124,11 +124,11 @@ public class Multi implements PlugInObstacle {
                         SnapshotParameters params = new SnapshotParameters();
                         params.setFill(Color.TRANSPARENT);
                         Image rotatedImage = iv.snapshot(params, null);
-                        sprite = new ObstacleSprite(newPos, 50, 25, Color.TRANSPARENT, rotatedImage, rota);
+                        sprite = new ObstacleSprite(newPos, 50, 25, Color.TRANSPARENT, rotatedImage, "rectangle", rota);
                         obs = new Obstacle(this, newPos, sprite);
                     } else {
                         vctr = new Vector2(Math.random() * 600, Math.random() * 600);
-                        sprite = new ObstacleSprite(vctr, 25, 50, Color.BLACK, img, rota);
+                        sprite = new ObstacleSprite(vctr, 25, 50, Color.BLACK, img, "rectangle", rota);
                         obs = new Obstacle(this, vctr, sprite);
                     }
                     break;
@@ -139,7 +139,7 @@ public class Multi implements PlugInObstacle {
                         img = new Image("/car/car1.png");
                     }
                     vctr = new Vector2(Math.random()*600, Math.random()*600);
-                    sprite = new ObstacleSprite(vctr, 30, 50, Color.BLACK, img, rota);
+                    sprite = new ObstacleSprite(vctr, 30, 50, Color.BLACK, img, "rectangle", rota);
                     obs = new Obstacle(this, vctr, sprite);
                     break;
             }
@@ -171,8 +171,16 @@ public class Multi implements PlugInObstacle {
     }
 
     public void setPlayerCollision(Player player){
-        player.reverseSpeed();
-        player.getVelocity().mult2(2);
+        if(player.getBlocked()){
+            double x = player.getPosition().getX();
+            double y = player.getPosition().getY();
+            Vector2 newPosition = new Vector2(x + Randomizer.getRandomIntInRange(-10,10), y + Randomizer.getRandomIntInRange(-10,10));
+            player.setPosition(newPosition);
+            player.setBlocked(false);
+        } else {
+            player.reverseSpeed();
+            player.getVelocity().mult2(2);
+        }
     }
 
     public void setWeaponCollision(Projectile projectile){}

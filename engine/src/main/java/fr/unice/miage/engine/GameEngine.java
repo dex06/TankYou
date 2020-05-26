@@ -77,7 +77,7 @@ public class GameEngine  {
     public void startGame(List<String> gui1Opts, List<String> gui2Opts, List<String> configOpts, List<List<String>> playersOpts, List<String> realPlayerOpts, boolean hasRP) throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
 
         /** Obstacle plugin **/
-        if(!configOpts.get(1).equals("Aucun")) {
+        if(!gui2Opts.get(0).equals("Aucun")) {
             loadingObstacle(configOpts.get(1));
             hasObstacles = true;
         }
@@ -242,6 +242,8 @@ public class GameEngine  {
                     double t = Timer.getTime();
 
                     canvas.clean();
+
+                    /** Obstacles **/
                     if (hasObstacles) {
                         for (Obstacle obs : obstaclesList) {
                             obs.draw(canvas);

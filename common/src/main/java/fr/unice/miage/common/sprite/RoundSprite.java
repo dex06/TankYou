@@ -2,8 +2,6 @@ package fr.unice.miage.common.sprite;
 
 import fr.unice.miage.common.CanvasGUI;
 import fr.unice.miage.common.game_objects.Player;
-import fr.unice.miage.common.geom.Rotation;
-import fr.unice.miage.common.geom.Vector2;
 import fr.unice.miage.common.utils.Randomizer;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
@@ -31,7 +29,6 @@ public class RoundSprite extends Sprite {
 	public void draw(CanvasGUI canvas){
 		double x = player.getPosition().getX();
 		double y = player.getPosition().getY();
-		Vector2 transV = Rotation.getTransVecAfterRot(new Vector2(this.getWidth()/2,this.getHeight()/2), rotation);
 		GraphicsContext gc = canvas.getGraphicsContext();
 		gc.save();
 		gc.setFill(color);
