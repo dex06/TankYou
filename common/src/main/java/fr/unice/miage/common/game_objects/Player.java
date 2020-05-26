@@ -172,7 +172,6 @@ public class Player {
 
     public void shoot() { pw.shoot(this); }
 
-
     public void setMovingDistance(double distance){ movingDistance += (int) distance; }
     public double getMovingDistance(){ return movingDistance; }
 

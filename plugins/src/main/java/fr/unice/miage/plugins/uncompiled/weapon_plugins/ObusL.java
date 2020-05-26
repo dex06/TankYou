@@ -55,8 +55,6 @@ public class ObusL implements PlugInWeapon {
 
     public void shoot(Player player) {
         if(Timer.getChrono() - player.getLastShot() > 1.5){
-
-
             Vector2 direction;
             if(Mouse.isMouseOn()){
                 direction = Mouse.getLastShootingPosition().sub2(player.getPosition()).norm2();

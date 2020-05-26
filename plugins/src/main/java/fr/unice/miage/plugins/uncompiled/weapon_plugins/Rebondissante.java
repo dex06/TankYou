@@ -73,7 +73,7 @@ public class Rebondissante implements PlugInWeapon {
     }
 
     public void applyPlayerImpact(Projectile projectile, Player player){
-        player.setHealth(player.getHealth()-10);
+        player.setHealth(player.getHealth()-5);
     }
 
     public void applyObstacleCollision(Projectile projectile, String inversion){
