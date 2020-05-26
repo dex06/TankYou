@@ -2,11 +2,16 @@
 ```mvn install```
 #Execution
 ```mvn exec:java -pl engine```
+#Jar Exécutable
+Le jar exécutable se trouve dans le dossier "out/artifacts/projet_jar"
+
+```java -jar projet.jar```
 
 #Création d'un fichier jar
 On se place dans le dossier contenant les fichiers à compiler
 
 ```jar  -cvf MyJarFile.jar *.class```
+
 
 
 # Projet Programmation avancée 2019-2020
