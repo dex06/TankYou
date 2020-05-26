@@ -7,7 +7,7 @@ import javafx.scene.paint.Paint;
 import javafx.scene.shape.Shape;
 
 public abstract class Sprite {
-
+	protected double rotation = 0;
 	protected double width;
 	protected double height;
 	protected Paint[] colors = new Paint[] { Color.RED, Color.CYAN, Color.DARKCYAN, Color.TURQUOISE, Color.WHEAT };
@@ -42,4 +42,5 @@ public abstract class Sprite {
 	}
 
 
+    public void setRotation(double rot) { rotation = rot; };
 }

@@ -1,6 +1,7 @@
 module fr.unice.miage.common {
     requires transitive javafx.graphics;
     requires transitive javafx.controls;
+    //requires org.junit.jupiter.engine;
 
     exports fr.unice.miage.common.plugins;
     exports fr.unice.miage.common.game_objects;
@@ -9,4 +10,5 @@ module fr.unice.miage.common {
     exports fr.unice.miage.common.geom;
     exports fr.unice.miage.common.input;
     exports fr.unice.miage.common;
+
 }

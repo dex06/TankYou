@@ -2,6 +2,7 @@ package fr.unice.miage.engine.gui;
 
 import fr.unice.miage.common.Config;
 import fr.unice.miage.common.game_objects.Player;
+import fr.unice.miage.common.utils.ImageLoader;
 import fr.unice.miage.engine.GameEngine;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -88,12 +89,13 @@ public class GameStats {
         stage.setTitle("Game statistics");
         root.setPadding(new Insets(5));
         root.setCenter(table);
-        //root.setAlignment(table, Pos.CENTER);
+
     }
     public void setRestartBtn(GameEngine engine){
 
         Button restartBtn = new Button();
-        Image restartImg = new Image("/barMenuIcons/skipPreviousBtn.png");
+        Class<?> cls = engine.getRepository().getGui1Plugins().get(0);
+        Image restartImg = ImageLoader.loadImage("/barMenuIcons/skipPreviousBtn.png", cls);
         ImageView restartImgView = new ImageView(restartImg);
         restartImgView.setFitWidth(30);
         restartImgView.setFitHeight(30);

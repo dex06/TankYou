@@ -52,17 +52,11 @@ public class Repository {
 
     public List<File> getJarFiles(){ return archiveFiles; }
 
-    public ObservableList<String> getMovePluginsNames() {
-        return movePluginsNames;
-    }
+    public ObservableList<String> getMovePluginsNames() { return movePluginsNames; }
 
-    public ObservableList<String> getWeaponPluginsNames() {
-        return weaponPluginsNames;
-    }
+    public ObservableList<String> getWeaponPluginsNames() { return weaponPluginsNames; }
 
-    public ObservableList<String> getGraphicPluginsNames() {
-        return graphicPluginsNames;
-    }
+    public ObservableList<String> getGraphicPluginsNames() { return graphicPluginsNames; }
 
     public ObservableList<String> getCollisionPluginsNames(){ return collisionPluginsNames; }
 
@@ -71,7 +65,7 @@ public class Repository {
     public ObservableList<String> getBackgroundPluginsNames() { return backgroundPluginsNames;}
 
     public List<String> getGui1PluginsNames(){ return gui1PluginsNames; }
-
+    public List<Class> getGui1Plugins(){ return gui1Plugins; }
     public List<String> getGui2PluginsNames(){ return gui2PluginsNames; }
 
     public List<String> getRealPlayerPluginsNames(){ return realPlayerPluginsNames; }

@@ -1,6 +1,5 @@
 package fr.unice.miage.engine.gui;
 
-import fr.unice.miage.common.Config;
 import fr.unice.miage.common.Repository;
 import fr.unice.miage.engine.GameEngine;
 import javafx.application.Application;
@@ -160,7 +159,7 @@ public class GameFiles extends Application {
         Button gotoMenuBtn = new Button("Configuration Menu");
         gotoMenuBtn.setOnAction(e -> {
 
-            GameEngine gameEngine = new GameEngine(primaryStage, Config.getWorldWidth(),Config.getWorldHeight(), repository);
+            GameEngine gameEngine = new GameEngine(primaryStage, repository);
             primaryStage.close();
             gameEngine.initMenu();
             gameEngine.startMenu();

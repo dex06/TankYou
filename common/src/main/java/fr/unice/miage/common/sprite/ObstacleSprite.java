@@ -7,12 +7,14 @@ import javafx.scene.image.Image;
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
+import javafx.scene.transform.Affine;
+import javafx.scene.transform.Rotate;
 
 public class ObstacleSprite extends Sprite {
 
     private final Vector2 position;
     private Image imgSprite = null;
-    private int rotation = 0;
+    private double rotation = 0;
 
     public ObstacleSprite(Vector2 position, double width, double height, Paint color) {
         super(width, height, color);
@@ -37,12 +39,13 @@ public class ObstacleSprite extends Sprite {
         gc.save();
         if(imgSprite == null){
             gc.setFill(color);
+            gc.translate(this.position.getX(), this.position.getY());
+            gc.transform(new Affine(new Rotate(rotation, this.getWidth()/2, this.getHeight()/2)));
             gc.fillRect(position.getX(), position.getY(), width, height);
         }
         else{
             gc.translate(this.position.getX(), this.position.getY());
-            gc.rotate(rotation);
-            gc.translate(-this.getWidth()/2, -this.getHeight()/2);
+            gc.transform(new Affine(new Rotate(rotation, this.getWidth()/2, this.getHeight()/2)));
             gc.drawImage(imgSprite, 0, 0, width, height);
         }
         gc.restore();
@@ -51,6 +54,11 @@ public class ObstacleSprite extends Sprite {
             this.rotation = 0;
         else
             this.rotation ++;
+    }
+
+    @Override
+    public void setRotation(double rot) {
+        rotation = rot;
     }
 
     @Override

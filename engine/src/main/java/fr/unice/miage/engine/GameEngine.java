@@ -34,7 +34,7 @@ public class GameEngine  {
     private GameStats gameStats;
     private Repository repository;
     private CanvasGUI canvas;
-    private final ButtonState btnState;
+    private ButtonState btnState;
     private PlugInCollision collision;
     private PlugInObstacle obstacles;
     private PlugInBackground background;
@@ -53,25 +53,17 @@ public class GameEngine  {
 
     private final GameEngine engine;
     private final Stage stage;
-    private final double stageWidth;
-    private final double stageHeight;
-    //private final String path;
 
-    public GameEngine(Stage stage, double width, double height, Repository repository) {
+
+    public GameEngine(Stage stage, Repository repository) {
         this.engine = this;
         this.stage = stage;
-        this.stageWidth = width;
-        this.stageHeight = height;
-        //this.path = path;
+        this.repository = repository;
+        this.gui1Opts = repository.getGui1PluginsNames();
+        this.canvas = new CanvasGUI(Config.getWorldWidth(),Config.getWorldHeight());
         this.btnState = new ButtonState();
-        try {
-            this.repository = repository;
-            this.gui1Opts = repository.getGui1PluginsNames();
-            this.canvas = new CanvasGUI(width, height);
-        } catch(Exception e){
-            System.err.println("GameEngine Initialisation error " + e);
-        }
     }
+    public Repository getRepository(){ return repository; }
 
     public void initMenu(){
         this.gameMenu = new GameMenu(this, stage, repository);
@@ -84,6 +76,7 @@ public class GameEngine  {
 
     public void startGame(List<String> gui1Opts, List<String> gui2Opts, List<String> configOpts, List<List<String>> playersOpts, List<String> realPlayerOpts, boolean hasRP) throws ClassNotFoundException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
 
+        /** Obstacle plugin **/
         if(!configOpts.get(1).equals("Aucun")) {
             loadingObstacle(configOpts.get(1));
             hasObstacles = true;
@@ -91,23 +84,26 @@ public class GameEngine  {
         /** Loading players **/
         loadingPlayers(playersOpts);
 
+        /** Collision plugin **/
         if(!configOpts.get(0).equals("Aucun")) {
             loadingCollision(configOpts.get(0));
             hasCollision = true;
         }
-
-
+        /** Bar menu plugin **/
         if(!gui1Opts.get(0).equals("Aucun")) hasBarMenu = true;
+        /** Statistic window plugin **/
         if(!gui2Opts.get(0).equals("Aucun")) hasStats = true;
 
         createGameBoard();
 
+        /** Background plugin **/
         if(!configOpts.get(2).equals("Aucun")) {
             loadingBackground(configOpts.get(2));
             hasBackground = true;
             gameBoard.setBackground(background);
         }
 
+        /** Real player plugin **/
         if(hasRP){
             System.out.println(realPlayerOpts.get(0));
             loadingRealPlayer(realPlayerOpts.get(0));
