@@ -258,7 +258,7 @@ public class GameEngine  {
                                 Vector2 lastAxis = Mouse.getLastMousePosition().sub2(player.getCenterPosition()).norm2();
                                 Vector2 previousAxis = lastAxis.sub2(difVector).norm2();
                                 double rot =  Math.toDegrees(Math.acos(previousAxis.dot(lastAxis)));
-                                player.setRotation(rot);
+                                player.setWeaponRotation(rot);
                             }
                         } else if (player.isAlive()) {
                             if(player.hasMove()) player.move();

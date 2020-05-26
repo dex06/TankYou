@@ -12,7 +12,8 @@ On se place dans le dossier contenant les fichiers à compiler
 
 ```jar  -cvf MyJarFile.jar *.class```
 
-
+#Le dossier pour les plugins 
+Les plugins se trouvent dans le dossier "plugins repository"
 
 # Projet Programmation avancée 2019-2020
 
@@ -57,5 +58,6 @@ Voici la liste exhaustive des plugins présent dans le projet :
     * Ajout aux joueurs des armes permettant de tirer et ainsi faire perdre des points de vie aux adversaires. Il y a 5 armes différentes disponibles.
     
 * Joueur humain :
-    * Ajout la possibilité de contrôler un joueur. 
+    * Ajout la possibilité de contrôler un joueur. Cliquez sur la case IH pour attaquer le joueur humain.
+    (nous n'avons pas eu le temps de corriger tous les bugs qui l'accompagnent).
 

@@ -217,15 +217,23 @@ public class CollisionOne implements PlugInCollision {
     }
 
     private boolean checkProjectileHitsObstacle(Projectile prj, Obstacle obs){
-
+        //Vector2 transVec = Rotation.getTransVecAfterRot(obs.getPosition(), obs.getSprite().getRotation());
         double pjxMin = prj.getX();
         double pjxMax = pjxMin + prj.getSprite().getWidth();
         double pjyMin = prj.getY();
         double pjyMax = pjyMin + prj.getSprite().getHeight();
+
         double plxMin = obs.getPosition().getX();
         double plxMax = plxMin + obs.getSprite().getWidth();
         double plyMin = obs.getPosition().getY();
         double plyMax = plyMin + obs.getSprite().getHeight();
+
+        /*Vector2 topRight = new Vector2(obs.getPosition().getX() + obs.getSprite().getWidth(), obs.getPosition().getY()).add2(transVec);
+        Vector2 bottomRight = new Vector2(obs.getPosition().getX() + obs.getSprite().getWidth(), obs.getPosition().getY() + obs.getSprite().getHeight()).add2(transVec);
+        Vector2 bottomLeft = new Vector2(obs.getPosition().getX(), obs.getPosition().getY() + obs.getSprite().getHeight()).add2(transVec);
+        plxMax = topRight.getX();
+        //plyMin = bottomLeft.getY();
+        plyMax = bottomRight.getY(); */
 
         if(pjxMax >= plxMin & pjyMax >= plyMin & pjxMax <= plxMax & pjyMax <= plyMax) return true;
         if(pjxMin >= plxMin & pjyMin >= plyMin & pjxMin <= plxMax & pjyMin <= plyMax) return true;

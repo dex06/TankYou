@@ -50,6 +50,8 @@ public class RoundSprite extends Sprite {
 		rotation = rot;
 	}
 
+	public double getRotation(){ return rotation; }
+
 	@Override
 	public Shape getBoundingShape() {
 		double x = player.getPosition().getX();

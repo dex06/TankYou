@@ -62,6 +62,9 @@ public class ObstacleSprite extends Sprite {
     }
 
     @Override
+    public double getRotation(){ return rotation; }
+
+    @Override
     public Shape getBoundingShape() {
         if(shapeType == "rectangle") return new Rectangle(position.getX(), position.getY(), width, height);
         return new Circle(position.getX(), position.getY(), width);

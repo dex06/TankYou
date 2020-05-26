@@ -45,6 +45,8 @@ public class RectangleSprite extends Sprite {
 	@Override
 	public void setRotation(double rot) { rotation = rot; }
 
+	public double getRotation(){ return rotation; }
+
 	@Override
 	public Shape getBoundingShape() {
 		double x = player.getX();
