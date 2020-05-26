@@ -86,6 +86,11 @@ public class ObusL implements PlugInWeapon {
         projectile.setHit();
     }
 
+    public void applyProjectileImpact(Projectile projectile){
+        projectile.setHitTime(Timer.getChrono());
+        projectile.setHit();
+    }
+
     public void applyObstacleCollision(Projectile projectile, String inversion){
         projectile.setHitTime(Timer.getChrono());
         projectile.setHit();

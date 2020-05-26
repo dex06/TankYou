@@ -52,7 +52,7 @@ public class MediumTankA implements PlugInGraphic {
 
 
         Image track;
-        if((int) Timer.getChrono() % 2 == 0){
+        if((int) Timer.getChrono() % 2 == 0 && player.isAlive()){
             track = ImageLoader.loadImage("/tanks2/colorA/tracks/Track_1_A.png", MediumTankA.class);
         } else {
             track = ImageLoader.loadImage("/tanks2/colorA/tracks/Track_1_B.png", MediumTankA.class);
@@ -82,6 +82,18 @@ public class MediumTankA implements PlugInGraphic {
         c.transform(new Affine(new Rotate(wRot-rot, w/2, 0.67*h)));
         c.drawImage(gunImage, 0, 0);
         c.restore();
+        if(!player.isAlive()){
+            c.save();
+            c.translate(x,y);
+            Image skull = ImageLoader.loadImage("/other/skull.png", MediumTankA.class);
+            ImageView ivSkull = new ImageView(skull);
+            ivSkull.setFitWidth(w * 0.5);
+            ivSkull.setFitHeight(h * 0.5);
+            params.setFill(Color.LIGHTBLUE);
+            Image dead = ivSkull.snapshot(params, null);
+            c.drawImage(dead, 0, h/4);
+            c.restore();
+        }
     }
 
     public void setToDead(Player player){

@@ -179,10 +179,8 @@ public class Player {
     public void setMovingDistance(double distance){
         movingDistance += (int) distance;
         numberOfMoves++;
-        if(numberOfMoves % 5 == 0) {
-            if (isBlocked) {
-                isBlocked = false;
-            }
+        if(isBlocked && numberOfMoves % 3 == 0) {
+            isBlocked = false;
         }
     }
     public double getMovingDistance(){ return movingDistance; }
@@ -242,6 +240,7 @@ public class Player {
         numberOfShots = 0;
         lastShot = 0;
         movingDistance = 0;
+        numberOfMoves = 0;
     }
 
     public void setBlocked(boolean bool){ isBlocked = bool; }

@@ -32,7 +32,7 @@ public class CollisionOne implements PlugInCollision {
         checkPlayerToPlayerCollision(player1, player2);
         checkPlayerToWeaponCollision(player1, player2);
         checkPlayerToWeaponCollision(player2, player1);
-        //checkWeaponToWeaponCollision(player1, player2);
+        checkWeaponToWeaponCollision(player1, player2);
     }
 
     private void checkPlayerToBorderCollision(Player player){
@@ -149,10 +149,10 @@ public class CollisionOne implements PlugInCollision {
                         player2.getSprite().setRandomColor();
                     }
                 }
+                if(player1.isAlive()) player1.setBlocked(true);
+                if(player2.isAlive()) player2.setBlocked(true);
                 if(player1.isAlive() & player2.isAlive()) {
                     playerToPlayerCollisionDamage(player1, player2);
-                    player1.setBlocked(true);
-                    player2.setBlocked(true);
                 }
             }
         }
@@ -173,9 +173,7 @@ public class CollisionOne implements PlugInCollision {
             List<Projectile> weaponProjectiles2 = player2.getProjectiles();
             for (int k = 0; k < weaponProjectiles1.size() - 1; k++) {
                 for (int l = 0; l < weaponProjectiles2.size() - 1; l++) {
-                    Sprite projectileSprite1 = weaponProjectiles1.get(k).getSprite();
-                    Sprite projectileSprite2 = weaponProjectiles2.get(l).getSprite();
-                    if (projectileSprite1.getBoundingShape().getBoundsInParent().intersects(projectileSprite2.getBoundingShape().getBoundsInParent())) {
+                    if (checkProjectileHitsProjectile(weaponProjectiles1.get(k), weaponProjectiles2.get(l))) {
                         weaponProjectiles1.get(k).collidedWith(weaponProjectiles2.get(l));
                         weaponProjectiles2.get(l).collidedWith(weaponProjectiles1.get(k));
                     }
@@ -228,6 +226,22 @@ public class CollisionOne implements PlugInCollision {
         double plxMax = plxMin + obs.getSprite().getWidth();
         double plyMin = obs.getPosition().getY();
         double plyMax = plyMin + obs.getSprite().getHeight();
+
+        if(pjxMax >= plxMin & pjyMax >= plyMin & pjxMax <= plxMax & pjyMax <= plyMax) return true;
+        if(pjxMin >= plxMin & pjyMin >= plyMin & pjxMin <= plxMax & pjyMin <= plyMax) return true;
+        if(pjxMax >= plxMin & pjyMin >= plyMin & pjxMax <= plxMax & pjyMin <= plyMax) return true;
+        return pjxMin >= plxMin & pjyMax >= plyMin & pjxMin <= plxMax & pjyMax <= plyMax;
+    }
+
+    private boolean checkProjectileHitsProjectile(Projectile prj1, Projectile prj2){
+        double pjxMin = prj1.getX();
+        double pjxMax = pjxMin + prj1.getSprite().getWidth();
+        double pjyMin = prj1.getY();
+        double pjyMax = pjyMin + prj1.getSprite().getHeight();
+        double plxMin = prj2.getX();
+        double plxMax = plxMin + prj2.getSprite().getWidth();
+        double plyMin = prj2.getY();
+        double plyMax = plyMin + prj2.getSprite().getHeight();
 
         if(pjxMax >= plxMin & pjyMax >= plyMin & pjxMax <= plxMax & pjyMax <= plyMax) return true;
         if(pjxMin >= plxMin & pjyMin >= plyMin & pjxMin <= plxMax & pjyMin <= plyMax) return true;

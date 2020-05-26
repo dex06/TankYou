@@ -37,7 +37,7 @@ public class Standard implements PlugInWeapon {
     }
 
     public void shoot(Player player) {
-        if(Timer.getChrono() - player.getLastShot() > 0.3){
+        if(Timer.getChrono() - player.getLastShot() > 1){
 
             Vector2 direction;
             if(Mouse.isMouseOn()){
@@ -67,7 +67,10 @@ public class Standard implements PlugInWeapon {
 
     public void applyPlayerImpact(Projectile projectile, Player player) {
         player.setHealth(player.getHealth()-3);
+        projectile.endProjectile();
     }
+
+    public void applyProjectileImpact(Projectile projectile){ projectile.endProjectile(); }
 
     public void applyObstacleCollision(Projectile projectile, String inversion){
         projectile.endProjectile();

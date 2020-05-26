@@ -27,7 +27,6 @@ public class Mine implements PlugInWeapon {
 
     public void onProjectileOut(String axis, Projectile projectile){
         projectile.endProjectile();
-
     }
 
     public void shoot(Player player) {
@@ -61,6 +60,8 @@ public class Mine implements PlugInWeapon {
         projectile.setHit();
         player.setHealth(player.getHealth()-30);
     }
+
+    public void applyProjectileImpact(Projectile prj){}
 
     public void applyObstacleCollision(Projectile projectile, String inversion){
         projectile.setHitTime(Timer.getChrono());

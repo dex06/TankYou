@@ -77,14 +77,14 @@ public class Projectile {
     public PlugInWeapon getWeapon(){ return pw; }
 
     public void collidedWith(Projectile projectile) {
+        pw.applyProjectileImpact(projectile);
     }
 
     public void applyPlayerImpact(Player player) {
         pw.applyPlayerImpact(this, player);
     }
+
     public boolean hasEnded(){ return hasEnded; }
-
-
 
     public void endProjectile(){ hasEnded = true; }
 

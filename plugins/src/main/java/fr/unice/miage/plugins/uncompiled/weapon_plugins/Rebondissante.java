@@ -38,7 +38,7 @@ public class Rebondissante implements PlugInWeapon {
     }
 
     public void shoot(Player player) {
-        if(Timer.getChrono() - player.getLastShot() > 1){
+        if(Timer.getChrono() - player.getLastShot() > 2){
 
             double xCenter = player.getX() + player.getSprite().getWidth()/2;
             double yCenter = player.getY() + player.getSprite().getHeight()/2;
@@ -74,7 +74,10 @@ public class Rebondissante implements PlugInWeapon {
 
     public void applyPlayerImpact(Projectile projectile, Player player){
         player.setHealth(player.getHealth()-5);
+        projectile.endProjectile();
     }
+
+    public void applyProjectileImpact(Projectile projectile){ projectile.endProjectile(); }
 
     public void applyObstacleCollision(Projectile projectile, String inversion){
 
