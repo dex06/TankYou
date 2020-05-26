@@ -17,56 +17,17 @@ import java.util.Vector;
 
 public class Predef implements PlugInObstacle {
 
-    private Obstacle generateTree(){
-        int rdm = (int)(Math.random()*4);
-        Image img;
-        switch (rdm){
-            case 0:
-                try {
-                    img = new Image(Predef.class.getClassLoader().getResourceAsStream("/arbre/arbre1.png"));
-                } catch(Exception e){
-                    img = new Image("/arbre/arbre1.png");
-                }
-            break;
-            case 1:
-                try {
-                    img = new Image(Predef.class.getClassLoader().getResourceAsStream("/arbre/arbre2.png"));
-                } catch(Exception e){
-                    img = new Image("/arbre/arbre2.png");
-                }            break;
-            case 3:
-                try {
-                    img = new Image(Predef.class.getClassLoader().getResourceAsStream("/arbre/arbre3.png"));
-                } catch(Exception e){
-                    img = new Image("/arbre/arbre3.png");
-                }            break;
-            case 4:
-                try {
-                    img = new Image(Predef.class.getClassLoader().getResourceAsStream("/arbre/arbre4.png"));
-                } catch(Exception e){
-                    img = new Image("/arbre/arbre4.png");
-                }            break;
-            default:
-                try {
-                    img = new Image(Predef.class.getClassLoader().getResourceAsStream("/arbre/arbre1.png"));
-                } catch(Exception e){
-                    img = new Image("/arbre/arbre1.png");
-                }            break;
-        }
-        Vector2 vctr = new Vector2(Math.random()*600, Math.random()*600);
-        ObstacleSprite sprite = new ObstacleSprite(vctr, 50, 50, Color.BLACK, img, "circle");
-        Obstacle obs = new Obstacle(this, vctr, sprite);
-        return obs;
-
-    }
 
     private Image makeImg(String path){
         Image img;
-        try {
-            img = new Image(Multi.class.getClassLoader().getResourceAsStream(path));
-        } catch (Exception e){
-            img = new Image(path);
-        }
+//        try {
+//            img = new Image(Multi.class.getClassLoader().getResourceAsStream(path));
+//        } catch (Exception e){
+//            img = new Image(path);
+//        }
+
+//        System.out.println(path);
+        img = ImageLoader.loadImage(path, Predef.class);
 
 //        ImageLoader.
         return img;
